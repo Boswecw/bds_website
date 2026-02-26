@@ -1,0 +1,226 @@
+/* ============================================================
+   HUD Assistant — Ambient Right-Edge Dock
+   Polite • Feminine • Capable • Non-intrusive
+   ============================================================ */
+
+/* ---- Collapsed Dock (Default) ---- */
+.hud-dock {
+  position: fixed;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 200;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: var(--space-1);
+}
+
+.hud-dock__trigger {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--hud-bg);
+  border: 1px solid var(--hud-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all var(--transition-base);
+  position: relative;
+}
+
+.hud-dock__trigger:hover {
+  border-color: var(--accent-border);
+}
+
+.hud-dock__trigger:focus-visible {
+  outline: 2px solid var(--hud-focus-ring);
+  outline-offset: 2px;
+}
+
+.hud-dock__trigger-icon {
+  width: 18px;
+  height: 18px;
+  color: var(--accent);
+}
+
+/* Subtle ambient pulse — 12-15s interval */
+.hud-dock__trigger::after {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  border: 1px solid var(--accent-border);
+  opacity: 0;
+  animation: hud-pulse 14s ease-in-out infinite;
+}
+
+@keyframes hud-pulse {
+  0%, 90%, 100% { opacity: 0; transform: scale(1); }
+  95% { opacity: 0.6; transform: scale(1.15); }
+}
+
+/* ---- Expanded Panel ---- */
+.hud-panel {
+  position: fixed;
+  top: 0;
+  right: -100%;
+  width: min(32vw, 420px);
+  height: 100vh;
+  background: var(--hud-bg);
+  border-left: 1px solid var(--hud-border);
+  z-index: 201;
+  display: flex;
+  flex-direction: column;
+  transition: right var(--transition-base);
+  overflow: hidden;
+}
+
+.hud-panel--open {
+  right: 0;
+}
+
+.hud-panel__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-3);
+  border-bottom: 1px solid var(--hud-border);
+  flex-shrink: 0;
+}
+
+.hud-panel__title {
+  font-family: var(--font-heading);
+  font-size: var(--fs-body);
+  font-weight: var(--fw-semibold);
+  color: var(--hud-text-primary);
+}
+
+.hud-panel__close {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--hud-text-secondary);
+  border-radius: var(--radius);
+  transition: color var(--transition-fast);
+}
+
+.hud-panel__close:hover {
+  color: var(--hud-text-primary);
+}
+
+.hud-panel__body {
+  flex: 1;
+  overflow-y: auto;
+  padding: var(--space-3);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.hud-panel__greeting {
+  color: var(--hud-text-secondary);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+}
+
+.hud-panel__suggestions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.hud-panel__suggestion-btn {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 0.625rem var(--space-2);
+  font-size: var(--fs-small);
+  font-weight: var(--fw-medium);
+  color: var(--hud-text-primary);
+  background: var(--hud-input-bg);
+  border: 1px solid var(--hud-border);
+  border-radius: var(--radius);
+  transition: all var(--transition-fast);
+}
+
+.hud-panel__suggestion-btn:hover {
+  border-color: var(--accent-border);
+  color: var(--accent);
+}
+
+.hud-panel__footer {
+  padding: var(--space-3);
+  border-top: 1px solid var(--hud-border);
+  flex-shrink: 0;
+}
+
+.hud-panel__input-wrap {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  background: var(--hud-input-bg);
+  border: 1px solid var(--hud-border);
+  border-radius: var(--radius);
+  padding: 0.5rem var(--space-2);
+  transition: border-color var(--transition-fast);
+}
+
+.hud-panel__input-wrap:focus-within {
+  border-color: var(--hud-focus-ring);
+}
+
+.hud-panel__input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: var(--hud-text-primary);
+  font-family: var(--font-body);
+  font-size: var(--fs-small);
+  outline: none;
+}
+
+.hud-panel__input::placeholder {
+  color: var(--text-muted);
+}
+
+.hud-panel__send {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--accent);
+  flex-shrink: 0;
+  border-radius: var(--radius);
+}
+
+.hud-panel__send:hover {
+  background: var(--accent-subtle-bg);
+}
+
+/* ---- Overlay ---- */
+.hud-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.3);
+  z-index: 200;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--transition-base);
+}
+
+.hud-overlay--visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* ---- Responsive ---- */
+@media (max-width: 768px) {
+  .hud-panel {
+    width: 100vw;
+  }
+}

@@ -1,0 +1,321 @@
+/* ============================================================
+   Homepage Sections
+   ============================================================ */
+
+/* ---- Hero Authority Block ---- */
+.hero {
+  padding: var(--space-12) 0;
+  min-height: 70vh;
+  display: flex;
+  align-items: center;
+}
+
+.hero__inner {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: var(--space-6);
+  align-items: center;
+}
+
+.hero__headline {
+  font-size: clamp(2.25rem, 4vw, var(--fs-h1));
+  font-weight: var(--fw-bold);
+  margin-bottom: var(--space-2);
+  max-width: 560px;
+}
+
+.hero__subtext {
+  font-size: var(--fs-body-lg);
+  color: var(--text-secondary);
+  margin-bottom: var(--space-4);
+  max-width: 480px;
+  line-height: var(--lh-body);
+}
+
+.hero__actions {
+  display: flex;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+}
+
+.hero__visual {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+/* Minimal geometric accent — authority visualization */
+.hero__geo {
+  width: 100%;
+  max-width: 360px;
+  aspect-ratio: 1;
+  position: relative;
+}
+
+.hero__geo-ring {
+  position: absolute;
+  border: 1px solid var(--border-divider);
+  border-radius: 50%;
+  animation: geo-rotate 60s linear infinite;
+}
+
+.hero__geo-ring--outer {
+  inset: 0;
+}
+
+.hero__geo-ring--mid {
+  inset: 15%;
+  border-color: var(--accent-border);
+  animation-direction: reverse;
+  animation-duration: 45s;
+}
+
+.hero__geo-ring--inner {
+  inset: 35%;
+  border-color: var(--border-divider);
+  animation-duration: 30s;
+}
+
+.hero__geo-center {
+  position: absolute;
+  inset: 42%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero__geo-center svg {
+  width: 48px;
+  height: 48px;
+  color: var(--accent);
+  opacity: 0.7;
+}
+
+@keyframes geo-rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* ---- Product Preview Grid ---- */
+.products-preview {
+  background: var(--bg-primary);
+}
+
+.products-preview__header {
+  margin-bottom: var(--space-6);
+}
+
+.products-preview__header h2 {
+  margin-bottom: var(--space-1);
+}
+
+.products-preview__header p {
+  max-width: 520px;
+}
+
+.product-card__icon {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius);
+  background: var(--accent-subtle-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: var(--space-2);
+  color: var(--accent);
+}
+
+.product-card__icon svg {
+  width: 20px;
+  height: 20px;
+}
+
+.product-card__name {
+  font-family: var(--font-heading);
+  font-size: var(--fs-h4);
+  font-weight: var(--fw-semibold);
+  color: var(--text-primary);
+  margin-bottom: 0.375rem;
+}
+
+.product-card__desc {
+  font-size: var(--fs-small);
+  color: var(--text-secondary);
+  line-height: var(--lh-body);
+  margin-bottom: var(--space-2);
+}
+
+.product-card__link {
+  font-size: var(--fs-small);
+  font-weight: var(--fw-medium);
+  color: var(--accent);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  transition: gap var(--transition-fast);
+}
+
+.product-card__link:hover {
+  gap: 0.5rem;
+}
+
+/* ---- Security Anchor Strip ---- */
+.security-strip {
+  background: var(--bg-surface);
+}
+
+.security-strip__inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-6);
+  align-items: center;
+}
+
+.security-strip__content h2 {
+  margin-bottom: var(--space-2);
+}
+
+.security-strip__list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  margin-bottom: var(--space-4);
+}
+
+.security-strip__item {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-1);
+  color: var(--text-secondary);
+  font-size: var(--fs-body);
+  line-height: 1.5;
+}
+
+.security-strip__item svg {
+  width: 18px;
+  height: 18px;
+  color: var(--color-success);
+  flex-shrink: 0;
+  margin-top: 3px;
+}
+
+/* Security Diagram — minimal line-based */
+.security-diagram {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-4);
+  border: 1px solid var(--border-divider);
+  border-radius: var(--radius);
+  background: var(--bg-primary);
+}
+
+.security-diagram__zone {
+  padding: var(--space-2) var(--space-3);
+  border-left: 3px solid var(--border-divider);
+  position: relative;
+}
+
+.security-diagram__zone--public {
+  border-left-color: var(--color-info);
+}
+
+.security-diagram__zone--admin {
+  border-left-color: var(--accent);
+}
+
+.security-diagram__zone-label {
+  font-family: var(--font-heading);
+  font-size: var(--fs-small);
+  font-weight: var(--fw-semibold);
+  color: var(--text-primary);
+  margin-bottom: 0.25rem;
+}
+
+.security-diagram__zone-items {
+  font-size: var(--fs-small);
+  color: var(--text-muted);
+  line-height: 1.7;
+}
+
+/* ---- Store Preview ---- */
+.store-preview {
+  background: var(--bg-primary);
+}
+
+.store-preview__header {
+  margin-bottom: var(--space-6);
+}
+
+.store-preview__header h2 {
+  margin-bottom: var(--space-1);
+}
+
+.store-card {
+  display: flex;
+  flex-direction: column;
+}
+
+.store-card__price {
+  font-family: var(--font-heading);
+  font-size: var(--fs-h4);
+  font-weight: var(--fw-bold);
+  color: var(--accent);
+  margin-top: auto;
+  padding-top: var(--space-2);
+}
+
+/* ---- Authority / Background ---- */
+.authority {
+  background: var(--bg-surface);
+}
+
+.authority__inner {
+  max-width: 720px;
+}
+
+.authority__label {
+  font-family: var(--font-heading);
+  font-size: var(--fs-small);
+  font-weight: var(--fw-semibold);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--accent);
+  margin-bottom: var(--space-2);
+}
+
+.authority__text {
+  font-size: var(--fs-body-lg);
+  color: var(--text-secondary);
+  line-height: 1.8;
+}
+
+.authority__text + .authority__text {
+  margin-top: var(--space-2);
+}
+
+/* ---- Responsive Hero ---- */
+@media (max-width: 768px) {
+  .hero {
+    min-height: auto;
+    padding: var(--space-8) 0;
+  }
+
+  .hero__inner {
+    grid-template-columns: 1fr;
+  }
+
+  .hero__visual {
+    order: -1;
+    max-height: 240px;
+  }
+
+  .hero__geo {
+    max-width: 200px;
+  }
+
+  .security-strip__inner {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,0 +1,122 @@
+/* ============================================================
+   Site Header / Navigation
+   ============================================================ */
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(15, 23, 42, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border-divider);
+}
+
+.site-header__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 var(--space-3);
+  height: 64px;
+}
+
+.site-header__logo {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  font-family: var(--font-heading);
+  font-weight: var(--fw-bold);
+  font-size: var(--fs-body-lg);
+  color: var(--text-primary);
+  letter-spacing: -0.01em;
+}
+
+.site-header__logo-mark {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--accent);
+  border-radius: var(--radius);
+  color: #fff;
+  font-weight: var(--fw-bold);
+  font-size: var(--fs-small);
+}
+
+.site-header__nav {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.site-header__nav-link {
+  font-family: var(--font-heading);
+  font-size: var(--fs-small);
+  font-weight: var(--fw-medium);
+  color: var(--text-secondary);
+  transition: color var(--transition-fast);
+  padding: var(--space-1) 0;
+  position: relative;
+}
+
+.site-header__nav-link:hover,
+.site-header__nav-link--active {
+  color: var(--text-primary);
+}
+
+.site-header__nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: var(--accent);
+  transition: width var(--transition-base);
+}
+
+.site-header__nav-link:hover::after,
+.site-header__nav-link--active::after {
+  width: 100%;
+}
+
+/* Mobile Nav Toggle */
+.site-header__menu-toggle {
+  display: none;
+  width: 36px;
+  height: 36px;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-primary);
+}
+
+.site-header__menu-toggle svg {
+  width: 24px;
+  height: 24px;
+}
+
+@media (max-width: 768px) {
+  .site-header__nav {
+    display: none;
+    position: absolute;
+    top: 64px;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    background: var(--bg-surface);
+    border-bottom: 1px solid var(--border-divider);
+    padding: var(--space-3);
+    gap: var(--space-2);
+  }
+
+  .site-header__nav--open {
+    display: flex;
+  }
+
+  .site-header__menu-toggle {
+    display: flex;
+  }
+}

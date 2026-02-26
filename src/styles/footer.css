@@ -1,0 +1,103 @@
+/* ============================================================
+   Site Footer
+   ============================================================ */
+
+.site-footer {
+  border-top: 1px solid var(--border-divider);
+  padding: var(--space-8) 0 var(--space-4);
+  background: var(--bg-primary);
+}
+
+.site-footer__inner {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 var(--space-3);
+}
+
+.site-footer__grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: var(--space-6);
+  margin-bottom: var(--space-6);
+}
+
+.site-footer__brand {
+  max-width: 280px;
+}
+
+.site-footer__brand-name {
+  font-family: var(--font-heading);
+  font-size: var(--fs-body-lg);
+  font-weight: var(--fw-bold);
+  color: var(--text-primary);
+  margin-bottom: var(--space-1);
+}
+
+.site-footer__brand-desc {
+  font-size: var(--fs-small);
+  color: var(--text-muted);
+  line-height: var(--lh-body);
+}
+
+.site-footer__col-title {
+  font-family: var(--font-heading);
+  font-size: var(--fs-small);
+  font-weight: var(--fw-semibold);
+  color: var(--text-primary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: var(--space-2);
+}
+
+.site-footer__col-links {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.site-footer__link {
+  font-size: var(--fs-small);
+  color: var(--text-muted);
+  transition: color var(--transition-fast);
+}
+
+.site-footer__link:hover {
+  color: var(--text-primary);
+}
+
+.site-footer__bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--border-divider);
+}
+
+.site-footer__copy {
+  font-size: var(--fs-small);
+  color: var(--text-muted);
+}
+
+.site-footer__sdvosb {
+  font-size: var(--fs-small);
+  color: var(--text-muted);
+  font-weight: var(--fw-medium);
+}
+
+@media (max-width: 768px) {
+  .site-footer__grid {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-4);
+  }
+
+  .site-footer__brand {
+    grid-column: 1 / -1;
+    max-width: none;
+  }
+
+  .site-footer__bottom {
+    flex-direction: column;
+    gap: var(--space-1);
+    text-align: center;
+  }
+}

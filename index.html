@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Boswell Digital Solutions — Governance-first AI infrastructure and digital products. Service-Disabled Veteran-Owned Small Business.">
+  <title>Boswell Digital Solutions — Engineered Infrastructure</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Source+Sans+3:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="src/styles/global.css">
+  <link rel="stylesheet" href="src/styles/header.css">
+  <link rel="stylesheet" href="src/styles/footer.css">
+  <link rel="stylesheet" href="src/styles/hud.css">
+  <link rel="stylesheet" href="src/styles/pages/home.css">
+</head>
+<body>
+  <!-- Skip Navigation -->
+  <a href="#main" class="skip-link">Skip to main content</a>
+
+  <!-- ============================
+       HEADER / NAVIGATION
+       ============================ -->
+  <header class="site-header" role="banner">
+    <div class="site-header__inner">
+      <a href="/" class="site-header__logo" aria-label="Boswell Digital Solutions — Home">
+        <span class="site-header__logo-mark">B</span>
+        <span>Boswell Digital Solutions</span>
+      </a>
+
+      <button class="site-header__menu-toggle" aria-label="Toggle navigation" aria-expanded="false" id="menu-toggle">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+
+      <nav class="site-header__nav" id="main-nav" aria-label="Main navigation">
+        <a href="products.html" class="site-header__nav-link">Products</a>
+        <a href="store.html" class="site-header__nav-link">Store</a>
+        <a href="security.html" class="site-header__nav-link">Security</a>
+        <a href="about.html" class="site-header__nav-link">About</a>
+        <a href="contact.html" class="site-header__nav-link">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ============================
+       MAIN CONTENT
+       ============================ -->
+  <main id="main">
+
+    <!-- ---- Hero Authority Block ---- -->
+    <section class="hero section" aria-labelledby="hero-heading">
+      <div class="container">
+        <div class="hero__inner">
+          <div class="hero__content">
+            <h1 id="hero-heading" class="hero__headline">
+              Infrastructure engineered<br>for governed execution.
+            </h1>
+            <p class="hero__subtext">
+              AI-powered tools built on production-grade architecture with fail-closed governance, cryptographic authority, and auditable decision chains.
+            </p>
+            <div class="hero__actions">
+              <a href="products.html" class="btn btn-primary">Explore Products</a>
+              <a href="security.html" class="btn btn-ghost">View Security Model</a>
+            </div>
+          </div>
+          <div class="hero__visual" aria-hidden="true">
+            <div class="hero__geo">
+              <div class="hero__geo-ring hero__geo-ring--outer"></div>
+              <div class="hero__geo-ring hero__geo-ring--mid"></div>
+              <div class="hero__geo-ring hero__geo-ring--inner"></div>
+              <div class="hero__geo-center">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+                  <path d="M2 17l10 5 10-5"/>
+                  <path d="M2 12l10 5 10-5"/>
+                </svg>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ---- Product Preview Grid ---- -->
+    <section class="products-preview section" aria-labelledby="products-heading">
+      <div class="container">
+        <div class="products-preview__header">
+          <h2 id="products-heading">Products</h2>
+          <p class="text-muted">Governance-first tools for execution and control.</p>
+        </div>
+        <div class="grid grid-3">
+
+          <!-- ForgeCommand -->
+          <article class="card product-card">
+            <div class="product-card__icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+            </div>
+            <div class="badge badge--beta">Beta</div>
+            <h3 class="product-card__name">ForgeCommand</h3>
+            <p class="product-card__desc">Operations dashboard with autonomous monitoring agents and governance-aware HUD for infrastructure oversight.</p>
+            <a href="products/forgecommand.html" class="product-card__link">View Details →</a>
+          </article>
+
+          <!-- AuthorForge -->
+          <article class="card product-card">
+            <div class="product-card__icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+            </div>
+            <div class="badge badge--roadmap">Roadmap</div>
+            <h3 class="product-card__name">AuthorForge</h3>
+            <p class="product-card__desc">AI-assisted creative writing platform for authors who demand control over their process and output.</p>
+            <a href="products/authorforge.html" class="product-card__link">View Details →</a>
+          </article>
+
+          <!-- VibeForge -->
+          <article class="card product-card">
+            <div class="product-card__icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+            </div>
+            <div class="badge">Launching 2026</div>
+            <h3 class="product-card__name">VibeForge</h3>
+            <p class="product-card__desc">AI-assisted development environment with governed execution pipelines and auditable build chains.</p>
+            <a href="products/vibeforge.html" class="product-card__link">View Details →</a>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ---- Security Anchor Strip ---- -->
+    <section class="security-strip section" aria-labelledby="security-heading">
+      <div class="container">
+        <div class="security-strip__inner">
+          <div class="security-strip__content">
+            <h2 id="security-heading">Security is architecture,<br>not afterthought.</h2>
+            <div class="security-strip__list">
+              <div class="security-strip__item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
+                <span>Passkey authentication (FIDO2 / WebAuthn)</span>
+              </div>
+              <div class="security-strip__item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
+                <span>Stripe-hosted checkout — no card data stored</span>
+              </div>
+              <div class="security-strip__item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
+                <span>Ed25519 signed admin control plane</span>
+              </div>
+              <div class="security-strip__item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
+                <span>Private infrastructure segmentation</span>
+              </div>
+              <div class="security-strip__item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
+                <span>Fail-closed governance on every state transition</span>
+              </div>
+            </div>
+            <a href="security.html" class="btn btn-ghost">How we secure transactions</a>
+          </div>
+
+          <div class="security-diagram" aria-label="Simplified security architecture diagram">
+            <div class="security-diagram__zone security-diagram__zone--public">
+              <div class="security-diagram__zone-label">Zone A — Public Surface</div>
+              <div class="security-diagram__zone-items">
+                Passkey Auth → Session → Stripe Checkout<br>
+                Webhook Verification → Order Fulfillment
+              </div>
+            </div>
+            <div class="security-diagram__zone security-diagram__zone--admin">
+              <div class="security-diagram__zone-label">Zone B — Admin Control Plane</div>
+              <div class="security-diagram__zone-items">
+                ForgeCommand → Ed25519 Gateway → Private API<br>
+                Audit Logging → Governance Events
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ---- Store Preview ---- -->
+    <section class="store-preview section" aria-labelledby="store-heading">
+      <div class="container">
+        <div class="store-preview__header">
+          <h2 id="store-heading">Store</h2>
+          <p class="text-muted">Licensed software and services.</p>
+        </div>
+        <div class="grid grid-3">
+
+          <article class="card store-card">
+            <div class="badge badge--beta">Available</div>
+            <h3 class="product-card__name">ForgeCommand License</h3>
+            <p class="product-card__desc">Full operations dashboard with autonomous monitoring agents.</p>
+            <div class="store-card__price">Coming Soon</div>
+          </article>
+
+          <article class="card store-card">
+            <div class="badge badge--roadmap">Pre-order</div>
+            <h3 class="product-card__name">VibeForge License</h3>
+            <p class="product-card__desc">AI-assisted development environment — launching January 2026.</p>
+            <div class="store-card__price">Coming Soon</div>
+          </article>
+
+          <article class="card store-card">
+            <div class="badge badge--roadmap">Planned</div>
+            <h3 class="product-card__name">Consulting Services</h3>
+            <p class="product-card__desc">Governance architecture review and implementation consulting.</p>
+            <div class="store-card__price">Contact</div>
+          </article>
+
+        </div>
+        <div style="margin-top: var(--space-4);">
+          <a href="store.html" class="btn btn-primary">Go to Store</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ---- Authority / Background ---- -->
+    <section class="authority section" aria-labelledby="authority-heading">
+      <div class="container">
+        <div class="authority__inner">
+          <span class="authority__label">About BDS</span>
+          <h2 id="authority-heading">Built by a veteran who understands governed systems.</h2>
+          <p class="authority__text">
+            Boswell Digital Solutions is a Service-Disabled Veteran-Owned Small Business founded on 16 years of federal service — including submarine qualifications, wildland fire incident command, contracting oversight, and security management.
+          </p>
+          <p class="authority__text">
+            Every product in the Forge ecosystem is built with the same principles that govern critical infrastructure: fail-closed defaults, auditable authority chains, and human-in-the-loop governance at every decision point.
+          </p>
+          <div style="margin-top: var(--space-4);">
+            <a href="about.html" class="btn btn-ghost">Learn More</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ============================
+       FOOTER
+       ============================ -->
+  <footer class="site-footer" role="contentinfo">
+    <div class="site-footer__inner">
+      <div class="site-footer__grid">
+        <div class="site-footer__brand">
+          <div class="site-footer__brand-name">Boswell Digital Solutions</div>
+          <p class="site-footer__brand-desc">Governance-first AI infrastructure and digital products. Service-Disabled Veteran-Owned Small Business (SDVOSB).</p>
+        </div>
+        <div>
+          <h4 class="site-footer__col-title">Products</h4>
+          <div class="site-footer__col-links">
+            <a href="products/forgecommand.html" class="site-footer__link">ForgeCommand</a>
+            <a href="products/authorforge.html" class="site-footer__link">AuthorForge</a>
+            <a href="products/vibeforge.html" class="site-footer__link">VibeForge</a>
+          </div>
+        </div>
+        <div>
+          <h4 class="site-footer__col-title">Company</h4>
+          <div class="site-footer__col-links">
+            <a href="about.html" class="site-footer__link">About</a>
+            <a href="security.html" class="site-footer__link">Security</a>
+            <a href="contact.html" class="site-footer__link">Contact</a>
+            <a href="store.html" class="site-footer__link">Store</a>
+          </div>
+        </div>
+        <div>
+          <h4 class="site-footer__col-title">Legal</h4>
+          <div class="site-footer__col-links">
+            <a href="legal/privacy.html" class="site-footer__link">Privacy Policy</a>
+            <a href="legal/terms.html" class="site-footer__link">Terms</a>
+            <a href="legal/refund.html" class="site-footer__link">Refund Policy</a>
+            <a href="legal/eula.html" class="site-footer__link">License / EULA</a>
+          </div>
+        </div>
+      </div>
+      <div class="site-footer__bottom">
+        <span class="site-footer__copy">&copy; 2025 Boswell Digital Solutions LLC. All rights reserved.</span>
+        <span class="site-footer__sdvosb">SDVOSB</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ============================
+       HUD ASSISTANT DOCK
+       ============================ -->
+  <div class="hud-dock" id="hud-dock" role="complementary" aria-label="BDS Assistant">
+    <button class="hud-dock__trigger" id="hud-trigger" aria-label="Open BDS Assistant" aria-expanded="false" aria-controls="hud-panel">
+      <svg class="hud-dock__trigger-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="3"/>
+        <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+      </svg>
+    </button>
+  </div>
+
+  <!-- HUD Overlay -->
+  <div class="hud-overlay" id="hud-overlay"></div>
+
+  <!-- HUD Panel -->
+  <aside class="hud-panel" id="hud-panel" aria-label="BDS Assistant panel" role="dialog" aria-hidden="true">
+    <div class="hud-panel__header">
+      <span class="hud-panel__title">BDS Assistant</span>
+      <button class="hud-panel__close" id="hud-close" aria-label="Close assistant">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="hud-panel__body">
+      <p class="hud-panel__greeting">How may I assist you today?</p>
+      <div class="hud-panel__suggestions" id="hud-suggestions">
+        <button class="hud-panel__suggestion-btn">Explain ForgeCommand</button>
+        <button class="hud-panel__suggestion-btn">Show me the security model</button>
+        <button class="hud-panel__suggestion-btn">Take me to the store</button>
+      </div>
+    </div>
+    <div class="hud-panel__footer">
+      <div class="hud-panel__input-wrap">
+        <input type="text" class="hud-panel__input" placeholder="Ask a question..." aria-label="Ask the assistant a question" id="hud-input">
+        <button class="hud-panel__send" aria-label="Send message">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+        </button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ============================
+       SCRIPTS
+       ============================ -->
+  <script>
+    // Mobile nav toggle
+    const menuToggle = document.getElementById('menu-toggle');
+    const mainNav = document.getElementById('main-nav');
+    menuToggle?.addEventListener('click', () => {
+      const isOpen = mainNav.classList.toggle('site-header__nav--open');
+      menuToggle.setAttribute('aria-expanded', isOpen);
+    });
+
+    // HUD dock behavior
+    const hudTrigger = document.getElementById('hud-trigger');
+    const hudPanel = document.getElementById('hud-panel');
+    const hudOverlay = document.getElementById('hud-overlay');
+    const hudClose = document.getElementById('hud-close');
+    const hudInput = document.getElementById('hud-input');
+
+    function openHud() {
+      hudPanel.classList.add('hud-panel--open');
+      hudOverlay.classList.add('hud-overlay--visible');
+      hudPanel.setAttribute('aria-hidden', 'false');
+      hudTrigger.setAttribute('aria-expanded', 'true');
+      hudInput?.focus();
+    }
+
+    function closeHud() {
+      hudPanel.classList.remove('hud-panel--open');
+      hudOverlay.classList.remove('hud-overlay--visible');
+      hudPanel.setAttribute('aria-hidden', 'true');
+      hudTrigger.setAttribute('aria-expanded', 'false');
+      hudTrigger?.focus();
+    }
+
+    hudTrigger?.addEventListener('click', openHud);
+    hudClose?.addEventListener('click', closeHud);
+    hudOverlay?.addEventListener('click', closeHud);
+
+    // Keyboard: Escape to close
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && hudPanel.classList.contains('hud-panel--open')) {
+        closeHud();
+      }
+    });
+
+    // Trap focus inside HUD when open
+    hudPanel?.addEventListener('keydown', (e) => {
+      if (e.key !== 'Tab') return;
+      const focusable = hudPanel.querySelectorAll('button, input, [tabindex]:not([tabindex="-1"])');
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    });
+  </script>
+</body>
+</html>
