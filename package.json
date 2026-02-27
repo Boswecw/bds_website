@@ -1,0 +1,8 @@
+{
+  "name": "bds_website",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "dev": "bun --serve ."
+  }
+}

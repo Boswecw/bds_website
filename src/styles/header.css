@@ -33,10 +33,17 @@
   letter-spacing: -0.01em;
 }
 
+.site-header__logo-img {
+  height: 28px;
+  width: auto;
+  display: block;
+}
+
+/* Fallback if image fails */
 .site-header__logo-mark {
   width: 32px;
   height: 32px;
-  display: flex;
+  display: none;
   align-items: center;
   justify-content: center;
   background: var(--accent);
@@ -44,6 +51,11 @@
   color: #fff;
   font-weight: var(--fw-bold);
   font-size: var(--fs-small);
+}
+
+.site-header__logo-img[src=""] ~ .site-header__logo-mark,
+.site-header__logo-img:not([src]) ~ .site-header__logo-mark {
+  display: flex;
 }
 
 .site-header__nav {

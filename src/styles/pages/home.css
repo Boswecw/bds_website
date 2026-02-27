@@ -79,12 +79,20 @@
 
 .hero__geo-center {
   position: absolute;
-  inset: 42%;
+  inset: 30%;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
+.hero__geo-center img {
+  width: 100%;
+  height: auto;
+  opacity: 0.85;
+  filter: drop-shadow(0 0 20px rgba(249,115,22,0.15));
+}
+
+/* Fallback if SVG is used instead */
 .hero__geo-center svg {
   width: 48px;
   height: 48px;
