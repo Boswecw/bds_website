@@ -9,7 +9,7 @@ PREFIX="bw"
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 OUTPUT="${SCRIPT_DIR}/../${PREFIX}SYSTEM.md"
 
-cat "${SCRIPT_DIR}/_index.md" > "${OUTPUT}"
+sed 's#](\./#](./system/#g' "${SCRIPT_DIR}/_index.md" > "${OUTPUT}"
 printf '\n---\n' >> "${OUTPUT}"
 
 for part in "${SCRIPT_DIR}"/[0-9][0-9]-*.md; do

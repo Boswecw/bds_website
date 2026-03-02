@@ -32,7 +32,7 @@
         <span>Boswell Digital Solutions</span>
       </a>
 
-      <button class="site-header__menu-toggle" aria-label="Toggle navigation" aria-expanded="false" id="menu-toggle">
+      <button class="site-header__menu-toggle" aria-label="Toggle navigation" aria-expanded="false" aria-controls="main-nav" id="menu-toggle">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
       </button>
 
@@ -98,7 +98,7 @@
             <div class="badge badge--beta">Beta</div>
             <h3 class="product-card__name">ForgeCommand</h3>
             <p class="product-card__desc">Operations dashboard with autonomous monitoring agents and governance-aware HUD for infrastructure oversight.</p>
-            <a href="products/forgecommand.html" class="product-card__link">View Details →</a>
+            <a href="products.html" class="product-card__link">View Details →</a>
           </article>
 
           <!-- AuthorForge -->
@@ -109,7 +109,7 @@
             <div class="badge badge--roadmap">Roadmap</div>
             <h3 class="product-card__name">AuthorForge</h3>
             <p class="product-card__desc">AI-assisted creative writing platform for authors who demand control over their process and output.</p>
-            <a href="products/authorforge.html" class="product-card__link">View Details →</a>
+            <a href="products.html" class="product-card__link">View Details →</a>
           </article>
 
           <!-- VibeForge -->
@@ -120,7 +120,7 @@
             <div class="badge">Launching 2026</div>
             <h3 class="product-card__name">VibeForge</h3>
             <p class="product-card__desc">AI-assisted development environment with governed execution pipelines and auditable build chains.</p>
-            <a href="products/vibeforge.html" class="product-card__link">View Details →</a>
+            <a href="products.html" class="product-card__link">View Details →</a>
           </article>
 
         </div>
@@ -252,9 +252,9 @@
         <div>
           <h4 class="site-footer__col-title">Products</h4>
           <div class="site-footer__col-links">
-            <a href="products/forgecommand.html" class="site-footer__link">ForgeCommand</a>
-            <a href="products/authorforge.html" class="site-footer__link">AuthorForge</a>
-            <a href="products/vibeforge.html" class="site-footer__link">VibeForge</a>
+            <a href="products.html" class="site-footer__link">ForgeCommand</a>
+            <a href="products.html" class="site-footer__link">AuthorForge</a>
+            <a href="products.html" class="site-footer__link">VibeForge</a>
           </div>
         </div>
         <div>
@@ -327,63 +327,59 @@
   <!-- ============================
        SCRIPTS
        ============================ -->
+  <script type="module" src="src/js/site.js"></script>
   <script>
-    // Mobile nav toggle
-    const menuToggle = document.getElementById('menu-toggle');
-    const mainNav = document.getElementById('main-nav');
-    menuToggle?.addEventListener('click', () => {
-      const isOpen = mainNav.classList.toggle('site-header__nav--open');
-      menuToggle.setAttribute('aria-expanded', isOpen);
-    });
-
-    // HUD dock behavior
     const hudTrigger = document.getElementById('hud-trigger');
     const hudPanel = document.getElementById('hud-panel');
     const hudOverlay = document.getElementById('hud-overlay');
     const hudClose = document.getElementById('hud-close');
     const hudInput = document.getElementById('hud-input');
 
-    function openHud() {
-      hudPanel.classList.add('hud-panel--open');
-      hudOverlay.classList.add('hud-overlay--visible');
-      hudPanel.setAttribute('aria-hidden', 'false');
-      hudTrigger.setAttribute('aria-expanded', 'true');
-      hudInput?.focus();
-    }
-
-    function closeHud() {
-      hudPanel.classList.remove('hud-panel--open');
-      hudOverlay.classList.remove('hud-overlay--visible');
-      hudPanel.setAttribute('aria-hidden', 'true');
-      hudTrigger.setAttribute('aria-expanded', 'false');
-      hudTrigger?.focus();
-    }
-
-    hudTrigger?.addEventListener('click', openHud);
-    hudClose?.addEventListener('click', closeHud);
-    hudOverlay?.addEventListener('click', closeHud);
-
-    // Keyboard: Escape to close
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && hudPanel.classList.contains('hud-panel--open')) {
-        closeHud();
+    if (hudTrigger && hudPanel && hudOverlay && hudClose) {
+      function openHud() {
+        hudPanel.classList.add('hud-panel--open');
+        hudOverlay.classList.add('hud-overlay--visible');
+        hudPanel.setAttribute('aria-hidden', 'false');
+        hudTrigger.setAttribute('aria-expanded', 'true');
+        hudInput?.focus();
       }
-    });
 
-    // Trap focus inside HUD when open
-    hudPanel?.addEventListener('keydown', (e) => {
-      if (e.key !== 'Tab') return;
-      const focusable = hudPanel.querySelectorAll('button, input, [tabindex]:not([tabindex="-1"])');
-      const first = focusable[0];
-      const last = focusable[focusable.length - 1];
-      if (e.shiftKey && document.activeElement === first) {
-        e.preventDefault();
-        last.focus();
-      } else if (!e.shiftKey && document.activeElement === last) {
-        e.preventDefault();
-        first.focus();
+      function closeHud() {
+        hudPanel.classList.remove('hud-panel--open');
+        hudOverlay.classList.remove('hud-overlay--visible');
+        hudPanel.setAttribute('aria-hidden', 'true');
+        hudTrigger.setAttribute('aria-expanded', 'false');
+        hudTrigger.focus();
       }
-    });
+
+      hudTrigger.addEventListener('click', openHud);
+      hudClose.addEventListener('click', closeHud);
+      hudOverlay.addEventListener('click', closeHud);
+
+      document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape' && hudPanel.classList.contains('hud-panel--open')) {
+          closeHud();
+        }
+      });
+
+      hudPanel.addEventListener('keydown', (event) => {
+        if (event.key !== 'Tab') return;
+
+        const focusable = hudPanel.querySelectorAll('button, input, [tabindex]:not([tabindex="-1"])');
+        if (focusable.length === 0) return;
+
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+
+        if (event.shiftKey && document.activeElement === first) {
+          event.preventDefault();
+          last.focus();
+        } else if (!event.shiftKey && document.activeElement === last) {
+          event.preventDefault();
+          first.focus();
+        }
+      });
+    }
   </script>
 </body>
 </html>

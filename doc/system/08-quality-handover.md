@@ -13,9 +13,11 @@ bash doc/system/BUILD.sh
 What exists now:
 
 - deterministic static page rendering
+- shared mobile-navigation behavior via `src/js/site.js`
 - shared CSS tokens and layout styles
-- lightweight homepage interaction script
+- lightweight homepage HUD interaction script
 - StateForge QC wiring in-repo
+- checked-in StateForge evidence and report artifacts under `out/` and `tools/stateforge/out/`
 - legal and content planning docs
 
 What does not exist yet:

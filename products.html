@@ -21,7 +21,10 @@
         <img src="src/assets/images/bds-logo.png" alt="BDS" class="site-header__logo-img">
         <span>Boswell Digital Solutions</span>
       </a>
-      <nav class="site-header__nav" aria-label="Main navigation">
+      <button class="site-header__menu-toggle" aria-label="Toggle navigation" aria-expanded="false" aria-controls="main-nav" id="menu-toggle">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+      <nav class="site-header__nav" id="main-nav" aria-label="Main navigation">
         <a href="products.html" class="site-header__nav-link">Products</a>
         <a href="store.html" class="site-header__nav-link">Store</a>
         <a href="security.html" class="site-header__nav-link">Security</a>
@@ -47,5 +50,6 @@
       </div>
     </div>
   </footer>
+  <script type="module" src="src/js/site.js"></script>
 </body>
 </html>

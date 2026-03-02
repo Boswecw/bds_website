@@ -10,7 +10,7 @@ The site positions BDS around:
 - private infrastructure segmentation
 - fail-closed governance
 
-These are presented most clearly on the homepage and in `docs/store_security_architecture_v_1.md`.
+These are presented most clearly on the homepage and in `docs/store_security_architecture_v_1.md`. The dedicated `security.html` page itself is still an under-construction placeholder.
 
 ## Important Implementation Boundary
 

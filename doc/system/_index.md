@@ -4,7 +4,7 @@
 
 | Key | Value |
 |-----|-------|
-| **Document version** | 1.0 (2026-03-02) |
+| **Document version** | 1.2 (2026-03-02) |
 | **Prefix** | `bw` |
 | **Output** | `doc/bwSYSTEM.md` |
 | **Protocol** | BDS Documentation Protocol v2.0 |

@@ -28,8 +28,9 @@ The HUD is the most opinionated interaction element in the site:
 - opens into a dialog-like side panel
 - offers static suggested prompts
 - supports overlay click dismissal and `Escape`
+- traps keyboard focus while open on the homepage
 
-The HUD is currently a presentation primitive, not a connected assistant service.
+The HUD is currently a presentation primitive, not a connected assistant service. Its DOM and JavaScript are only present on `index.html`; the other pages load the shared HUD styles but do not instantiate the HUD UI.
 
 ## Accessibility Intent
 
@@ -40,5 +41,6 @@ The implementation already signals several accessibility priorities:
 - button semantics for toggles
 - focus-visible styling
 - dialog-like HUD affordances
+- homepage HUD focus trapping
 
 The repo should preserve those patterns if the site later migrates to a framework implementation.

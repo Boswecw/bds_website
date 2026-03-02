@@ -4,8 +4,13 @@
 
 ```text
 bds_website/
+├── AUDIT_REPORT.md
+├── bun.lock
+├── dev-server.ts
 ├── about.html
 ├── contact.html
+├── out/
+│   └── stateforge.evidence.bundle.json
 ├── index.html
 ├── products.html
 ├── security.html
@@ -17,6 +22,9 @@ bds_website/
 │   └── terms.html
 ├── src/
 │   ├── assets/images/
+│   │   └── bds-logo.png
+│   ├── js/
+│   │   └── site.js
 │   └── styles/
 │       ├── footer.css
 │       ├── global.css
@@ -34,8 +42,14 @@ bds_website/
 │   ├── bwSYSTEM.md
 │   └── system/
 └── tools/
-    ├── qc/stateforge.ts
+    ├── qc/
+    │   ├── perf_budgets.json
+    │   └── stateforge.ts
     └── stateforge/
+        ├── fixtures/
+        ├── out/
+        ├── src/
+        └── package.json
 ```
 
 ## Folder Roles
@@ -43,10 +57,11 @@ bds_website/
 - `src/styles/` holds the actual reusable presentation system.
 - `docs/` contains planning and reference material that informed the implementation.
 - `doc/system/` is the maintained modular system reference.
-- `tools/` contains governance and QC support code.
+- `out/` holds generated evidence artifacts already checked into the repo.
+- `tools/` contains governance and QC support code, including a vendored StateForge workspace.
 
 ## Structural Observations
 
-- Product detail links referenced from the homepage point to pages that do not exist in this repo yet.
+- Homepage product links now route to `products.html` instead of dead `products/*.html` pages.
 - There is no `public/` directory in the checked-in structure despite the README describing one as a future/static asset area.
 - Shared page chrome is repeated directly in HTML files rather than abstracted behind includes or templates.

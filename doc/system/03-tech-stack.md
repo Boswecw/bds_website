@@ -6,8 +6,8 @@
 |------|------------|-------|
 | Public pages | HTML5 | Static multi-page site |
 | Styling | CSS | Shared tokens plus page-specific styles |
-| Interaction | Vanilla JavaScript | Inline script on homepage only |
-| Dev server | Bun | `bun --serve .` |
+| Interaction | Vanilla JavaScript | Shared `src/js/site.js` plus homepage HUD inline script |
+| Dev server | Bun + local TypeScript server | `bun run dev` executes `dev-server.ts` |
 | Package manager | Bun | Minimal `package.json` |
 
 ## Design Stack
@@ -19,6 +19,7 @@
 | Token source | `src/styles/tokens.css` |
 | Shared layout styles | `src/styles/global.css`, `header.css`, `footer.css`, `hud.css` |
 | Homepage styles | `src/styles/pages/home.css` |
+| Shared behavior | `src/js/site.js` |
 
 ## Quality / Governance Tooling
 

@@ -5,20 +5,20 @@
 | Page | Path | Status |
 |------|------|--------|
 | Homepage | `index.html` | Primary authored page; most complete experience |
-| Products | `products.html` | Shell present |
-| Store | `store.html` | Shell present |
+| Products | `products.html` | Shell present; under construction |
+| Store | `store.html` | Shell present; under construction |
 | Security | `security.html` | Shell present; marked under construction |
-| About | `about.html` | Shell present |
-| Contact | `contact.html` | Shell present |
+| About | `about.html` | Shell present; under construction |
+| Contact | `contact.html` | Shell present; under construction |
 
 ## Legal Pages
 
-| Page | Path |
-|------|------|
-| Terms | `legal/terms.html` |
-| Privacy | `legal/privacy.html` |
-| Refund | `legal/refund.html` |
-| EULA | `legal/eula.html` |
+| Page | Path | Status |
+|------|------|--------|
+| Terms | `legal/terms.html` | Shell present; under construction |
+| Privacy | `legal/privacy.html` | Shell present; under construction |
+| Refund | `legal/refund.html` | Shell present; under construction |
+| EULA | `legal/eula.html` | Shell present; under construction |
 
 ## Homepage Content Blocks
 
@@ -29,14 +29,17 @@
 - security strip and zone diagram
 - store preview cards
 - founder / company background
-- footer navigation
+- expanded footer navigation
 - ambient HUD assistant
+
+## Shared-Asset Boundary
+
+All public pages load the shared style sheets, including `hud.css`. Only the homepage actually instantiates HUD markup and the inline HUD behavior. All pages now load the shared header script from `src/js/site.js`.
 
 ## Content Gaps
 
 The site communicates several future capabilities that are not implemented here yet:
 
-- product detail pages under `products/`
 - live store inventory or purchase flow
 - fully written-out security architecture page
 - contextual HUD intelligence beyond static suggestions
