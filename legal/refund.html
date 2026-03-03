@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Refund conditions for BDS products.">
+  <meta name="description" content="Refund policy for Boswell Digital Solutions software licenses, subscriptions, and services.">
   <title>Refund Policy — Boswell Digital Solutions</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -12,6 +12,7 @@
   <link rel="stylesheet" href="../src/styles/header.css">
   <link rel="stylesheet" href="../src/styles/footer.css">
   <link rel="stylesheet" href="../src/styles/hud.css">
+  <link rel="stylesheet" href="../src/styles/pages/site-pages.css">
 </head>
 <body>
   <a href="#main" class="skip-link">Skip to main content</a>
@@ -26,30 +27,77 @@
       </button>
       <nav class="site-header__nav" id="main-nav" aria-label="Main navigation">
         <a href="../products.html" class="site-header__nav-link">Products</a>
-        <a href="../store.html" class="site-header__nav-link">Store</a>
+        <a href="../services.html" class="site-header__nav-link">Services</a>
+        <a href="../forge.html" class="site-header__nav-link">Forge</a>
+        <a href="../architecture.html" class="site-header__nav-link">Architecture</a>
         <a href="../security.html" class="site-header__nav-link">Security</a>
         <a href="../about.html" class="site-header__nav-link">About</a>
         <a href="../contact.html" class="site-header__nav-link">Contact</a>
       </nav>
     </div>
   </header>
-  <main id="main">
-    <section class="section">
-      <div class="container">
+
+  <main id="main" class="content-page">
+    <div class="container">
+      <nav class="breadcrumbs" aria-label="Breadcrumb">
+        <a href="../index.html">Home</a>
+        <span>/</span>
+        <span>Legal</span>
+        <span>/</span>
+        <span aria-current="page">Refund Policy</span>
+      </nav>
+
+      <section class="page-hero">
+        <div class="page-hero__eyebrow">Legal</div>
         <h1>Refund Policy</h1>
-        <p style="color: var(--text-secondary); margin-top: var(--space-2);">Refund conditions for BDS products.</p>
-        <p class="text-muted" style="margin-top: var(--space-4);">This page is under construction.</p>
-      </div>
-    </section>
+        <p class="page-hero__lede">Effective date: to be set at launch.</p>
+      </section>
+
+      <section class="page-section">
+        <div class="page-stack">
+          <article class="page-card">
+            <h2>Software licenses</h2>
+            <p>Digital software licenses may be refunded within 14 days of purchase if they have not been activated or used beyond initial installation. Submit requests with your order number.</p>
+          </article>
+
+          <article class="page-card">
+            <h2>Consulting services</h2>
+            <p>Consulting engagements may be cancelled before work begins for a full refund. Once work has commenced, refunds are prorated based on work completed, with clear accounting provided before any partial refund is processed.</p>
+          </article>
+
+          <article class="page-card">
+            <h2>Subscriptions</h2>
+            <p>Subscriptions may be cancelled at any time. Cancellation takes effect at the end of the current billing period. No prorated refunds are issued for partial billing periods.</p>
+          </article>
+
+          <article class="page-card">
+            <h2>Processing</h2>
+            <p>Refunds are processed through Stripe and typically appear within 5 to 10 business days. Refunds are issued to the original payment method.</p>
+          </article>
+
+          <article class="page-card">
+            <h2>Exceptions</h2>
+            <p>We reserve the right to deny requests showing evidence of abuse, including repeated purchase-and-refund patterns or license key sharing.</p>
+          </article>
+
+          <article class="page-card">
+            <h2>Contact</h2>
+            <p>Send refund requests to <a href="mailto:contact@boswelldigital.com">contact@boswelldigital.com</a> with your order number and reason for the request.</p>
+          </article>
+        </div>
+      </section>
+    </div>
   </main>
+
   <footer class="site-footer" role="contentinfo">
     <div class="site-footer__inner">
       <div class="site-footer__bottom">
-        <span class="site-footer__copy">&copy; 2025 Boswell Digital Solutions LLC. All rights reserved.</span>
+        <span class="site-footer__copy">&copy; 2026 Boswell Digital Solutions LLC. All rights reserved.</span>
         <span class="site-footer__sdvosb">SDVOSB</span>
       </div>
     </div>
   </footer>
+
   <script type="module" src="../src/js/site.js"></script>
 </body>
 </html>

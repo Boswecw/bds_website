@@ -4,7 +4,7 @@
 
 | Key | Value |
 |-----|-------|
-| **Document version** | 1.2 (2026-03-02) |
+| **Document version** | 1.3 (2026-03-03) |
 | **Prefix** | `bw` |
 | **Output** | `doc/bwSYSTEM.md` |
 | **Protocol** | BDS Documentation Protocol v2.0 |
@@ -31,4 +31,4 @@ Rebuild the unified document with `bash doc/system/BUILD.sh`.
 bash doc/system/BUILD.sh
 ```
 
-*Last updated: 2026-03-02*
+*Last updated: 2026-03-03*

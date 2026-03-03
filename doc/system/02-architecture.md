@@ -5,7 +5,7 @@
 The site is a static multi-page website:
 
 - `index.html` is the most complete page and contains the primary brand narrative
-- secondary pages reuse the same visual shell but are mostly under-construction placeholders
+- secondary pages now cover products, services, forge platform framing, architecture, security, about, contact, store, and AuthorForge detail content
 - legal pages live under `legal/`
 - shared styling is loaded from `src/styles/`
 
@@ -28,6 +28,15 @@ Most pages repeat the same major regions:
 3. footer with company attribution and SDVOSB marker
 
 This is currently duplication-by-copy rather than templated composition. The homepage is the only page with the expanded multi-column footer; the rest of the pages use a simplified footer bottom bar.
+
+## Public IA Pattern
+
+The current website routes are organized into clear public lanes:
+
+1. application buying path through `products.html`, `authorforge.html`, and `store.html`
+2. services inquiry path through `services.html` and `contact.html`
+3. platform/story path through `forge.html` and `meet-smith.html`
+4. authority/trust path through `architecture.html` and `security.html`
 
 ## Homepage Interaction Layer
 

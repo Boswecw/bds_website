@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Discover the Forge ecosystem — governance-first AI tools.">
+  <meta name="description" content="Forge applications from Boswell Digital Solutions, led by AuthorForge.">
   <title>Products — Boswell Digital Solutions</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -12,6 +12,7 @@
   <link rel="stylesheet" href="src/styles/header.css">
   <link rel="stylesheet" href="src/styles/footer.css">
   <link rel="stylesheet" href="src/styles/hud.css">
+  <link rel="stylesheet" href="src/styles/pages/site-pages.css">
   <link rel="stylesheet" href="src/styles/pages/products.css">
 </head>
 <body>
@@ -26,24 +27,37 @@
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
       </button>
       <nav class="site-header__nav" id="main-nav" aria-label="Main navigation">
-        <a href="products.html" class="site-header__nav-link">Products</a>
-        <a href="store.html" class="site-header__nav-link">Store</a>
+        <a href="products.html" class="site-header__nav-link site-header__nav-link--active">Products</a>
+        <a href="services.html" class="site-header__nav-link">Services</a>
+        <a href="forge.html" class="site-header__nav-link">Forge</a>
+        <a href="architecture.html" class="site-header__nav-link">Architecture</a>
         <a href="security.html" class="site-header__nav-link">Security</a>
         <a href="about.html" class="site-header__nav-link">About</a>
         <a href="contact.html" class="site-header__nav-link">Contact</a>
       </nav>
     </div>
   </header>
-  <main id="main">
-    <section class="products-page">
-      <div class="container">
-        <div class="products-page__hero">
-          <span class="products-page__eyebrow">Forge Gallery</span>
-          <h1>Products</h1>
-          <p>
-            Public BDS products are presented as focused forge instruments: one for literary craft, one for structured AI signal work.
-            Each keeps the same disciplined doctrine while expressing a distinct product identity.
-          </p>
+
+  <main id="main" class="content-page products-page">
+    <div class="container">
+      <nav class="breadcrumbs" aria-label="Breadcrumb">
+        <a href="index.html">Home</a>
+        <span>/</span>
+        <span aria-current="page">Products</span>
+      </nav>
+
+      <section class="page-hero products-page__hero">
+        <div class="page-hero__eyebrow">Forge Applications</div>
+        <h1>Desktop-first applications built for clear work and controlled expansion.</h1>
+        <p class="page-hero__lede">
+          BDS products start from a local-first baseline, then add ecosystem support only when it materially improves the workflow. The public buyer path starts here.
+        </p>
+      </section>
+
+      <section class="page-section" aria-labelledby="featured-product-heading">
+        <div class="page-section__head">
+          <h2 id="featured-product-heading">Featured product</h2>
+          <p>AuthorForge is the primary public application in the current catalog: an authoring operating system for disciplined independent publishing.</p>
         </div>
 
         <section class="products-page__grid" aria-label="Public product catalog">
@@ -54,25 +68,24 @@
 
             <div class="forge-body">
               <div class="forge-title">AuthorForge</div>
-              <div class="forge-sub">Creative Authority Workbench</div>
+              <div class="forge-sub">Local-first authoring operating system</div>
 
               <p class="forge-desc">
-                A disciplined writing environment where imagination meets structure.
-                Draft, worldbuild, and refine inside a controlled creative forge.
+                Built for serious indie authors and small publishing companies who need drafting, lore, revision, production, and export inside one governed workflow.
               </p>
 
-              <div class="forge-tags" aria-label="AuthorForge features">
-                <span class="forge-tag">Worldbuilding</span>
-                <span class="forge-tag">AI Drafting</span>
-                <span class="forge-tag">Local-First</span>
-                <span class="forge-tag">Manuscript Structuring</span>
+              <div class="forge-tags" aria-label="AuthorForge positioning">
+                <span class="forge-tag">Local-first</span>
+                <span class="forge-tag">Desktop-first</span>
+                <span class="forge-tag">Optional ecosystem integration</span>
+                <span class="forge-tag">Distributor-ready output</span>
               </div>
 
-              <a href="authorforge.html" class="forge-cta">Enter the Forge →</a>
+              <a href="authorforge.html" class="forge-cta">View AuthorForge →</a>
             </div>
           </article>
 
-          <article class="forge-card forge-signal">
+          <article class="forge-card forge-signal" id="vibeforge">
             <div class="forge-image">
               <div class="forge-image__banner">Coming Soon</div>
               <img src="src/assets/images/products/VibeForge.webp" alt="VibeForge molten puzzle and signal line">
@@ -80,42 +93,58 @@
 
             <div class="forge-body">
               <div class="forge-title">VibeForge</div>
-              <div class="forge-sub">AI Prompt Engineering Bench</div>
+              <div class="forge-sub">Structured signal workbench</div>
 
               <p class="forge-desc">
-                Multi-model orchestration for prompt design, refinement,
-                and structured AI output testing, built for control and clarity.
+                A forthcoming Forge application for prompt design, refinement, and controlled AI output evaluation. Public positioning exists now; release timing remains deliberate.
               </p>
 
-              <div class="forge-tags" aria-label="VibeForge features">
+              <div class="forge-tags" aria-label="VibeForge positioning">
                 <span class="forge-tag">Prompt Studio</span>
-                <span class="forge-tag">Multi-Model</span>
-                <span class="forge-tag">Structured Output</span>
-                <span class="forge-tag">Linux-First</span>
+                <span class="forge-tag">Multi-model</span>
+                <span class="forge-tag">Structured output</span>
+                <span class="forge-tag">Upcoming</span>
               </div>
 
-              <a href="contact.html" class="forge-cta">Shape the Signal →</a>
+              <a href="contact.html" class="forge-cta">Request Early Access →</a>
             </div>
           </article>
         </section>
+      </section>
 
-        <section class="products-page__note" aria-labelledby="products-note-heading">
-          <h2 id="products-note-heading">Public Exposure Boundary</h2>
-          <p>
-            Only public-facing products are listed here. Internal operational tooling and non-public control systems are intentionally excluded from the public catalog.
-          </p>
-        </section>
-      </div>
-    </section>
+      <section class="page-section" aria-labelledby="licensing-heading">
+        <div class="page-section__head">
+          <h2 id="licensing-heading">Purchasing &amp; licensing</h2>
+          <p>The store remains a simple licensing surface. Buyers can move from product context into editions and purchase flow without navigating a separate application.</p>
+        </div>
+        <div class="page-grid page-grid--2">
+          <article class="page-card page-card--accent">
+            <h3>AuthorForge licensing</h3>
+            <p>Review the current licensing lane for AuthorForge, then move into the edition details or purchase setup as needed.</p>
+            <div class="page-actions">
+              <a href="store.html#authorforge" class="btn btn-primary">Buy AuthorForge</a>
+              <a href="authorforge.html#editions" class="btn btn-ghost">Compare Editions</a>
+            </div>
+          </article>
+          <article class="page-card">
+            <h3>Built on the Forge platform</h3>
+            <p>The applications share a common product philosophy: structured workflows, optional ecosystem amplification, and interfaces designed for control instead of noise.</p>
+            <a href="forge.html" class="page-inline-link">Built on Forge</a>
+          </article>
+        </div>
+      </section>
+    </div>
   </main>
+
   <footer class="site-footer" role="contentinfo">
     <div class="site-footer__inner">
       <div class="site-footer__bottom">
-        <span class="site-footer__copy">&copy; 2025 Boswell Digital Solutions LLC. All rights reserved.</span>
+        <span class="site-footer__copy">&copy; 2026 Boswell Digital Solutions LLC. All rights reserved.</span>
         <span class="site-footer__sdvosb">SDVOSB</span>
       </div>
     </div>
   </footer>
+
   <script type="module" src="src/js/site.js"></script>
 </body>
 </html>

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Licensed software and services from Boswell Digital Solutions.">
+  <meta name="description" content="Licensing and purchasing information for Boswell Digital Solutions products.">
   <title>Store — Boswell Digital Solutions</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -12,6 +12,7 @@
   <link rel="stylesheet" href="src/styles/header.css">
   <link rel="stylesheet" href="src/styles/footer.css">
   <link rel="stylesheet" href="src/styles/hud.css">
+  <link rel="stylesheet" href="src/styles/pages/site-pages.css">
 </head>
 <body>
   <a href="#main" class="skip-link">Skip to main content</a>
@@ -26,30 +27,92 @@
       </button>
       <nav class="site-header__nav" id="main-nav" aria-label="Main navigation">
         <a href="products.html" class="site-header__nav-link">Products</a>
-        <a href="store.html" class="site-header__nav-link">Store</a>
+        <a href="services.html" class="site-header__nav-link">Services</a>
+        <a href="forge.html" class="site-header__nav-link">Forge</a>
+        <a href="architecture.html" class="site-header__nav-link">Architecture</a>
         <a href="security.html" class="site-header__nav-link">Security</a>
         <a href="about.html" class="site-header__nav-link">About</a>
         <a href="contact.html" class="site-header__nav-link">Contact</a>
       </nav>
     </div>
   </header>
-  <main id="main">
-    <section class="section">
-      <div class="container">
-        <h1>Store</h1>
-        <p style="color: var(--text-secondary); margin-top: var(--space-2);">Licensed software and services from Boswell Digital Solutions.</p>
-        <p class="text-muted" style="margin-top: var(--space-4);">This page is under construction.</p>
-      </div>
-    </section>
+
+  <main id="main" class="content-page">
+    <div class="container">
+      <nav class="breadcrumbs" aria-label="Breadcrumb">
+        <a href="index.html">Home</a>
+        <span>/</span>
+        <span aria-current="page">Store</span>
+      </nav>
+
+      <section class="page-hero">
+        <div class="page-hero__eyebrow">Licensing</div>
+        <h1>Simple software purchasing without turning the website into an app.</h1>
+        <p class="page-hero__lede">
+          The store is the commerce surface for product licensing. Payment handling will route through Stripe-hosted checkout as links are enabled, while product context remains on the public site.
+        </p>
+      </section>
+
+      <section class="page-section" id="authorforge" aria-labelledby="store-authorforge-heading">
+        <div class="page-section__head">
+          <h2 id="store-authorforge-heading">AuthorForge</h2>
+          <p>AuthorForge has a two-lane edition model: a one-time local desktop license and a monthly Pro lane for cloud-backed AI assistance.</p>
+        </div>
+        <div class="page-grid page-grid--2">
+          <article class="page-card page-card--accent">
+            <div class="page-card__eyebrow">Standard</div>
+            <h3>AuthorForge Standard</h3>
+            <p>One-time purchase for the Debian desktop application, including the full writing-and-publishing workflow with no subscription required to publish.</p>
+            <ul class="page-list">
+              <li>Local-first, offline-capable desktop application</li>
+              <li>Writing, lore, revision, production, and export in one workflow</li>
+              <li>Best fit for authors who want stable local control</li>
+            </ul>
+            <div class="page-actions">
+              <a href="contact.html" class="btn btn-primary">Request Purchase Setup</a>
+              <a href="authorforge.html#editions" class="btn btn-ghost">Compare Editions</a>
+            </div>
+          </article>
+          <article class="page-card">
+            <div class="page-card__eyebrow">Pro</div>
+            <h3>AuthorForge Pro</h3>
+            <p>Monthly subscription lane that activates cloud-based AI with multiple models, continuity sweeps, canon-aware rewrite passes, and optional story-audio features.</p>
+            <ul class="page-list">
+              <li>Multi-model AI support when needed</li>
+              <li>Batch-first higher-order workflow acceleration</li>
+              <li>Intended for authors who want optional cloud amplification</li>
+            </ul>
+            <div class="page-actions">
+              <a href="contact.html" class="btn btn-primary">Request Purchase Setup</a>
+              <a href="authorforge.html#editions" class="btn btn-ghost">Compare Editions</a>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="page-section">
+        <div class="page-callout">
+          <h3>Stripe-first commerce flow</h3>
+          <p>Payment will be handled by Stripe-hosted checkout when payment links are enabled. The public site does not need to become a logged-in purchase application to support basic licensing.</p>
+          <p>Receipts, fulfillment steps, and onboarding instructions remain short and explicit.</p>
+          <div class="page-actions">
+            <a href="authorforge.html" class="btn btn-ghost">View AuthorForge</a>
+            <a href="contact.html" class="btn btn-primary">Request Purchase Setup</a>
+          </div>
+        </div>
+      </section>
+    </div>
   </main>
+
   <footer class="site-footer" role="contentinfo">
     <div class="site-footer__inner">
       <div class="site-footer__bottom">
-        <span class="site-footer__copy">&copy; 2025 Boswell Digital Solutions LLC. All rights reserved.</span>
+        <span class="site-footer__copy">&copy; 2026 Boswell Digital Solutions LLC. All rights reserved.</span>
         <span class="site-footer__sdvosb">SDVOSB</span>
       </div>
     </div>
   </footer>
+
   <script type="module" src="src/js/site.js"></script>
 </body>
 </html>

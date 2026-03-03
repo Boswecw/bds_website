@@ -10,7 +10,7 @@ The site positions BDS around:
 - private infrastructure segmentation
 - fail-closed governance
 
-These are presented most clearly on the homepage and in `docs/store_security_architecture_v_1.md`. The dedicated `security.html` page itself is still an under-construction placeholder.
+These are presented most clearly on the homepage, `security.html`, and `docs/store_security_architecture_v_1.md`.
 
 ## Important Implementation Boundary
 
@@ -30,6 +30,6 @@ The public store posture is intentionally bounded:
 - licensed software and services only
 - no card handling on the website itself
 - legal terms already scaffolded
-- pricing and fulfillment still placeholder-level
+- store flow currently routes buyers into a simple licensing page plus contact-based purchase coordination until Stripe Payment Links are enabled
 
 This is a reasonable sequence for a repo that is still establishing brand and trust surfaces first.

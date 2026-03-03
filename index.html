@@ -38,7 +38,9 @@
 
       <nav class="site-header__nav" id="main-nav" aria-label="Main navigation">
         <a href="products.html" class="site-header__nav-link">Products</a>
-        <a href="store.html" class="site-header__nav-link">Store</a>
+        <a href="services.html" class="site-header__nav-link">Services</a>
+        <a href="forge.html" class="site-header__nav-link">Forge</a>
+        <a href="architecture.html" class="site-header__nav-link">Architecture</a>
         <a href="security.html" class="site-header__nav-link">Security</a>
         <a href="about.html" class="site-header__nav-link">About</a>
         <a href="contact.html" class="site-header__nav-link">Contact</a>
@@ -64,7 +66,7 @@
             </p>
             <div class="hero__actions">
               <a href="products.html" class="btn btn-primary">Explore Products</a>
-              <a href="security.html" class="btn btn-ghost">View Security Model</a>
+              <a href="architecture.html" class="btn btn-ghost">View Architecture</a>
             </div>
           </div>
           <div class="hero__visual" aria-hidden="true">
@@ -85,8 +87,8 @@
     <section class="products-preview section" aria-labelledby="products-heading">
       <div class="container">
         <div class="products-preview__header">
-          <h2 id="products-heading">Products</h2>
-          <p class="text-muted">Governance-first tools for execution and control.</p>
+          <h2 id="products-heading">Forge Applications</h2>
+          <p class="text-muted">Public products for disciplined writing, structured signal work, and governed digital delivery.</p>
         </div>
         <div class="grid grid-3">
 
@@ -95,10 +97,10 @@
             <div class="product-card__icon">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
             </div>
-            <div class="badge badge--roadmap">Roadmap</div>
+            <div class="badge badge--production">Featured</div>
             <h3 class="product-card__name">AuthorForge</h3>
-            <p class="product-card__desc">AI-assisted creative writing platform for authors who demand control over their process and output.</p>
-            <a href="products.html" class="product-card__link">View Details →</a>
+            <p class="product-card__desc">Local-first authoring operating system for serious indie authors and small publishing companies.</p>
+            <a href="authorforge.html" class="product-card__link">View AuthorForge →</a>
           </article>
 
           <!-- VibeForge -->
@@ -108,8 +110,8 @@
             </div>
             <div class="badge">Launching 2026</div>
             <h3 class="product-card__name">VibeForge</h3>
-            <p class="product-card__desc">AI-assisted development environment with governed execution pipelines and auditable build chains.</p>
-            <a href="products.html" class="product-card__link">View Details →</a>
+            <p class="product-card__desc">Structured prompt and signal workbench now staging for public release.</p>
+            <a href="products.html#vibeforge" class="product-card__link">View Product Preview →</a>
           </article>
 
           <!-- Services -->
@@ -119,8 +121,8 @@
             </div>
             <div class="badge badge--beta">Available</div>
             <h3 class="product-card__name">Consulting Services</h3>
-            <p class="product-card__desc">Governance architecture review, implementation planning, and controlled execution consulting for serious systems.</p>
-            <a href="contact.html" class="product-card__link">Start a Conversation →</a>
+            <p class="product-card__desc">Systems architecture, custom application work, professional websites, and technical advisory.</p>
+            <a href="services.html" class="product-card__link">Explore Services →</a>
           </article>
 
         </div>
@@ -182,35 +184,35 @@
     <section class="store-preview section" aria-labelledby="store-heading">
       <div class="container">
         <div class="store-preview__header">
-          <h2 id="store-heading">Store</h2>
-          <p class="text-muted">Licensed software and services.</p>
+          <h2 id="store-heading">Licensing</h2>
+          <p class="text-muted">Stripe-first purchasing flow for software licensing without turning the site into an application.</p>
         </div>
         <div class="grid grid-3">
 
           <article class="card store-card">
             <div class="badge badge--roadmap">Preview</div>
             <h3 class="product-card__name">AuthorForge Access</h3>
-            <p class="product-card__desc">Early-access creative writing environment for disciplined authors and structured story development.</p>
-            <div class="store-card__price">Coming Soon</div>
+            <p class="product-card__desc">Review Standard and Pro edition lanes for the Debian-native authoring operating system.</p>
+            <div class="store-card__price">Standard + Pro</div>
           </article>
 
           <article class="card store-card">
             <div class="badge badge--roadmap">Pre-order</div>
             <h3 class="product-card__name">VibeForge License</h3>
-            <p class="product-card__desc">AI-assisted development environment — launching January 2026.</p>
+            <p class="product-card__desc">Upcoming product lane for structured AI prompt design and output evaluation.</p>
             <div class="store-card__price">Coming Soon</div>
           </article>
 
           <article class="card store-card">
             <div class="badge badge--roadmap">Planned</div>
             <h3 class="product-card__name">Consulting Services</h3>
-            <p class="product-card__desc">Governance architecture review and implementation consulting.</p>
-            <div class="store-card__price">Contact</div>
+            <p class="product-card__desc">Services engagements are scoped directly rather than processed as self-serve checkout.</p>
+            <div class="store-card__price">Consultation</div>
           </article>
 
         </div>
         <div style="margin-top: var(--space-4);">
-          <a href="store.html" class="btn btn-primary">Go to Store</a>
+          <a href="store.html" class="btn btn-primary">View Licensing</a>
         </div>
       </div>
     </section>
@@ -252,18 +254,20 @@
         <div>
           <h4 class="site-footer__col-title">Products</h4>
           <div class="site-footer__col-links">
-            <a href="products.html" class="site-footer__link">AuthorForge</a>
-            <a href="products.html" class="site-footer__link">VibeForge</a>
-            <a href="contact.html" class="site-footer__link">Consulting Services</a>
+            <a href="authorforge.html" class="site-footer__link">AuthorForge</a>
+            <a href="store.html" class="site-footer__link">Store</a>
+            <a href="meet-smith.html" class="site-footer__link">Meet SMITH</a>
           </div>
         </div>
         <div>
           <h4 class="site-footer__col-title">Company</h4>
           <div class="site-footer__col-links">
+            <a href="services.html" class="site-footer__link">Services</a>
+            <a href="forge.html" class="site-footer__link">Forge</a>
+            <a href="architecture.html" class="site-footer__link">Architecture</a>
             <a href="about.html" class="site-footer__link">About</a>
             <a href="security.html" class="site-footer__link">Security</a>
             <a href="contact.html" class="site-footer__link">Contact</a>
-            <a href="store.html" class="site-footer__link">Store</a>
           </div>
         </div>
         <div>
@@ -273,6 +277,7 @@
             <a href="legal/terms.html" class="site-footer__link">Terms</a>
             <a href="legal/refund.html" class="site-footer__link">Refund Policy</a>
             <a href="legal/eula.html" class="site-footer__link">License / EULA</a>
+            <a href="legal/ecosystem.html" class="site-footer__link">Ecosystem Terms</a>
           </div>
         </div>
       </div>

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="SDVOSB founded on 16 years of federal service.">
+  <meta name="description" content="About Boswell Digital Solutions, a systems architecture firm that ships applications.">
   <title>About — Boswell Digital Solutions</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -12,6 +12,7 @@
   <link rel="stylesheet" href="src/styles/header.css">
   <link rel="stylesheet" href="src/styles/footer.css">
   <link rel="stylesheet" href="src/styles/hud.css">
+  <link rel="stylesheet" href="src/styles/pages/site-pages.css">
 </head>
 <body>
   <a href="#main" class="skip-link">Skip to main content</a>
@@ -26,30 +27,78 @@
       </button>
       <nav class="site-header__nav" id="main-nav" aria-label="Main navigation">
         <a href="products.html" class="site-header__nav-link">Products</a>
-        <a href="store.html" class="site-header__nav-link">Store</a>
+        <a href="services.html" class="site-header__nav-link">Services</a>
+        <a href="forge.html" class="site-header__nav-link">Forge</a>
+        <a href="architecture.html" class="site-header__nav-link">Architecture</a>
         <a href="security.html" class="site-header__nav-link">Security</a>
-        <a href="about.html" class="site-header__nav-link">About</a>
+        <a href="about.html" class="site-header__nav-link site-header__nav-link--active">About</a>
         <a href="contact.html" class="site-header__nav-link">Contact</a>
       </nav>
     </div>
   </header>
-  <main id="main">
-    <section class="section">
-      <div class="container">
-        <h1>About Boswell Digital Solutions</h1>
-        <p style="color: var(--text-secondary); margin-top: var(--space-2);">SDVOSB founded on 16 years of federal service.</p>
-        <p class="text-muted" style="margin-top: var(--space-4);">This page is under construction.</p>
-      </div>
-    </section>
+
+  <main id="main" class="content-page">
+    <div class="container">
+      <nav class="breadcrumbs" aria-label="Breadcrumb">
+        <a href="index.html">Home</a>
+        <span>/</span>
+        <span aria-current="page">About</span>
+      </nav>
+
+      <section class="page-hero">
+        <div class="page-hero__eyebrow">About BDS</div>
+        <h1>A systems architecture firm that also ships applications.</h1>
+        <p class="page-hero__lede">
+          Boswell Digital Solutions exists to build governed software, credible public systems, and sober architecture for work that needs more than trend-driven product dressing.
+        </p>
+      </section>
+
+      <section class="page-section" aria-labelledby="about-identity-heading">
+        <div class="page-section__head">
+          <h2 id="about-identity-heading">Identity</h2>
+          <p>BDS is not split between advisory language and product language. The applications and the service work come from the same operating philosophy.</p>
+        </div>
+        <div class="page-grid page-grid--2">
+          <article class="page-card">
+            <h3>What BDS is</h3>
+            <p>A systems architecture firm that builds products where authority, recoverability, and clarity matter more than product theatrics.</p>
+          </article>
+          <article class="page-card">
+            <h3>Why it exists</h3>
+            <p>Because too many technical systems are sold as magic and operated as improvisation. BDS takes the opposite position.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="page-section" aria-labelledby="about-founder-heading">
+        <div class="page-section__head">
+          <h2 id="about-founder-heading">Founder</h2>
+          <p>The public bio should communicate credibility without drifting into autobiography for its own sake.</p>
+        </div>
+        <div class="page-callout">
+          <h3>Veteran systems perspective</h3>
+          <p>Boswell Digital Solutions was founded by a Service-Disabled Veteran with sixteen years of federal service spanning submarine qualification, wildland fire incident command, contracting oversight, and security management.</p>
+          <p>That background shows up in the products: clear boundaries, deliberate escalation, and a strong bias toward human accountability.</p>
+        </div>
+      </section>
+
+      <section class="page-section">
+        <div class="page-actions">
+          <a href="services.html" class="btn btn-primary">View Services</a>
+        </div>
+      </section>
+    </div>
   </main>
+
   <footer class="site-footer" role="contentinfo">
     <div class="site-footer__inner">
       <div class="site-footer__bottom">
-        <span class="site-footer__copy">&copy; 2025 Boswell Digital Solutions LLC. All rights reserved.</span>
+        <span class="site-footer__copy">&copy; 2026 Boswell Digital Solutions LLC. All rights reserved.</span>
         <span class="site-footer__sdvosb">SDVOSB</span>
       </div>
     </div>
   </footer>
+
   <script type="module" src="src/js/site.js"></script>
 </body>
 </html>

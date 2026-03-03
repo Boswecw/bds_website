@@ -15,6 +15,8 @@ What exists now:
 - deterministic static page rendering
 - shared mobile-navigation behavior via `src/js/site.js`
 - shared CSS tokens and layout styles
+- shared content-page styling for services, forge, architecture, security, about, contact, and store routes
+- published legal policy pages for privacy, terms, refund, and EULA
 - lightweight homepage HUD interaction script
 - StateForge QC wiring in-repo
 - checked-in StateForge evidence and report artifacts under `out/` and `tools/stateforge/out/`
@@ -29,9 +31,9 @@ What does not exist yet:
 
 ## Known Risks
 
-1. Homepage links to product detail pages that are not present.
-2. Secondary content pages are mostly shells, so the public narrative depth is concentrated in `index.html`.
-3. Security and store claims can outpace implementation if future copy is not kept precise.
+1. Stripe checkout is still placeholder-level; the store currently routes into contact-based purchase coordination rather than live payment links.
+2. Only AuthorForge has a dedicated detail page today; additional product pages will need the same treatment as the portfolio expands.
+3. Security and ecosystem claims can outpace implementation if future copy is not kept precise.
 4. Repeated header/footer markup increases drift risk across pages.
 
 ## Maintenance Rule

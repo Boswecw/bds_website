@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Forge platform overview: local-first applications, structured workflows, and optional ecosystem integration.">
+  <title>Forge — Boswell Digital Solutions</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Source+Sans+3:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="src/styles/global.css">
+  <link rel="stylesheet" href="src/styles/header.css">
+  <link rel="stylesheet" href="src/styles/footer.css">
+  <link rel="stylesheet" href="src/styles/hud.css">
+  <link rel="stylesheet" href="src/styles/pages/site-pages.css">
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to main content</a>
+  <header class="site-header" role="banner">
+    <div class="site-header__inner">
+      <a href="/" class="site-header__logo" aria-label="Boswell Digital Solutions — Home">
+        <img src="src/assets/images/bds-logo.png" alt="BDS" class="site-header__logo-img">
+        <span>Boswell Digital Solutions</span>
+      </a>
+      <button class="site-header__menu-toggle" aria-label="Toggle navigation" aria-expanded="false" aria-controls="main-nav" id="menu-toggle">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+      <nav class="site-header__nav" id="main-nav" aria-label="Main navigation">
+        <a href="products.html" class="site-header__nav-link">Products</a>
+        <a href="services.html" class="site-header__nav-link">Services</a>
+        <a href="forge.html" class="site-header__nav-link site-header__nav-link--active">Forge</a>
+        <a href="architecture.html" class="site-header__nav-link">Architecture</a>
+        <a href="security.html" class="site-header__nav-link">Security</a>
+        <a href="about.html" class="site-header__nav-link">About</a>
+        <a href="contact.html" class="site-header__nav-link">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" class="content-page">
+    <div class="container">
+      <nav class="breadcrumbs" aria-label="Breadcrumb">
+        <a href="index.html">Home</a>
+        <span>/</span>
+        <span aria-current="page">Forge</span>
+      </nav>
+
+      <section class="page-hero">
+        <div class="page-hero__eyebrow">Forge Platform</div>
+        <h1>Local-first applications with structured workflows and optional integration.</h1>
+        <p class="page-hero__lede">
+          Forge is the public platform language for BDS-built applications: disciplined desktop software with clear boundaries, deliberate operator control, and the option to connect outward when that actually improves the workflow.
+        </p>
+        <div class="page-pills" aria-label="Forge platform traits">
+          <span class="page-pill">Local-first</span>
+          <span class="page-pill">Structured workflows</span>
+          <span class="page-pill">Optional integration</span>
+        </div>
+      </section>
+
+      <section class="page-section" aria-labelledby="forge-pillars-heading">
+        <div class="page-section__head">
+          <h2 id="forge-pillars-heading">Platform pillars</h2>
+          <p>The public explanation stays intentionally high level. It describes the user-facing operating model, not internal service topology.</p>
+        </div>
+        <div class="page-grid page-grid--4">
+          <article class="page-card">
+            <h3>Controlled local baseline</h3>
+            <p>Core work can remain on the user’s machine instead of assuming every action belongs in a remote browser session.</p>
+          </article>
+          <article class="page-card">
+            <h3>Structured workflow surfaces</h3>
+            <p>Interfaces are designed around real sequences of work, not novelty interactions that create drift and confusion.</p>
+          </article>
+          <article class="page-card">
+            <h3>Optional ecosystem support</h3>
+            <p>Specialized services can be added when they improve validation, evidence, or automation, but they are not the baseline identity of the product.</p>
+          </article>
+          <article class="page-card">
+            <h3>Governed expansion</h3>
+            <p>When an application connects outward, those connections are deliberate and bounded rather than ad hoc.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="page-section" aria-labelledby="forge-smith-heading">
+        <div class="page-section__head">
+          <h2 id="forge-smith-heading">SMITH preview</h2>
+          <p>SMITH is the workflow-intelligence layer used inside Forge applications. It is calm, assistive, and intentionally not a generic chatbot overlay.</p>
+        </div>
+        <div class="page-card page-card--accent">
+          <h3>Meet SMITH</h3>
+          <p>SMITH stays small, visible, and subordinate to the user. It does not auto-open, does not interrupt the operator, and does not ask to run the room.</p>
+          <a href="meet-smith.html" class="page-inline-link">Meet SMITH</a>
+        </div>
+      </section>
+
+      <section class="page-section" aria-labelledby="forge-connectivity-heading">
+        <div class="page-section__head">
+          <h2 id="forge-connectivity-heading">Optional ecosystem connectivity</h2>
+          <p>The ecosystem exists to amplify certain workflows, not to drag every product into permanent cloud dependence.</p>
+        </div>
+        <div class="page-grid page-grid--2">
+          <article class="page-card">
+            <h3>When connected</h3>
+            <p>Applications can reach specialized services for validation, AI orchestration, evidence assembly, or agent-style execution when those services materially improve the outcome.</p>
+          </article>
+          <article class="page-card">
+            <h3>When disconnected</h3>
+            <p>The public posture remains local-first. Products should remain understandable and useful even when the ecosystem lane is not active.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="page-section" aria-labelledby="forge-why-heading">
+        <div class="page-section__head">
+          <h2 id="forge-why-heading">Why structure matters</h2>
+          <p>Structure is not branding garnish. It is how products stay trustworthy when the work becomes complex.</p>
+        </div>
+        <div class="page-callout">
+          <h3>Deliberate interfaces age better</h3>
+          <p>Products built around authority, clarity, and recoverability can support serious work longer than products designed to impress for five minutes.</p>
+        </div>
+      </section>
+
+      <section class="page-section" aria-labelledby="forge-built-heading">
+        <div class="page-section__head">
+          <h2 id="forge-built-heading">Built with Forge</h2>
+          <p>The public platform currently centers on AuthorForge, with additional applications planned as the portfolio expands.</p>
+        </div>
+        <div class="page-link-list">
+          <a href="authorforge.html" class="page-link-card">
+            <strong>AuthorForge</strong>
+            <span>Authoring operating system for serious indie authors and small publishers.</span>
+          </a>
+          <a href="products.html#vibeforge" class="page-link-card">
+            <strong>More coming</strong>
+            <span>VibeForge and additional Forge-built products are being staged deliberately.</span>
+          </a>
+        </div>
+      </section>
+
+      <section class="page-section">
+        <div class="page-actions">
+          <a href="authorforge.html" class="btn btn-primary">Explore AuthorForge</a>
+          <a href="meet-smith.html" class="btn btn-ghost">Meet SMITH</a>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="site-footer" role="contentinfo">
+    <div class="site-footer__inner">
+      <div class="site-footer__bottom">
+        <span class="site-footer__copy">&copy; 2026 Boswell Digital Solutions LLC. All rights reserved.</span>
+        <span class="site-footer__sdvosb">SDVOSB</span>
+      </div>
+    </div>
+  </footer>
+
+  <script type="module" src="src/js/site.js"></script>
+</body>
+</html>

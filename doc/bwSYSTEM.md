@@ -4,7 +4,7 @@
 
 | Key | Value |
 |-----|-------|
-| **Document version** | 1.2 (2026-03-02) |
+| **Document version** | 1.3 (2026-03-03) |
 | **Prefix** | `bw` |
 | **Output** | `doc/bwSYSTEM.md` |
 | **Protocol** | BDS Documentation Protocol v2.0 |
@@ -31,7 +31,7 @@ Rebuild the unified document with `bash doc/system/BUILD.sh`.
 bash doc/system/BUILD.sh
 ```
 
-*Last updated: 2026-03-02*
+*Last updated: 2026-03-03*
 
 ---
 
@@ -42,7 +42,9 @@ bash doc/system/BUILD.sh
 `bds_website` is the public marketing surface for Boswell Digital Solutions. It presents:
 
 - company positioning
-- Forge ecosystem products
+- Forge applications and platform framing
+- services and advisory work
+- systems architecture thought surface
 - a security-first posture
 - a future commerce surface for licensed software and services
 - legal pages for terms, privacy, refund, and EULA
@@ -57,6 +59,16 @@ The site is implemented as static HTML/CSS with a minimal inline JavaScript laye
 - no authenticated customer area yet
 
 This keeps the public surface easy to inspect and cheap to ship while the brand, copy, and governance posture are still being refined.
+
+## Information Architecture
+
+The current public IA separates the commercial lanes intentionally:
+
+- `Products` is the buyer entry point for applications
+- `Services` is the entry point for consulting and delivery work
+- `Forge` explains the platform philosophy behind Forge-branded applications
+- `Architecture` is the authority lane for principles, papers, and future-system previews
+- `Store` remains available as a licensing surface, but it is not a top-level nav item
 
 ## Product Philosophy
 
@@ -75,7 +87,7 @@ This repository currently covers the website shell and supporting documentation.
 - implemented Stripe checkout flows
 - passkey registration or login code
 - server-side webhook handling
-- product detail pages for the homepage links under `products/`
+- product detail pages beyond `authorforge.html`
 
 Those capabilities are described in planning docs, but they are not present in this repo as executable website features today.
 
@@ -88,7 +100,7 @@ Those capabilities are described in planning docs, but they are not present in t
 The site is a static multi-page website:
 
 - `index.html` is the most complete page and contains the primary brand narrative
-- secondary pages reuse the same visual shell but are mostly under-construction placeholders
+- secondary pages now cover products, services, forge platform framing, architecture, security, about, contact, store, and AuthorForge detail content
 - legal pages live under `legal/`
 - shared styling is loaded from `src/styles/`
 
@@ -111,6 +123,15 @@ Most pages repeat the same major regions:
 3. footer with company attribution and SDVOSB marker
 
 This is currently duplication-by-copy rather than templated composition. The homepage is the only page with the expanded multi-column footer; the rest of the pages use a simplified footer bottom bar.
+
+## Public IA Pattern
+
+The current website routes are organized into clear public lanes:
+
+1. application buying path through `products.html`, `authorforge.html`, and `store.html`
+2. services inquiry path through `services.html` and `contact.html`
+3. platform/story path through `forge.html` and `meet-smith.html`
+4. authority/trust path through `architecture.html` and `security.html`
 
 ## Homepage Interaction Layer
 
@@ -204,21 +225,32 @@ bds_website/
 ├── bun.lock
 ├── dev-server.ts
 ├── about.html
+├── architecture.html
+├── authorforge-cost-comparison.html
+├── authorforge-founder.html
+├── authorforge.html
 ├── contact.html
+├── forge.html
+├── meet-smith.html
 ├── out/
 │   └── stateforge.evidence.bundle.json
 ├── index.html
 ├── products.html
 ├── security.html
+├── services.html
 ├── store.html
 ├── legal/
+│   ├── ecosystem.html
 │   ├── eula.html
 │   ├── privacy.html
 │   ├── refund.html
 │   └── terms.html
 ├── src/
 │   ├── assets/images/
-│   │   └── bds-logo.png
+│   │   ├── bds-logo.png
+│   │   └── products/
+│   │       ├── AuthorForge.webp
+│   │       └── VibeForge.webp
 │   ├── js/
 │   │   └── site.js
 │   └── styles/
@@ -227,7 +259,11 @@ bds_website/
 │       ├── header.css
 │       ├── hud.css
 │       ├── tokens.css
-│       └── pages/home.css
+│       └── pages/
+│           ├── home.css
+│           ├── product-detail.css
+│           ├── products.css
+│           └── site-pages.css
 ├── docs/
 │   ├── bds_design_system_color_tokens_v_1.md
 │   ├── bds_homepage_wireframe_with_hud_v_1.md
@@ -258,7 +294,8 @@ bds_website/
 
 ## Structural Observations
 
-- Homepage product links now route to `products.html` instead of dead `products/*.html` pages.
+- Public IA now includes dedicated `services.html`, `forge.html`, `meet-smith.html`, and `architecture.html` routes in addition to the original marketing shell.
+- Homepage product links now route into real public pages such as `authorforge.html`, `products.html#vibeforge`, and `services.html`.
 - There is no `public/` directory in the checked-in structure despite the README describing one as a future/static asset area.
 - Shared page chrome is repeated directly in HTML files rather than abstracted behind includes or templates.
 
@@ -271,20 +308,28 @@ bds_website/
 | Page | Path | Status |
 |------|------|--------|
 | Homepage | `index.html` | Primary authored page; most complete experience |
-| Products | `products.html` | Shell present; under construction |
-| Store | `store.html` | Shell present; under construction |
-| Security | `security.html` | Shell present; marked under construction |
-| About | `about.html` | Shell present; under construction |
-| Contact | `contact.html` | Shell present; under construction |
+| Products | `products.html` | Live product-entry page for applications |
+| Services | `services.html` | Live services-entry page |
+| Forge | `forge.html` | Live platform overview page |
+| Meet SMITH | `meet-smith.html` | Live secondary platform explainer |
+| Architecture | `architecture.html` | Live authority / white-paper lane |
+| Store | `store.html` | Live licensing surface with placeholder purchase coordination |
+| Security | `security.html` | Live trust/posture page |
+| About | `about.html` | Live company identity page |
+| Contact | `contact.html` | Live inquiry and support page |
+| AuthorForge | `authorforge.html` | Live product detail page |
+| AuthorForge Founder | `authorforge-founder.html` | Live supporting detail page |
+| AuthorForge Cost Comparison | `authorforge-cost-comparison.html` | Live supporting detail page |
 
 ## Legal Pages
 
 | Page | Path | Status |
 |------|------|--------|
-| Terms | `legal/terms.html` | Shell present; under construction |
-| Privacy | `legal/privacy.html` | Shell present; under construction |
-| Refund | `legal/refund.html` | Shell present; under construction |
-| EULA | `legal/eula.html` | Shell present; under construction |
+| Terms | `legal/terms.html` | Live policy page |
+| Privacy | `legal/privacy.html` | Live policy page |
+| Refund | `legal/refund.html` | Live policy page |
+| EULA | `legal/eula.html` | Live multi-product software license page with Pro / ecosystem integration terms |
+| Ecosystem Terms | `legal/ecosystem.html` | Live optional ecosystem feature terms page |
 
 ## Homepage Content Blocks
 
@@ -293,7 +338,7 @@ bds_website/
 - authority-driven hero
 - product preview cards
 - security strip and zone diagram
-- store preview cards
+- licensing preview cards
 - founder / company background
 - expanded footer navigation
 - ambient HUD assistant
@@ -306,8 +351,8 @@ All public pages load the shared style sheets, including `hud.css`. Only the hom
 
 The site communicates several future capabilities that are not implemented here yet:
 
-- live store inventory or purchase flow
-- fully written-out security architecture page
+- live Stripe payment links and automated fulfillment
+- dedicated product detail pages beyond AuthorForge
 - contextual HUD intelligence beyond static suggestions
 
 That gap is acceptable as long as the marketing copy remains explicit about planned versus available functionality.
@@ -375,7 +420,7 @@ The site positions BDS around:
 - private infrastructure segmentation
 - fail-closed governance
 
-These are presented most clearly on the homepage and in `docs/store_security_architecture_v_1.md`. The dedicated `security.html` page itself is still an under-construction placeholder.
+These are presented most clearly on the homepage, `security.html`, and `docs/store_security_architecture_v_1.md`.
 
 ## Important Implementation Boundary
 
@@ -395,7 +440,7 @@ The public store posture is intentionally bounded:
 - licensed software and services only
 - no card handling on the website itself
 - legal terms already scaffolded
-- pricing and fulfillment still placeholder-level
+- store flow currently routes buyers into a simple licensing page plus contact-based purchase coordination until Stripe Payment Links are enabled
 
 This is a reasonable sequence for a repo that is still establishing brand and trust surfaces first.
 
@@ -418,6 +463,8 @@ What exists now:
 - deterministic static page rendering
 - shared mobile-navigation behavior via `src/js/site.js`
 - shared CSS tokens and layout styles
+- shared content-page styling for services, forge, architecture, security, about, contact, and store routes
+- published legal policy pages for privacy, terms, refund, and EULA
 - lightweight homepage HUD interaction script
 - StateForge QC wiring in-repo
 - checked-in StateForge evidence and report artifacts under `out/` and `tools/stateforge/out/`
@@ -432,9 +479,9 @@ What does not exist yet:
 
 ## Known Risks
 
-1. Homepage links to product detail pages that are not present.
-2. Secondary content pages are mostly shells, so the public narrative depth is concentrated in `index.html`.
-3. Security and store claims can outpace implementation if future copy is not kept precise.
+1. Stripe checkout is still placeholder-level; the store currently routes into contact-based purchase coordination rather than live payment links.
+2. Only AuthorForge has a dedicated detail page today; additional product pages will need the same treatment as the portfolio expands.
+3. Security and ecosystem claims can outpace implementation if future copy is not kept precise.
 4. Repeated header/footer markup increases drift risk across pages.
 
 ## Maintenance Rule

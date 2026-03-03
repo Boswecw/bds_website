@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Get in touch with Boswell Digital Solutions.">
+  <meta name="description" content="Contact Boswell Digital Solutions for consultations, product questions, and support.">
   <title>Contact — Boswell Digital Solutions</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -12,6 +12,7 @@
   <link rel="stylesheet" href="src/styles/header.css">
   <link rel="stylesheet" href="src/styles/footer.css">
   <link rel="stylesheet" href="src/styles/hud.css">
+  <link rel="stylesheet" href="src/styles/pages/site-pages.css">
 </head>
 <body>
   <a href="#main" class="skip-link">Skip to main content</a>
@@ -26,30 +27,94 @@
       </button>
       <nav class="site-header__nav" id="main-nav" aria-label="Main navigation">
         <a href="products.html" class="site-header__nav-link">Products</a>
-        <a href="store.html" class="site-header__nav-link">Store</a>
+        <a href="services.html" class="site-header__nav-link">Services</a>
+        <a href="forge.html" class="site-header__nav-link">Forge</a>
+        <a href="architecture.html" class="site-header__nav-link">Architecture</a>
         <a href="security.html" class="site-header__nav-link">Security</a>
         <a href="about.html" class="site-header__nav-link">About</a>
-        <a href="contact.html" class="site-header__nav-link">Contact</a>
+        <a href="contact.html" class="site-header__nav-link site-header__nav-link--active">Contact</a>
       </nav>
     </div>
   </header>
-  <main id="main">
-    <section class="section">
-      <div class="container">
-        <h1>Contact</h1>
-        <p style="color: var(--text-secondary); margin-top: var(--space-2);">Get in touch with Boswell Digital Solutions.</p>
-        <p class="text-muted" style="margin-top: var(--space-4);">This page is under construction.</p>
-      </div>
-    </section>
+
+  <main id="main" class="content-page">
+    <div class="container">
+      <nav class="breadcrumbs" aria-label="Breadcrumb">
+        <a href="index.html">Home</a>
+        <span>/</span>
+        <span aria-current="page">Contact</span>
+      </nav>
+
+      <section class="page-hero">
+        <div class="page-hero__eyebrow">Contact</div>
+        <h1>Consultation requests, product questions, and support start here.</h1>
+        <p class="page-hero__lede">
+          Use this page for services inquiries, AuthorForge purchasing questions, or general support. The framing is straightforward on purpose.
+        </p>
+      </section>
+
+      <section class="page-section">
+        <div class="page-grid page-grid--2">
+          <article class="page-card">
+            <h2>Consultation request</h2>
+            <form class="page-form" action="mailto:contact@boswelldigital.com" method="post" enctype="text/plain">
+              <div class="page-field">
+                <label for="contact-name">Name</label>
+                <input id="contact-name" name="name" type="text" autocomplete="name" required>
+              </div>
+              <div class="page-field">
+                <label for="contact-email">Email</label>
+                <input id="contact-email" name="email" type="email" autocomplete="email" required>
+              </div>
+              <div class="page-field">
+                <label for="contact-topic">Reason</label>
+                <select id="contact-topic" name="reason">
+                  <option>Services / consultation</option>
+                  <option>AuthorForge purchasing</option>
+                  <option>General support</option>
+                </select>
+              </div>
+              <div class="page-field">
+                <label for="contact-message">Message</label>
+                <textarea id="contact-message" name="message" required></textarea>
+              </div>
+              <button type="submit" class="btn btn-primary">Send Request</button>
+            </form>
+          </article>
+
+          <aside class="page-stack">
+            <div class="page-card">
+              <h3>Business email</h3>
+              <div class="page-meta">
+                <div>
+                  <strong>Email</strong>
+                  <a href="mailto:contact@boswelldigital.com">contact@boswelldigital.com</a>
+                </div>
+              </div>
+            </div>
+            <div class="page-card">
+              <h3>Best use of this page</h3>
+              <ul class="page-list">
+                <li>New services engagements</li>
+                <li>AuthorForge purchase coordination</li>
+                <li>Questions about security or architecture posture</li>
+              </ul>
+            </div>
+          </aside>
+        </div>
+      </section>
+    </div>
   </main>
+
   <footer class="site-footer" role="contentinfo">
     <div class="site-footer__inner">
       <div class="site-footer__bottom">
-        <span class="site-footer__copy">&copy; 2025 Boswell Digital Solutions LLC. All rights reserved.</span>
+        <span class="site-footer__copy">&copy; 2026 Boswell Digital Solutions LLC. All rights reserved.</span>
         <span class="site-footer__sdvosb">SDVOSB</span>
       </div>
     </div>
   </footer>
+
   <script type="module" src="src/js/site.js"></script>
 </body>
 </html>

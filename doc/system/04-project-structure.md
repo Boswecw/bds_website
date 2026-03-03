@@ -8,21 +8,32 @@ bds_website/
 ├── bun.lock
 ├── dev-server.ts
 ├── about.html
+├── architecture.html
+├── authorforge-cost-comparison.html
+├── authorforge-founder.html
+├── authorforge.html
 ├── contact.html
+├── forge.html
+├── meet-smith.html
 ├── out/
 │   └── stateforge.evidence.bundle.json
 ├── index.html
 ├── products.html
 ├── security.html
+├── services.html
 ├── store.html
 ├── legal/
+│   ├── ecosystem.html
 │   ├── eula.html
 │   ├── privacy.html
 │   ├── refund.html
 │   └── terms.html
 ├── src/
 │   ├── assets/images/
-│   │   └── bds-logo.png
+│   │   ├── bds-logo.png
+│   │   └── products/
+│   │       ├── AuthorForge.webp
+│   │       └── VibeForge.webp
 │   ├── js/
 │   │   └── site.js
 │   └── styles/
@@ -31,7 +42,11 @@ bds_website/
 │       ├── header.css
 │       ├── hud.css
 │       ├── tokens.css
-│       └── pages/home.css
+│       └── pages/
+│           ├── home.css
+│           ├── product-detail.css
+│           ├── products.css
+│           └── site-pages.css
 ├── docs/
 │   ├── bds_design_system_color_tokens_v_1.md
 │   ├── bds_homepage_wireframe_with_hud_v_1.md
@@ -62,6 +77,7 @@ bds_website/
 
 ## Structural Observations
 
-- Homepage product links now route to `products.html` instead of dead `products/*.html` pages.
+- Public IA now includes dedicated `services.html`, `forge.html`, `meet-smith.html`, and `architecture.html` routes in addition to the original marketing shell.
+- Homepage product links now route into real public pages such as `authorforge.html`, `products.html#vibeforge`, and `services.html`.
 - There is no `public/` directory in the checked-in structure despite the README describing one as a future/static asset area.
 - Shared page chrome is repeated directly in HTML files rather than abstracted behind includes or templates.

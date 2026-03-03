@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Terms governing use of BDS services.">
+  <meta name="description" content="Terms of service for Boswell Digital Solutions products and website usage.">
   <title>Terms of Service — Boswell Digital Solutions</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -12,6 +12,7 @@
   <link rel="stylesheet" href="../src/styles/header.css">
   <link rel="stylesheet" href="../src/styles/footer.css">
   <link rel="stylesheet" href="../src/styles/hud.css">
+  <link rel="stylesheet" href="../src/styles/pages/site-pages.css">
 </head>
 <body>
   <a href="#main" class="skip-link">Skip to main content</a>
@@ -26,30 +27,97 @@
       </button>
       <nav class="site-header__nav" id="main-nav" aria-label="Main navigation">
         <a href="../products.html" class="site-header__nav-link">Products</a>
-        <a href="../store.html" class="site-header__nav-link">Store</a>
+        <a href="../services.html" class="site-header__nav-link">Services</a>
+        <a href="../forge.html" class="site-header__nav-link">Forge</a>
+        <a href="../architecture.html" class="site-header__nav-link">Architecture</a>
         <a href="../security.html" class="site-header__nav-link">Security</a>
         <a href="../about.html" class="site-header__nav-link">About</a>
         <a href="../contact.html" class="site-header__nav-link">Contact</a>
       </nav>
     </div>
   </header>
-  <main id="main">
-    <section class="section">
-      <div class="container">
+
+  <main id="main" class="content-page">
+    <div class="container">
+      <nav class="breadcrumbs" aria-label="Breadcrumb">
+        <a href="../index.html">Home</a>
+        <span>/</span>
+        <span>Legal</span>
+        <span>/</span>
+        <span aria-current="page">Terms of Service</span>
+      </nav>
+
+      <section class="page-hero">
+        <div class="page-hero__eyebrow">Legal</div>
         <h1>Terms of Service</h1>
-        <p style="color: var(--text-secondary); margin-top: var(--space-2);">Terms governing use of BDS services.</p>
-        <p class="text-muted" style="margin-top: var(--space-4);">This page is under construction.</p>
-      </div>
-    </section>
+        <p class="page-hero__lede">Effective date: to be set at launch.</p>
+      </section>
+
+      <section class="page-section">
+        <div class="page-stack">
+          <article class="page-card">
+            <h2>Acceptance</h2>
+            <p>By accessing or using boswelldigital.com or any BDS product, you agree to these terms.</p>
+          </article>
+
+          <article class="page-card">
+            <h2>Accounts</h2>
+            <p>You are responsible for maintaining the security of account credentials, including passkey devices. Notify us immediately of unauthorized access.</p>
+          </article>
+
+          <article class="page-card">
+            <h2>Products and licenses</h2>
+            <p>Software products are licensed, not sold. Each product is governed by a specific license agreement or EULA, and license terms are presented before purchase.</p>
+          </article>
+
+          <article class="page-card">
+            <h2>Payments</h2>
+            <p>All payments are processed through Stripe. Prices are listed in USD. We reserve the right to change pricing with notice to existing customers where applicable.</p>
+          </article>
+
+          <article class="page-card">
+            <h2>Refunds</h2>
+            <p>Refunds are governed by our <a href="refund.html">Refund Policy</a>. Review it before purchasing.</p>
+          </article>
+
+          <article class="page-card">
+            <h2>Intellectual property</h2>
+            <p>All BDS products, content, and branding are the property of Boswell Digital Solutions LLC. Do not reproduce, distribute, or reverse engineer without written permission.</p>
+          </article>
+
+          <article class="page-card">
+            <h2>Limitation of liability</h2>
+            <p>Products are provided as-is. We do not guarantee uninterrupted service or fitness for a particular purpose. Liability is limited to the amount paid for the product in question.</p>
+          </article>
+
+          <article class="page-card">
+            <h2>Termination</h2>
+            <p>We may suspend or terminate accounts that violate these terms. You may close your account at any time.</p>
+          </article>
+
+          <article class="page-card">
+            <h2>Governing law</h2>
+            <p>These terms are governed by the laws of the Commonwealth of Kentucky.</p>
+          </article>
+
+          <article class="page-card">
+            <h2>Contact</h2>
+            <p>Questions about these terms can be sent to <a href="mailto:contact@boswelldigital.com">contact@boswelldigital.com</a>.</p>
+          </article>
+        </div>
+      </section>
+    </div>
   </main>
+
   <footer class="site-footer" role="contentinfo">
     <div class="site-footer__inner">
       <div class="site-footer__bottom">
-        <span class="site-footer__copy">&copy; 2025 Boswell Digital Solutions LLC. All rights reserved.</span>
+        <span class="site-footer__copy">&copy; 2026 Boswell Digital Solutions LLC. All rights reserved.</span>
         <span class="site-footer__sdvosb">SDVOSB</span>
       </div>
     </div>
   </footer>
+
   <script type="module" src="../src/js/site.js"></script>
 </body>
 </html>
