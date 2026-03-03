@@ -57,7 +57,18 @@
         <div class="page-grid page-grid--2">
           <article class="page-card">
             <h2>Consultation request</h2>
-            <form class="page-form" action="mailto:contact@boswelldigital.com" method="post" enctype="text/plain">
+            <p class="page-form__help">
+              Requests are submitted to the BDS intake service. If the intake lane is unavailable, use the business email shown on this page.
+            </p>
+            <form
+              class="page-form"
+              action="mailto:charlesboswell@boswelldigitalsolutions.com"
+              method="post"
+              enctype="text/plain"
+              data-intake-form
+              data-intake-url="https://intake.boswelldigitalsolutions.com/api/intake/consultation"
+              data-fallback-email="charlesboswell@boswelldigitalsolutions.com"
+            >
               <div class="page-field">
                 <label for="contact-name">Name</label>
                 <input id="contact-name" name="name" type="text" autocomplete="name" required>
@@ -78,8 +89,21 @@
                 <label for="contact-message">Message</label>
                 <textarea id="contact-message" name="message" required></textarea>
               </div>
-              <button type="submit" class="btn btn-primary">Send Request</button>
+              <div class="page-field page-field--honeypot" aria-hidden="true">
+                <label for="contact-website">Website</label>
+                <input id="contact-website" name="website" type="text" tabindex="-1" autocomplete="off">
+              </div>
+              <input type="hidden" name="source_page" value="contact.html">
+              <p class="page-form__status" data-form-status role="status" aria-live="polite"></p>
+              <button type="submit" class="btn btn-primary" data-submit-button>Send Request</button>
             </form>
+            <noscript>
+              <p class="page-form__help">
+                JavaScript is required for online intake submission. Email
+                <a href="mailto:charlesboswell@boswelldigitalsolutions.com">charlesboswell@boswelldigitalsolutions.com</a>
+                if you prefer not to use the form.
+              </p>
+            </noscript>
           </article>
 
           <aside class="page-stack">
@@ -88,7 +112,7 @@
               <div class="page-meta">
                 <div>
                   <strong>Email</strong>
-                  <a href="mailto:contact@boswelldigital.com">contact@boswelldigital.com</a>
+                  <a href="mailto:charlesboswell@boswelldigitalsolutions.com">charlesboswell@boswelldigitalsolutions.com</a>
                 </div>
               </div>
             </div>
@@ -116,5 +140,6 @@
   </footer>
 
   <script type="module" src="src/js/site.js"></script>
+  <script type="module" src="src/js/contact-form.js"></script>
 </body>
 </html>

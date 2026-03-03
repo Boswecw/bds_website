@@ -138,6 +138,7 @@ The current website routes are organized into clear public lanes:
 The client-side behavior is split across two places:
 
 - `src/js/site.js` provides shared mobile-nav behavior for every page
+- `src/js/contact-form.js` provides the contact-page intake submission flow
 - `index.html` contains the homepage-only HUD behavior
 - the HUD script handles open/close state, overlay dismissal, `Escape`, focus handoff into the input, and focus trapping inside the panel
 
@@ -237,6 +238,7 @@ bds_website/
 ├── index.html
 ├── products.html
 ├── security.html
+├── SMITH_icon.png
 ├── services.html
 ├── store.html
 ├── legal/
@@ -252,6 +254,7 @@ bds_website/
 │   │       ├── AuthorForge.webp
 │   │       └── VibeForge.webp
 │   ├── js/
+│   │   ├── contact-form.js
 │   │   └── site.js
 │   └── styles/
 │       ├── footer.css
@@ -287,6 +290,7 @@ bds_website/
 ## Folder Roles
 
 - `src/styles/` holds the actual reusable presentation system.
+- `src/js/` holds the small shared/browser-side behaviors for navigation and contact-form submission.
 - `docs/` contains planning and reference material that informed the implementation.
 - `doc/system/` is the maintained modular system reference.
 - `out/` holds generated evidence artifacts already checked into the repo.
@@ -311,12 +315,12 @@ bds_website/
 | Products | `products.html` | Live product-entry page for applications |
 | Services | `services.html` | Live services-entry page |
 | Forge | `forge.html` | Live platform overview page |
-| Meet SMITH | `meet-smith.html` | Live secondary platform explainer |
+| Meet SMITH | `meet-smith.html` | Live secondary platform explainer with dedicated icon hero |
 | Architecture | `architecture.html` | Live authority / white-paper lane |
 | Store | `store.html` | Live licensing surface with placeholder purchase coordination |
 | Security | `security.html` | Live trust/posture page |
 | About | `about.html` | Live company identity page |
-| Contact | `contact.html` | Live inquiry and support page |
+| Contact | `contact.html` | Live inquiry and support page wired to the public intake service |
 | AuthorForge | `authorforge.html` | Live product detail page |
 | AuthorForge Founder | `authorforge-founder.html` | Live supporting detail page |
 | AuthorForge Cost Comparison | `authorforge-cost-comparison.html` | Live supporting detail page |
@@ -433,6 +437,14 @@ In this repo, those items are largely documentation and positioning statements t
 
 That means the security model is currently architectural intent plus site messaging, not a full production commerce stack.
 
+## Public Intake Boundary
+
+The public contact page now submits consultation requests to the Rust intake service over HTTPS. That gives the marketing site a real inquiry lane without exposing ForgeCommand's admin surface directly from the website.
+
+- website contact form posts to the public intake endpoint
+- intake persistence and triage happen outside this static website repo
+- operator review still belongs in ForgeCommand rather than the marketing surface
+
 ## Commerce Posture
 
 The public store posture is intentionally bounded:
@@ -462,9 +474,11 @@ What exists now:
 
 - deterministic static page rendering
 - shared mobile-navigation behavior via `src/js/site.js`
+- contact-page intake submission via `src/js/contact-form.js`
 - shared CSS tokens and layout styles
 - shared content-page styling for services, forge, architecture, security, about, contact, and store routes
 - published legal policy pages for privacy, terms, refund, and EULA
+- contact and legal surfaces now consistently point to the same business email address
 - lightweight homepage HUD interaction script
 - StateForge QC wiring in-repo
 - checked-in StateForge evidence and report artifacts under `out/` and `tools/stateforge/out/`
@@ -481,8 +495,9 @@ What does not exist yet:
 
 1. Stripe checkout is still placeholder-level; the store currently routes into contact-based purchase coordination rather than live payment links.
 2. Only AuthorForge has a dedicated detail page today; additional product pages will need the same treatment as the portfolio expands.
-3. Security and ecosystem claims can outpace implementation if future copy is not kept precise.
-4. Repeated header/footer markup increases drift risk across pages.
+3. The contact form now depends on public intake-service availability; if that service is down, users fall back to business email.
+4. Security and ecosystem claims can outpace implementation if future copy is not kept precise.
+5. Repeated header/footer markup increases drift risk across pages.
 
 ## Maintenance Rule
 

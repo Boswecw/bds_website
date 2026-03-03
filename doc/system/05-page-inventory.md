@@ -8,12 +8,12 @@
 | Products | `products.html` | Live product-entry page for applications |
 | Services | `services.html` | Live services-entry page |
 | Forge | `forge.html` | Live platform overview page |
-| Meet SMITH | `meet-smith.html` | Live secondary platform explainer |
+| Meet SMITH | `meet-smith.html` | Live secondary platform explainer with dedicated icon hero |
 | Architecture | `architecture.html` | Live authority / white-paper lane |
 | Store | `store.html` | Live licensing surface with placeholder purchase coordination |
 | Security | `security.html` | Live trust/posture page |
 | About | `about.html` | Live company identity page |
-| Contact | `contact.html` | Live inquiry and support page |
+| Contact | `contact.html` | Live inquiry and support page wired to the public intake service |
 | AuthorForge | `authorforge.html` | Live product detail page |
 | AuthorForge Founder | `authorforge-founder.html` | Live supporting detail page |
 | AuthorForge Cost Comparison | `authorforge-cost-comparison.html` | Live supporting detail page |

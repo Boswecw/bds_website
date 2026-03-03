@@ -20,6 +20,7 @@ bds_website/
 ├── index.html
 ├── products.html
 ├── security.html
+├── SMITH_icon.png
 ├── services.html
 ├── store.html
 ├── legal/
@@ -35,6 +36,7 @@ bds_website/
 │   │       ├── AuthorForge.webp
 │   │       └── VibeForge.webp
 │   ├── js/
+│   │   ├── contact-form.js
 │   │   └── site.js
 │   └── styles/
 │       ├── footer.css
@@ -70,6 +72,7 @@ bds_website/
 ## Folder Roles
 
 - `src/styles/` holds the actual reusable presentation system.
+- `src/js/` holds the small shared/browser-side behaviors for navigation and contact-form submission.
 - `docs/` contains planning and reference material that informed the implementation.
 - `doc/system/` is the maintained modular system reference.
 - `out/` holds generated evidence artifacts already checked into the repo.

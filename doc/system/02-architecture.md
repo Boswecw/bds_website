@@ -43,6 +43,7 @@ The current website routes are organized into clear public lanes:
 The client-side behavior is split across two places:
 
 - `src/js/site.js` provides shared mobile-nav behavior for every page
+- `src/js/contact-form.js` provides the contact-page intake submission flow
 - `index.html` contains the homepage-only HUD behavior
 - the HUD script handles open/close state, overlay dismissal, `Escape`, focus handoff into the input, and focus trapping inside the panel
 

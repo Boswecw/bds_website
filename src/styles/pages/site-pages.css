@@ -65,6 +65,14 @@
   color: var(--text-secondary);
 }
 
+.page-hero__icon {
+  width: clamp(96px, 18vw, 152px);
+  height: auto;
+  margin-top: var(--space-3);
+  border-radius: 18px;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.28);
+}
+
 .page-pills {
   display: flex;
   flex-wrap: wrap;
@@ -334,6 +342,11 @@
   gap: var(--space-2);
 }
 
+.page-form__help {
+  margin-bottom: var(--space-2);
+  color: var(--text-secondary);
+}
+
 .page-field label {
   display: block;
   margin-bottom: 0.4rem;
@@ -358,11 +371,38 @@
   resize: vertical;
 }
 
+.page-field--honeypot {
+  position: absolute;
+  left: -100vw;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
 .page-field input:focus-visible,
 .page-field select:focus-visible,
 .page-field textarea:focus-visible {
   outline: 2px solid var(--accent-border);
   outline-offset: 2px;
+}
+
+.page-form__status {
+  min-height: 1.5rem;
+  margin: 0;
+  font-size: var(--fs-small);
+  color: var(--text-secondary);
+}
+
+.page-form__status[data-state="pending"] {
+  color: var(--text-secondary);
+}
+
+.page-form__status[data-state="success"] {
+  color: #8ce0b8;
+}
+
+.page-form__status[data-state="error"] {
+  color: #f6b0aa;
 }
 
 .page-meta {

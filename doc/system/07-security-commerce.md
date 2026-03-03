@@ -23,6 +23,14 @@ In this repo, those items are largely documentation and positioning statements t
 
 That means the security model is currently architectural intent plus site messaging, not a full production commerce stack.
 
+## Public Intake Boundary
+
+The public contact page now submits consultation requests to the Rust intake service over HTTPS. That gives the marketing site a real inquiry lane without exposing ForgeCommand's admin surface directly from the website.
+
+- website contact form posts to the public intake endpoint
+- intake persistence and triage happen outside this static website repo
+- operator review still belongs in ForgeCommand rather than the marketing surface
+
 ## Commerce Posture
 
 The public store posture is intentionally bounded:

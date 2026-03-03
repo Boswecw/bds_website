@@ -14,9 +14,11 @@ What exists now:
 
 - deterministic static page rendering
 - shared mobile-navigation behavior via `src/js/site.js`
+- contact-page intake submission via `src/js/contact-form.js`
 - shared CSS tokens and layout styles
 - shared content-page styling for services, forge, architecture, security, about, contact, and store routes
 - published legal policy pages for privacy, terms, refund, and EULA
+- contact and legal surfaces now consistently point to the same business email address
 - lightweight homepage HUD interaction script
 - StateForge QC wiring in-repo
 - checked-in StateForge evidence and report artifacts under `out/` and `tools/stateforge/out/`
@@ -33,8 +35,9 @@ What does not exist yet:
 
 1. Stripe checkout is still placeholder-level; the store currently routes into contact-based purchase coordination rather than live payment links.
 2. Only AuthorForge has a dedicated detail page today; additional product pages will need the same treatment as the portfolio expands.
-3. Security and ecosystem claims can outpace implementation if future copy is not kept precise.
-4. Repeated header/footer markup increases drift risk across pages.
+3. The contact form now depends on public intake-service availability; if that service is down, users fall back to business email.
+4. Security and ecosystem claims can outpace implementation if future copy is not kept precise.
+5. Repeated header/footer markup increases drift risk across pages.
 
 ## Maintenance Rule
 
