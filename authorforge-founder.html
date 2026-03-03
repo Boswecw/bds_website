@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Why AuthorForge was built and the workflow problem it is designed to solve.">
+  <title>Why I Built AuthorForge — Boswell Digital Solutions</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Source+Sans+3:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="src/styles/global.css">
+  <link rel="stylesheet" href="src/styles/header.css">
+  <link rel="stylesheet" href="src/styles/footer.css">
+  <link rel="stylesheet" href="src/styles/hud.css">
+  <link rel="stylesheet" href="src/styles/pages/product-detail.css">
+  <style>
+    :root {
+      --accent: #d88a2d;
+      --accentSoft: rgba(216, 138, 45, 0.22);
+    }
+  </style>
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to main content</a>
+  <header class="site-header" role="banner">
+    <div class="site-header__inner">
+      <a href="/" class="site-header__logo" aria-label="Boswell Digital Solutions — Home">
+        <img src="src/assets/images/bds-logo.png" alt="BDS" class="site-header__logo-img">
+        <span>Boswell Digital Solutions</span>
+      </a>
+      <button class="site-header__menu-toggle" aria-label="Toggle navigation" aria-expanded="false" aria-controls="main-nav" id="menu-toggle">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+      <nav class="site-header__nav" id="main-nav" aria-label="Main navigation">
+        <a href="products.html" class="site-header__nav-link">Products</a>
+        <a href="store.html" class="site-header__nav-link">Store</a>
+        <a href="security.html" class="site-header__nav-link">Security</a>
+        <a href="about.html" class="site-header__nav-link">About</a>
+        <a href="contact.html" class="site-header__nav-link">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" class="product-detail-page">
+    <div class="container">
+      <div class="product-detail-page__canvas">
+        <div class="product-topbar">
+          <div class="product-crumbs">
+            <a href="index.html">Home</a> / <a href="products.html">Products</a> / <a href="authorforge.html">AuthorForge</a> / <span>Founder Statement</span>
+          </div>
+          <div class="product-sku">AF-FOUNDER</div>
+        </div>
+
+        <section class="product-hero">
+          <div>
+            <div class="product-kicker">Founder Statement</div>
+            <h1 class="product-title">Why I Built AuthorForge</h1>
+            <p class="product-lede">AuthorForge came out of a direct publishing problem: too many disconnected tools, too much manual handoff, and too little structural control for authors trying to build books with seriousness.</p>
+            <div class="product-cta-row">
+              <a class="product-btn product-btn--primary" href="authorforge.html">Back to AuthorForge →</a>
+            </div>
+          </div>
+
+          <aside class="product-hero-art" aria-label="AuthorForge product art">
+            <img src="src/assets/images/products/AuthorForge.webp" alt="AuthorForge anvil and quill">
+          </aside>
+        </section>
+
+        <section class="product-sec">
+          <div class="product-card">
+            <div class="product-card__body">
+              <p>I built AuthorForge because I’m an author.</p>
+              <p>And I was tired of stitching together half-connected tools just to publish a single book.</p>
+              <p>Drafting in one app. Tracking lore in another. Designing covers elsewhere. Manually calculating spine width. Fixing distributor formatting errors after rejection.</p>
+              <p>None of the tools were terrible. None of them were complete.</p>
+              <p>Each one solved a slice of the work, but publishing is not a slice problem. It is a systems problem. A manuscript changes the lore. Lore affects continuity. Continuity affects revision. Revision affects layout. Layout affects exports. Exports affect distribution. Once you see the workflow as one pipeline, the disconnected stack starts to feel structurally wrong.</p>
+              <p>So I built the system I wished existed.</p>
+              <p>AuthorForge replaces the fragmented stack with one deliberate workflow. It is meant to be calm, controlled, and practical: a place where the writing process and the publishing process can live inside the same governed environment.</p>
+              <p>That is why AuthorForge exists. Not to add more novelty to the author-tool market, but to remove operational friction from serious independent publishing.</p>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer" role="contentinfo">
+    <div class="site-footer__inner">
+      <div class="site-footer__bottom">
+        <span class="site-footer__copy">&copy; 2025 Boswell Digital Solutions LLC. All rights reserved.</span>
+        <span class="site-footer__sdvosb">SDVOSB</span>
+      </div>
+    </div>
+  </footer>
+
+  <script type="module" src="src/js/site.js"></script>
+</body>
+</html>

@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="AuthorForge — Debian-native Authoring OS for serious indie authors and small publishing companies.">
+  <title>AuthorForge — Boswell Digital Solutions</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Source+Sans+3:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="src/styles/global.css">
+  <link rel="stylesheet" href="src/styles/header.css">
+  <link rel="stylesheet" href="src/styles/footer.css">
+  <link rel="stylesheet" href="src/styles/hud.css">
+  <link rel="stylesheet" href="src/styles/pages/product-detail.css">
+  <style>
+    :root {
+      --accent: #d88a2d;
+      --accentSoft: rgba(216, 138, 45, 0.22);
+    }
+  </style>
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to main content</a>
+  <header class="site-header" role="banner">
+    <div class="site-header__inner">
+      <a href="/" class="site-header__logo" aria-label="Boswell Digital Solutions — Home">
+        <img src="src/assets/images/bds-logo.png" alt="BDS" class="site-header__logo-img">
+        <span>Boswell Digital Solutions</span>
+      </a>
+      <button class="site-header__menu-toggle" aria-label="Toggle navigation" aria-expanded="false" aria-controls="main-nav" id="menu-toggle">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+      <nav class="site-header__nav" id="main-nav" aria-label="Main navigation">
+        <a href="products.html" class="site-header__nav-link">Products</a>
+        <a href="store.html" class="site-header__nav-link">Store</a>
+        <a href="security.html" class="site-header__nav-link">Security</a>
+        <a href="about.html" class="site-header__nav-link">About</a>
+        <a href="contact.html" class="site-header__nav-link">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" class="product-detail-page">
+    <div class="container">
+      <div class="product-detail-page__canvas">
+        <div class="product-topbar">
+          <div class="product-crumbs">
+            <a href="index.html">Home</a> / <a href="products.html">Products</a> / <span>AuthorForge</span>
+          </div>
+          <div class="product-sku">AF-OS-01</div>
+        </div>
+
+        <section class="product-hero">
+          <div>
+            <div class="product-kicker">Authoring Operating System</div>
+            <h1 class="product-title">AuthorForge</h1>
+            <p class="product-lede">AuthorForge is a Debian-native Authoring OS built for serious indie authors and small publishing companies. It manages the complete narrative lifecycle — drafting, lore, arcs, maps, revision, cover production, and distributor-ready export — inside a governed, local-first environment.</p>
+
+            <div class="product-rail" aria-label="Key traits">
+              <span class="product-chip"><span class="product-dot" aria-hidden="true"></span>Local-first</span>
+              <span class="product-chip"><span class="product-dot" aria-hidden="true"></span>Full narrative lifecycle</span>
+              <span class="product-chip"><span class="product-dot" aria-hidden="true"></span>Distributor-ready output</span>
+            </div>
+
+            <div class="product-cta-row">
+              <a class="product-btn product-btn--primary" href="#editions">View Pricing &amp; Editions →</a>
+              <a class="product-btn" href="#security">Security &amp; Control →</a>
+            </div>
+          </div>
+
+          <aside class="product-hero-art" aria-label="Product art">
+            <img src="src/assets/images/products/AuthorForge.webp" alt="AuthorForge anvil and quill">
+          </aside>
+        </section>
+
+        <section class="product-sec" id="founder">
+          <div class="product-sec-head">
+            <h2>Why AuthorForge Exists</h2>
+            <p>Founder context matters here because the product is solving a workflow problem that only becomes obvious when you have actually tried to publish books through fragmented tooling.</p>
+          </div>
+
+          <div class="product-card">
+            <div class="product-card__body">
+              <p>I built AuthorForge because I’m an author.</p>
+              <p>And I was tired of stitching together half-connected tools just to publish a single book.</p>
+              <p>Drafting in one app. Tracking lore in another. Designing covers elsewhere. Manually calculating spine width. Fixing distributor formatting errors after rejection.</p>
+              <p>None of the tools were terrible. None of them were complete.</p>
+              <p>So I built the system I wished existed.</p>
+              <p>AuthorForge replaces the fragmented stack with one deliberate workflow.</p>
+              <a class="product-inline-link" href="authorforge-founder.html">Read the full founder statement</a>
+            </div>
+          </div>
+        </section>
+
+        <section class="product-sec" id="what">
+          <div class="product-sec-head">
+            <h2>What it brings together</h2>
+            <p>AuthorForge is positioned as a complete authoring system rather than a narrow writing utility, so the page groups the value into three durable pillars.</p>
+          </div>
+
+          <div class="product-grid3">
+            <div class="product-card">
+              <div class="product-card__heading">Narrative Architecture</div>
+              <div class="product-card__body">Structured manuscript engine, scene-level organization, multi-book series management, revision pass tracking, and snapshot versioning.</div>
+            </div>
+            <div class="product-card">
+              <div class="product-card__heading">Lore, Arcs &amp; Maps</div>
+              <div class="product-card__body">Canon-aware worldbuilding graph, character relationship tracking, arc milestones, timeline enforcement, and geography-linked maps.</div>
+            </div>
+            <div class="product-card">
+              <div class="product-card__heading">Production &amp; Publishing Pipeline</div>
+              <div class="product-card__body">Cover Forge with spine-width calculation, trim/bleed validation, ISBN pool management, Publishing Readiness HUD, and deterministic exports (EPUB, PDF, DOCX, Markdown, HTML) with distributor presets.</div>
+            </div>
+          </div>
+        </section>
+
+        <section class="product-sec" id="how">
+          <div class="product-sec-head">
+            <h2>How it works</h2>
+            <p>The flow is simple on purpose: build the story system, refine with discipline, then move through a deliberate distribution stage instead of improvising at the end.</p>
+          </div>
+
+          <div class="product-steps">
+            <div class="product-step">
+              <div class="product-step__number">Step 01</div>
+              <div>
+                <div class="product-step__title">Build the Story System</div>
+                <div class="product-step__desc">Start with manuscript structure, series scaffolding, characters, lore, and geography so the narrative has a governed foundation before drafting accelerates.</div>
+              </div>
+            </div>
+            <div class="product-step">
+              <div class="product-step__number">Step 02</div>
+              <div>
+                <div class="product-step__title">Refine with Discipline</div>
+                <div class="product-step__desc">Run revision passes against canon, arcs, continuity, and scene intent so changes stay coherent instead of creating new drift elsewhere in the book.</div>
+              </div>
+            </div>
+            <div class="product-step">
+              <div class="product-step__number">Step 03</div>
+              <div>
+                <div class="product-step__title">Prepare for Distribution</div>
+                <div class="product-step__desc">Finalize packaging, validate trim and bleed, confirm publishing readiness, and export into distributor-ready formats without leaving the AuthorForge workflow.</div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="product-sec" id="editions">
+          <div class="product-sec-head">
+            <h2>Editions</h2>
+            <p>Standard is the core Debian desktop application. Pro adds cloud-based multi-model AI capabilities and higher-order workflow acceleration without turning publishing into a subscription lock.</p>
+          </div>
+
+          <div class="product-editions">
+            <div class="product-edition">
+              <div class="product-edition__label">Standard</div>
+              <h3>One-time license</h3>
+              <div class="product-edition__price">Standard: one-time</div>
+              <ul>
+                <li>Debian desktop app</li>
+                <li>Local-first / offline functional</li>
+                <li>Includes full Authoring OS for writing + publishing</li>
+                <li>No subscription required to publish</li>
+              </ul>
+            </div>
+            <div class="product-edition">
+              <div class="product-edition__label">Pro</div>
+              <h3>Monthly subscription</h3>
+              <div class="product-edition__price">Pro: monthly</div>
+              <ul>
+                <li>Activates cloud-based AI with multiple models via multi-LLM routing</li>
+                <li>Batch-first AI workflows where possible</li>
+                <li>Series-wide continuity sweeps and canon-aware rewrite passes</li>
+                <li>RAG-backed citations and optional cloud TTS for Story Reel</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <section class="product-sec" id="security">
+          <div class="product-sec-head">
+            <h2>Security &amp; Control</h2>
+            <p>AuthorForge is presented as an authoring operating system, so control boundaries need to be explicit instead of implied.</p>
+          </div>
+
+          <div class="product-assurance">
+            <div>
+              <h3>Built for governed authorship</h3>
+              <p>AuthorForge keeps the manuscript system under author control. Local-first storage and deterministic export flows are first-class parts of the product model, not afterthoughts bolted onto a cloud editor.</p>
+              <p>AI is optional, invoked explicitly, and separated from the core writing-and-publishing path so authors can keep working without forced cloud dependency.</p>
+            </div>
+
+            <div class="product-proof" aria-label="Assurance checklist">
+              <div class="product-proof__row"><span>Local manuscript storage</span><span class="product-proof__ok">Yes</span></div>
+              <div class="product-proof__row"><span>Forced cloud dependency</span><span class="product-proof__ok">No</span></div>
+              <div class="product-proof__row"><span>Explicit AI invocation</span><span class="product-proof__ok">Yes</span></div>
+              <div class="product-proof__row"><span>Deterministic export pipeline</span><span class="product-proof__ok">Yes</span></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="product-sec" id="comparison">
+          <div class="product-sec-head">
+            <h2>Cost comparison</h2>
+            <p>Many authors pay for multiple disconnected tools across drafting, worldbuilding, formatting, cover prep, and AI assistance. AuthorForge is meant to reduce that fragmentation.</p>
+          </div>
+
+          <div class="product-card">
+            <div class="product-card__body">
+              Most author workflows are assembled from separate subscriptions and one-off utilities. That works until continuity, packaging, and distributor readiness all need to be managed together under deadline.
+            </div>
+            <a class="product-inline-link" href="authorforge-cost-comparison.html">See the full cost comparison chart</a>
+          </div>
+        </section>
+
+        <section class="product-sec" id="faq">
+          <div class="product-sec-head">
+            <h2>FAQ</h2>
+            <p>Use native disclosure controls so the answers stay accessible, indexable, and script-free.</p>
+          </div>
+
+          <details class="product-details">
+            <summary>Do I need Pro to publish a book?</summary>
+            <p>No. Standard is intended to include the full Authoring OS for writing and publishing. Pro adds cloud AI workflows, not the basic ability to ship a book.</p>
+          </details>
+          <details class="product-details">
+            <summary>Is AuthorForge cloud-based?</summary>
+            <p>No. The core product is local-first and offline functional. Pro introduces optional cloud-backed AI services, but the product is not designed around mandatory cloud dependence.</p>
+          </details>
+          <details class="product-details">
+            <summary>Does AuthorForge replace cover or formatting tools?</summary>
+            <p>It aims to replace much of the fragmented author stack by bringing cover prep, spine-width calculation, publishing validation, and deterministic export into one workflow. Some external tools may still remain in edge cases, but AuthorForge is designed to reduce that sprawl.</p>
+          </details>
+        </section>
+
+        <section class="product-final" aria-label="Primary call to action">
+          <h2>Build Your Book Like Infrastructure.</h2>
+          <div class="product-final__line">Draft, refine, validate, and publish inside a complete Authoring Operating System designed for independent publishing.</div>
+          <a class="product-btn product-btn--primary" href="#editions">View Pricing &amp; Editions →</a>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer" role="contentinfo">
+    <div class="site-footer__inner">
+      <div class="site-footer__bottom">
+        <span class="site-footer__copy">&copy; 2025 Boswell Digital Solutions LLC. All rights reserved.</span>
+        <span class="site-footer__sdvosb">SDVOSB</span>
+      </div>
+    </div>
+  </footer>
+
+  <script type="module" src="src/js/site.js"></script>
+</body>
+</html>

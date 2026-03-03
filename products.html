@@ -12,6 +12,7 @@
   <link rel="stylesheet" href="src/styles/header.css">
   <link rel="stylesheet" href="src/styles/footer.css">
   <link rel="stylesheet" href="src/styles/hud.css">
+  <link rel="stylesheet" href="src/styles/pages/products.css">
 </head>
 <body>
   <a href="#main" class="skip-link">Skip to main content</a>
@@ -34,11 +35,76 @@
     </div>
   </header>
   <main id="main">
-    <section class="section">
+    <section class="products-page">
       <div class="container">
-        <h1>Products</h1>
-        <p style="color: var(--text-secondary); margin-top: var(--space-2);">Discover the Forge ecosystem — governance-first AI tools.</p>
-        <p class="text-muted" style="margin-top: var(--space-4);">This page is under construction.</p>
+        <div class="products-page__hero">
+          <span class="products-page__eyebrow">Forge Gallery</span>
+          <h1>Products</h1>
+          <p>
+            Public BDS products are presented as focused forge instruments: one for literary craft, one for structured AI signal work.
+            Each keeps the same disciplined doctrine while expressing a distinct product identity.
+          </p>
+        </div>
+
+        <section class="products-page__grid" aria-label="Public product catalog">
+          <article class="forge-card forge-ember">
+            <div class="forge-image">
+              <img src="src/assets/images/products/AuthorForge.webp" alt="AuthorForge anvil and quill">
+            </div>
+
+            <div class="forge-body">
+              <div class="forge-title">AuthorForge</div>
+              <div class="forge-sub">Creative Authority Workbench</div>
+
+              <p class="forge-desc">
+                A disciplined writing environment where imagination meets structure.
+                Draft, worldbuild, and refine inside a controlled creative forge.
+              </p>
+
+              <div class="forge-tags" aria-label="AuthorForge features">
+                <span class="forge-tag">Worldbuilding</span>
+                <span class="forge-tag">AI Drafting</span>
+                <span class="forge-tag">Local-First</span>
+                <span class="forge-tag">Manuscript Structuring</span>
+              </div>
+
+              <a href="authorforge.html" class="forge-cta">Enter the Forge →</a>
+            </div>
+          </article>
+
+          <article class="forge-card forge-signal">
+            <div class="forge-image">
+              <div class="forge-image__banner">Coming Soon</div>
+              <img src="src/assets/images/products/VibeForge.webp" alt="VibeForge molten puzzle and signal line">
+            </div>
+
+            <div class="forge-body">
+              <div class="forge-title">VibeForge</div>
+              <div class="forge-sub">AI Prompt Engineering Bench</div>
+
+              <p class="forge-desc">
+                Multi-model orchestration for prompt design, refinement,
+                and structured AI output testing, built for control and clarity.
+              </p>
+
+              <div class="forge-tags" aria-label="VibeForge features">
+                <span class="forge-tag">Prompt Studio</span>
+                <span class="forge-tag">Multi-Model</span>
+                <span class="forge-tag">Structured Output</span>
+                <span class="forge-tag">Linux-First</span>
+              </div>
+
+              <a href="contact.html" class="forge-cta">Shape the Signal →</a>
+            </div>
+          </article>
+        </section>
+
+        <section class="products-page__note" aria-labelledby="products-note-heading">
+          <h2 id="products-note-heading">Public Exposure Boundary</h2>
+          <p>
+            Only public-facing products are listed here. Internal operational tooling and non-public control systems are intentionally excluded from the public catalog.
+          </p>
+        </section>
       </div>
     </section>
   </main>
