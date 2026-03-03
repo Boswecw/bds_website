@@ -1,0 +1,61 @@
+{
+  "ok": false,
+  "tool": "stateforge",
+  "version": "0.2.1",
+  "model_hash": "sha256:1b280629cb9dfa2e3d765f209ed167db045986f3288e83dd668ec5635faf1ba1",
+  "config": {
+    "maxDepth": 30,
+    "maxStates": 200000
+  },
+  "stats": {
+    "statesExplored": 3,
+    "maxDepthReached": 2,
+    "elapsedMs": 0
+  },
+  "violations": [
+    {
+      "invariant": "escalation_requires_prior_approval",
+      "message": "Authority escalation occurred before pipeline approval",
+      "counterexample_depth": 1,
+      "counterexample": {
+        "trace": [
+          {
+            "step": 0,
+            "action": "start_execution",
+            "actor": "SMITH",
+            "ring": "R1",
+            "state": {
+              "pipeline": "PLANNING",
+              "approvedSeen": false,
+              "dependency": "OK",
+              "authority": {
+                "ring": "R1",
+                "lastEscalation": true
+              },
+              "evidence_chain": {
+                "headHash": null,
+                "sealed": false,
+                "length": 0,
+                "forked": false,
+                "sealedHeadHash": null,
+                "expectedPrev": null,
+                "lastAppendType": "none",
+                "lastAppendAccepted": false,
+                "lastAppendPrevMatchesExpected": true,
+                "nextNonce": 0,
+                "seenNonces": [],
+                "lastAppend": null
+              },
+              "cost": {
+                "cap": 0,
+                "total": 0,
+                "maxTotal": 3,
+                "lastCharge": null
+              }
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

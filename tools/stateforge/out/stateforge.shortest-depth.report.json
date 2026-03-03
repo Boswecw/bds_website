@@ -1,0 +1,64 @@
+{
+  "ok": false,
+  "tool": "stateforge",
+  "version": "0.2.1",
+  "model_hash": "sha256:93ac9d440cbd590fa10e020a695e6d498f7d32b2588cacf577663fd93aa3649a",
+  "config": {
+    "maxDepth": 30,
+    "maxStates": 200000
+  },
+  "stats": {
+    "statesExplored": 2,
+    "maxDepthReached": 1,
+    "elapsedMs": 0
+  },
+  "violations": [
+    {
+      "invariant": "cost_cap_not_exceeded",
+      "message": "Cost cap exceeded: total 1 > cap 0",
+      "counterexample_depth": 1,
+      "counterexample": {
+        "trace": [
+          {
+            "step": 0,
+            "action": "cost_charge_embed",
+            "actor": "Human",
+            "ring": "R0",
+            "state": {
+              "pipeline": "IDLE",
+              "approvedSeen": false,
+              "dependency": "OK",
+              "authority": {
+                "ring": "R2",
+                "lastEscalation": false
+              },
+              "evidence_chain": {
+                "headHash": null,
+                "sealed": false,
+                "length": 0,
+                "forked": false,
+                "sealedHeadHash": null,
+                "expectedPrev": null,
+                "lastAppendType": "none",
+                "lastAppendAccepted": false,
+                "lastAppendPrevMatchesExpected": true,
+                "nextNonce": 0,
+                "seenNonces": [],
+                "lastAppend": null
+              },
+              "cost": {
+                "cap": 0,
+                "total": 1,
+                "maxTotal": 1,
+                "lastCharge": {
+                  "op": "embed",
+                  "amount": 1
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

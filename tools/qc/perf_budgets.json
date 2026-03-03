@@ -1,0 +1,14 @@
+{
+  "default": {
+    "max_states": 20000,
+    "max_depth": 64,
+    "max_runtime_ms": 2000
+  },
+  "repos": {
+    "forge-smithy": {
+      "max_states": 40000,
+      "max_depth": 96,
+      "max_runtime_ms": 7000
+    }
+  }
+}

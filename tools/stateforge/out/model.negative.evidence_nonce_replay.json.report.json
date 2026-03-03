@@ -1,0 +1,66 @@
+{
+  "ok": false,
+  "tool": "stateforge",
+  "version": "0.2.1",
+  "model_hash": "sha256:1ef9f677e54d2ee4fe27cf4c90de0c2076f0274a8b716e40c447afdc6210bbf5",
+  "config": {
+    "maxDepth": 30,
+    "maxStates": 200000
+  },
+  "stats": {
+    "statesExplored": 4,
+    "maxDepthReached": 3,
+    "elapsedMs": 0
+  },
+  "violations": [
+    {
+      "invariant": "evidence_nonce_no_replay",
+      "message": "Evidence nonce replay detected for nonce 0",
+      "counterexample_depth": 1,
+      "counterexample": {
+        "trace": [
+          {
+            "step": 0,
+            "action": "ev_append_with_nonce_0",
+            "actor": "Human",
+            "ring": "R0",
+            "state": {
+              "pipeline": "IDLE",
+              "approvedSeen": false,
+              "dependency": "OK",
+              "authority": {
+                "ring": "R2",
+                "lastEscalation": false
+              },
+              "evidence_chain": {
+                "headHash": "3794497ca8a302ac5232e323cab08e6250f02c9e1183e44938e2f6a3914c00b0",
+                "sealed": false,
+                "length": 1,
+                "forked": false,
+                "sealedHeadHash": null,
+                "expectedPrev": "3794497ca8a302ac5232e323cab08e6250f02c9e1183e44938e2f6a3914c00b0",
+                "lastAppendType": "valid",
+                "lastAppendAccepted": true,
+                "lastAppendPrevMatchesExpected": true,
+                "nextNonce": 1,
+                "seenNonces": [
+                  0
+                ],
+                "lastAppend": {
+                  "nonce": 0,
+                  "kind": "append_with_nonce_replay"
+                }
+              },
+              "cost": {
+                "cap": 0,
+                "total": 0,
+                "maxTotal": 3,
+                "lastCharge": null
+              }
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

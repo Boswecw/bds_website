@@ -1,0 +1,130 @@
+{
+  "version": "0.2.1",
+  "seed": "stateforge-v0.1-fixed-seed",
+  "defaults": {
+    "maxDepth": 30,
+    "maxStates": 200000
+  },
+  "actions": [
+    "approve_plan",
+    "begin_release",
+    "cost_charge_embed",
+    "cost_charge_llm_call",
+    "cost_charge_retrieve",
+    "cost_charge_tool_call",
+    "dep_degraded",
+    "dep_down",
+    "dep_ok",
+    "enter_evidence_review",
+    "enter_verifying",
+    "ev_append_valid",
+    "ev_seal",
+    "fail",
+    "finalize_release",
+    "noop",
+    "plan",
+    "start_execution",
+    "submit_for_review"
+  ],
+  "nodes": {
+    "pipeline": {
+      "initial": "IDLE",
+      "approvalState": "APPROVED",
+      "terminal": [
+        "FAILED",
+        "RELEASED"
+      ],
+      "failureTransitions": [
+        "APPROVED",
+        "EVIDENCE_REVIEW",
+        "EXECUTING",
+        "IDLE",
+        "PLANNING",
+        "PLAN_REVIEW",
+        "RELEASING",
+        "VERIFYING"
+      ],
+      "transitions": {
+        "APPROVED:start_execution": "EXECUTING",
+        "EVIDENCE_REVIEW:begin_release": "RELEASING",
+        "EXECUTING:enter_verifying": "VERIFYING",
+        "IDLE:plan": "PLANNING",
+        "PLANNING:submit_for_review": "PLAN_REVIEW",
+        "PLAN_REVIEW:approve_plan": "APPROVED",
+        "RELEASING:finalize_release": "RELEASED",
+        "VERIFYING:enter_evidence_review": "EVIDENCE_REVIEW"
+      }
+    },
+    "authority": {
+      "actors": [
+        "Human",
+        "SMITH",
+        "Service"
+      ],
+      "rings": [
+        "R0",
+        "R1",
+        "R2"
+      ],
+      "requirements": {
+        "approve_plan": {
+          "actor": "Human",
+          "ring": "R0"
+        },
+        "finalize_release": {
+          "actor": "SMITH",
+          "ring": "R1"
+        },
+        "start_execution": {
+          "actor": "SMITH",
+          "ring": "R1"
+        }
+      }
+    },
+    "circuit_breaker": {
+      "initial": "OK",
+      "statuses": [
+        "DEGRADED",
+        "DOWN",
+        "OK"
+      ],
+      "criticalActions": [
+        "begin_release",
+        "finalize_release",
+        "start_execution"
+      ]
+    }
+  },
+  "evidence_chain": {
+    "nextNonce": 0,
+    "seenNonces": [],
+    "maxLen": 3,
+    "hashAlg": "sha256",
+    "allowSealEmpty": false,
+    "actions": [
+      "ev_append_invalid_prev",
+      "ev_append_valid",
+      "ev_fork",
+      "ev_mutate_after_seal",
+      "ev_seal"
+    ]
+  },
+  "cost": {
+    "cap": 5,
+    "total": 0,
+    "maxTotal": 8,
+    "allowOverCap": false,
+    "actions": [
+      "cost_charge_embed",
+      "cost_charge_llm_call",
+      "cost_charge_retrieve",
+      "cost_charge_tool_call"
+    ],
+    "schedule": {
+      "embed": 1,
+      "llm_call": 3,
+      "retrieve": 1,
+      "tool_call": 2
+    }
+  }
+}

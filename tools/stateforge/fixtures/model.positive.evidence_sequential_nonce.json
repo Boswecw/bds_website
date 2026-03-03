@@ -1,0 +1,62 @@
+{
+  "version": "0.2.1",
+  "seed": "stateforge-v0.1-fixed-seed",
+  "defaults": {
+    "maxDepth": 30,
+    "maxStates": 200000
+  },
+  "actions": [
+    "ev_append_evidence_a",
+    "ev_append_evidence_b",
+    "ev_append_evidence_c"
+  ],
+  "nodes": {
+    "pipeline": {
+      "initial": "IDLE",
+      "approvalState": "APPROVED",
+      "terminal": [
+        "FAILED",
+        "RELEASED"
+      ],
+      "failureTransitions": [
+        "IDLE"
+      ],
+      "transitions": {}
+    },
+    "authority": {
+      "actors": [
+        "Human",
+        "SMITH",
+        "Service"
+      ],
+      "rings": [
+        "R0",
+        "R1",
+        "R2"
+      ],
+      "requirements": {}
+    },
+    "circuit_breaker": {
+      "initial": "OK",
+      "statuses": [
+        "OK",
+        "DEGRADED",
+        "DOWN"
+      ],
+      "criticalActions": []
+    }
+  },
+  "evidence_chain": {
+    "maxLen": 3,
+    "hashAlg": "sha256",
+    "allowSealEmpty": false,
+    "nextNonce": 0,
+    "seenNonces": [],
+    "actions": [
+      "ev_append_evidence_a",
+      "ev_append_evidence_b",
+      "ev_append_evidence_c",
+      "ev_append_with_nonce_0"
+    ]
+  }
+}

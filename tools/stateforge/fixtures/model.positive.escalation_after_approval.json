@@ -1,0 +1,82 @@
+{
+  "version": "0.2.1",
+  "seed": "stateforge-v0.1-fixed-seed",
+  "defaults": {
+    "maxDepth": 30,
+    "maxStates": 200000
+  },
+  "actions": [
+    "plan",
+    "submit_for_review",
+    "approve_plan",
+    "start_execution"
+  ],
+  "nodes": {
+    "pipeline": {
+      "initial": "IDLE",
+      "approvalState": "APPROVED",
+      "terminal": [
+        "FAILED",
+        "RELEASED"
+      ],
+      "failureTransitions": [
+        "IDLE",
+        "PLANNING",
+        "PLAN_REVIEW",
+        "APPROVED",
+        "EXECUTING"
+      ],
+      "transitions": {
+        "IDLE:plan": "PLANNING",
+        "PLANNING:submit_for_review": "PLAN_REVIEW",
+        "PLAN_REVIEW:approve_plan": "APPROVED",
+        "APPROVED:start_execution": "EXECUTING"
+      }
+    },
+    "authority": {
+      "actors": [
+        "Human",
+        "SMITH",
+        "Service"
+      ],
+      "rings": [
+        "R0",
+        "R1",
+        "R2"
+      ],
+      "requirements": {
+        "approve_plan": {
+          "actor": "Human",
+          "ring": "R0"
+        },
+        "start_execution": {
+          "actor": "SMITH",
+          "ring": "R1"
+        }
+      }
+    },
+    "circuit_breaker": {
+      "initial": "OK",
+      "statuses": [
+        "OK",
+        "DEGRADED",
+        "DOWN"
+      ],
+      "criticalActions": [
+        "start_execution"
+      ]
+    }
+  },
+  "evidence_chain": {
+    "maxLen": 3,
+    "hashAlg": "sha256",
+    "allowSealEmpty": false,
+    "actions": [
+      "ev_append_invalid_prev",
+      "ev_append_valid",
+      "ev_fork",
+      "ev_mutate_after_seal",
+      "ev_seal"
+    ]
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "name": "stateforge",
+  "version": "0.2.1",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "stateforge": "bun run src/index.ts",
+    "stateforge:check": "bun run src/index.ts",
+    "test": "bun test"
+  }
+}

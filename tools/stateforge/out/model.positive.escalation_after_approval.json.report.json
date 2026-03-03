@@ -1,0 +1,16 @@
+{
+  "ok": true,
+  "tool": "stateforge",
+  "version": "0.2.1",
+  "model_hash": "sha256:7dc7f5249b8445420e92947d6401096065350cdebd392a9754289b0e4b972a5c",
+  "config": {
+    "maxDepth": 30,
+    "maxStates": 200000
+  },
+  "stats": {
+    "statesExplored": 5,
+    "maxDepthReached": 4,
+    "elapsedMs": 0
+  },
+  "violations": []
+}

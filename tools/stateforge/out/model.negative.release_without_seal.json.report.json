@@ -1,0 +1,306 @@
+{
+  "ok": false,
+  "tool": "stateforge",
+  "version": "0.2.1",
+  "model_hash": "sha256:7e88d0c9871777b3d9906ff7411640d0836588f3eb39037c23a31f30a0a47e0b",
+  "config": {
+    "maxDepth": 30,
+    "maxStates": 200000
+  },
+  "stats": {
+    "statesExplored": 266,
+    "maxDepthReached": 13,
+    "elapsedMs": 0
+  },
+  "violations": [
+    {
+      "invariant": "release_requires_sealed_evidence",
+      "message": "Release finalized without sealed evidence chain",
+      "counterexample_depth": 8,
+      "counterexample": {
+        "trace": [
+          {
+            "step": 0,
+            "action": "plan",
+            "actor": "Human",
+            "ring": "R0",
+            "state": {
+              "pipeline": "PLANNING",
+              "approvedSeen": false,
+              "dependency": "OK",
+              "authority": {
+                "ring": "R2",
+                "lastEscalation": false
+              },
+              "evidence_chain": {
+                "headHash": null,
+                "sealed": false,
+                "length": 0,
+                "forked": false,
+                "sealedHeadHash": null,
+                "expectedPrev": null,
+                "lastAppendType": "none",
+                "lastAppendAccepted": false,
+                "lastAppendPrevMatchesExpected": true,
+                "nextNonce": 0,
+                "seenNonces": [],
+                "lastAppend": null
+              },
+              "cost": {
+                "cap": 0,
+                "total": 0,
+                "maxTotal": 3,
+                "lastCharge": null
+              }
+            }
+          },
+          {
+            "step": 1,
+            "action": "submit_for_review",
+            "actor": "Human",
+            "ring": "R0",
+            "state": {
+              "pipeline": "PLAN_REVIEW",
+              "approvedSeen": false,
+              "dependency": "OK",
+              "authority": {
+                "ring": "R2",
+                "lastEscalation": false
+              },
+              "evidence_chain": {
+                "headHash": null,
+                "sealed": false,
+                "length": 0,
+                "forked": false,
+                "sealedHeadHash": null,
+                "expectedPrev": null,
+                "lastAppendType": "none",
+                "lastAppendAccepted": false,
+                "lastAppendPrevMatchesExpected": true,
+                "nextNonce": 0,
+                "seenNonces": [],
+                "lastAppend": null
+              },
+              "cost": {
+                "cap": 0,
+                "total": 0,
+                "maxTotal": 3,
+                "lastCharge": null
+              }
+            }
+          },
+          {
+            "step": 2,
+            "action": "approve_plan",
+            "actor": "Human",
+            "ring": "R0",
+            "state": {
+              "pipeline": "APPROVED",
+              "approvedSeen": true,
+              "dependency": "OK",
+              "authority": {
+                "ring": "R2",
+                "lastEscalation": false
+              },
+              "evidence_chain": {
+                "headHash": null,
+                "sealed": false,
+                "length": 0,
+                "forked": false,
+                "sealedHeadHash": null,
+                "expectedPrev": null,
+                "lastAppendType": "none",
+                "lastAppendAccepted": false,
+                "lastAppendPrevMatchesExpected": true,
+                "nextNonce": 0,
+                "seenNonces": [],
+                "lastAppend": null
+              },
+              "cost": {
+                "cap": 0,
+                "total": 0,
+                "maxTotal": 3,
+                "lastCharge": null
+              }
+            }
+          },
+          {
+            "step": 3,
+            "action": "start_execution",
+            "actor": "SMITH",
+            "ring": "R1",
+            "state": {
+              "pipeline": "EXECUTING",
+              "approvedSeen": true,
+              "dependency": "OK",
+              "authority": {
+                "ring": "R1",
+                "lastEscalation": true
+              },
+              "evidence_chain": {
+                "headHash": null,
+                "sealed": false,
+                "length": 0,
+                "forked": false,
+                "sealedHeadHash": null,
+                "expectedPrev": null,
+                "lastAppendType": "none",
+                "lastAppendAccepted": false,
+                "lastAppendPrevMatchesExpected": true,
+                "nextNonce": 0,
+                "seenNonces": [],
+                "lastAppend": null
+              },
+              "cost": {
+                "cap": 0,
+                "total": 0,
+                "maxTotal": 3,
+                "lastCharge": null
+              }
+            }
+          },
+          {
+            "step": 4,
+            "action": "enter_verifying",
+            "actor": "Human",
+            "ring": "R0",
+            "state": {
+              "pipeline": "VERIFYING",
+              "approvedSeen": true,
+              "dependency": "OK",
+              "authority": {
+                "ring": "R1",
+                "lastEscalation": false
+              },
+              "evidence_chain": {
+                "headHash": null,
+                "sealed": false,
+                "length": 0,
+                "forked": false,
+                "sealedHeadHash": null,
+                "expectedPrev": null,
+                "lastAppendType": "none",
+                "lastAppendAccepted": false,
+                "lastAppendPrevMatchesExpected": true,
+                "nextNonce": 0,
+                "seenNonces": [],
+                "lastAppend": null
+              },
+              "cost": {
+                "cap": 0,
+                "total": 0,
+                "maxTotal": 3,
+                "lastCharge": null
+              }
+            }
+          },
+          {
+            "step": 5,
+            "action": "enter_evidence_review",
+            "actor": "Human",
+            "ring": "R0",
+            "state": {
+              "pipeline": "EVIDENCE_REVIEW",
+              "approvedSeen": true,
+              "dependency": "OK",
+              "authority": {
+                "ring": "R1",
+                "lastEscalation": false
+              },
+              "evidence_chain": {
+                "headHash": null,
+                "sealed": false,
+                "length": 0,
+                "forked": false,
+                "sealedHeadHash": null,
+                "expectedPrev": null,
+                "lastAppendType": "none",
+                "lastAppendAccepted": false,
+                "lastAppendPrevMatchesExpected": true,
+                "nextNonce": 0,
+                "seenNonces": [],
+                "lastAppend": null
+              },
+              "cost": {
+                "cap": 0,
+                "total": 0,
+                "maxTotal": 3,
+                "lastCharge": null
+              }
+            }
+          },
+          {
+            "step": 6,
+            "action": "begin_release",
+            "actor": "Human",
+            "ring": "R0",
+            "state": {
+              "pipeline": "RELEASING",
+              "approvedSeen": true,
+              "dependency": "OK",
+              "authority": {
+                "ring": "R1",
+                "lastEscalation": false
+              },
+              "evidence_chain": {
+                "headHash": null,
+                "sealed": false,
+                "length": 0,
+                "forked": false,
+                "sealedHeadHash": null,
+                "expectedPrev": null,
+                "lastAppendType": "none",
+                "lastAppendAccepted": false,
+                "lastAppendPrevMatchesExpected": true,
+                "nextNonce": 0,
+                "seenNonces": [],
+                "lastAppend": null
+              },
+              "cost": {
+                "cap": 0,
+                "total": 0,
+                "maxTotal": 3,
+                "lastCharge": null
+              }
+            }
+          },
+          {
+            "step": 7,
+            "action": "finalize_release",
+            "actor": "SMITH",
+            "ring": "R1",
+            "state": {
+              "pipeline": "RELEASED",
+              "approvedSeen": true,
+              "dependency": "OK",
+              "authority": {
+                "ring": "R1",
+                "lastEscalation": false
+              },
+              "evidence_chain": {
+                "headHash": null,
+                "sealed": false,
+                "length": 0,
+                "forked": false,
+                "sealedHeadHash": null,
+                "expectedPrev": null,
+                "lastAppendType": "none",
+                "lastAppendAccepted": false,
+                "lastAppendPrevMatchesExpected": true,
+                "nextNonce": 0,
+                "seenNonces": [],
+                "lastAppend": null
+              },
+              "cost": {
+                "cap": 0,
+                "total": 0,
+                "maxTotal": 3,
+                "lastCharge": null
+              }
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

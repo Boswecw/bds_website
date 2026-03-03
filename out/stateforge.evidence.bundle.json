@@ -1,0 +1,44 @@
+{
+  "bundle_version": "stateforge.evidence.v1",
+  "fail_reason": null,
+  "inputs": {
+    "fixtures": {
+      "negatives": [
+        "tools/stateforge/fixtures/model.negative.cost_exceeds_cap.json",
+        "tools/stateforge/fixtures/model.negative.escalation_before_approval.json",
+        "tools/stateforge/fixtures/model.negative.evidence_nonce_replay.json",
+        "tools/stateforge/fixtures/model.negative.release_without_seal.json",
+        "tools/stateforge/fixtures/model.negative.shortest_depth.json"
+      ],
+      "positives": [
+        "tools/stateforge/fixtures/model.positive.cost_within_cap.json",
+        "tools/stateforge/fixtures/model.positive.escalation_after_approval.json",
+        "tools/stateforge/fixtures/model.positive.evidence_sequential_nonce.json"
+      ]
+    },
+    "flags": {
+      "canonical_snapshot": true,
+      "drift_mode": "always",
+      "shortest": true
+    },
+    "model_file": "tools/stateforge/fixtures/model.generated.json",
+    "model_hash": "sha256:73215f337718f117df0a10f3c5d5ff92cb51ab085d3074040307108663d182a1"
+  },
+  "metrics": {
+    "depth": 16,
+    "runtime_ms": 3394,
+    "states": 4572
+  },
+  "outputs": {
+    "canonical_snapshot_file": "tools/stateforge/fixtures/stateforge.report.canonical.json",
+    "canonical_snapshot_hash": "sha256:097c9e843d51d8103e2b6a857fd2d05356acbd0310db6e4baed38cde47d6c473",
+    "report_file": "tools/stateforge/out/stateforge.report.canonical.check.json",
+    "report_hash": "sha256:097c9e843d51d8103e2b6a857fd2d05356acbd0310db6e4baed38cde47d6c473"
+  },
+  "repo": "bds_website",
+  "result": "PASS",
+  "tool": {
+    "qc_runner_version": "stateforge-ecosystem-runner-v0.3",
+    "stateforge_version": "0.2.1"
+  }
+}

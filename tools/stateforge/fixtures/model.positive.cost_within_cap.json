@@ -1,0 +1,79 @@
+{
+  "version": "0.2.1",
+  "seed": "stateforge-v0.1-fixed-seed",
+  "defaults": {
+    "maxDepth": 30,
+    "maxStates": 200000
+  },
+  "actions": [
+    "cost_charge_retrieve",
+    "cost_charge_llm_call",
+    "cost_charge_embed"
+  ],
+  "nodes": {
+    "pipeline": {
+      "initial": "IDLE",
+      "approvalState": "APPROVED",
+      "terminal": [
+        "FAILED",
+        "RELEASED"
+      ],
+      "failureTransitions": [
+        "IDLE"
+      ],
+      "transitions": {}
+    },
+    "authority": {
+      "actors": [
+        "Human",
+        "SMITH",
+        "Service"
+      ],
+      "rings": [
+        "R0",
+        "R1",
+        "R2"
+      ],
+      "requirements": {}
+    },
+    "circuit_breaker": {
+      "initial": "OK",
+      "statuses": [
+        "OK",
+        "DEGRADED",
+        "DOWN"
+      ],
+      "criticalActions": []
+    }
+  },
+  "evidence_chain": {
+    "maxLen": 3,
+    "hashAlg": "sha256",
+    "allowSealEmpty": false,
+    "actions": [
+      "ev_append_invalid_prev",
+      "ev_append_valid",
+      "ev_fork",
+      "ev_mutate_after_seal",
+      "ev_seal"
+    ]
+  },
+  "cost": {
+    "cap": 5,
+    "total": 0,
+    "maxTotal": 8,
+    "allowOverCap": false,
+    "actions": [
+      "cost_charge_embed",
+      "cost_charge_llm_call",
+      "cost_charge_retrieve",
+      "cost_charge_tool_call"
+    ],
+    "schedule": {
+      "embed": 1,
+      "llm_call": 3,
+      "retrieve": 1,
+      "tool_call": 2
+    }
+  }
+}
