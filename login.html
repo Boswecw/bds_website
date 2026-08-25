@@ -53,22 +53,26 @@
       <section class="page-section forge-auth">
         <article class="page-card">
           <form class="page-form" data-login-form novalidate>
-            <fieldset class="forge-auth__modes" aria-label="Account action">
+            <fieldset class="forge-auth__modes" data-credential-field aria-label="Account action">
               <label><input type="radio" name="auth-mode" value="signin" checked> Sign in</label>
               <label><input type="radio" name="auth-mode" value="signup"> Create account</label>
             </fieldset>
-            <div class="page-field">
+            <div class="page-field" data-credential-field>
               <label for="login-email">Email</label>
               <input id="login-email" name="email" type="email" autocomplete="email" required>
             </div>
-            <div class="page-field">
+            <div class="page-field" data-credential-field>
               <label for="login-password">Password</label>
               <input id="login-password" name="password" type="password" autocomplete="current-password" minlength="8" required>
             </div>
+            <div class="page-field" data-mfa-step hidden>
+              <label for="login-mfa-code">Authentication code</label>
+              <input id="login-mfa-code" name="mfa-code" type="text" inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]*" maxlength="6">
+            </div>
             <p class="page-form__status" data-form-status role="status" aria-live="polite"></p>
             <button type="submit" class="btn btn-primary" data-submit-button>Sign in</button>
-            <div class="forge-auth__divider">or</div>
-            <button type="button" class="btn btn-ghost" data-magic-button>Email me a magic link</button>
+            <div class="forge-auth__divider" data-credential-field>or</div>
+            <button type="button" class="btn btn-ghost" data-magic-button data-credential-field>Email me a magic link</button>
           </form>
           <noscript>
             <p class="page-form__help">JavaScript is required to sign in.</p>

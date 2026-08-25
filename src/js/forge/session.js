@@ -10,6 +10,7 @@ import { getSession } from "./supabase.js";
 import { forge } from "./api.js";
 import { describeForgeError, LOGIN_PAGE } from "./errors.js";
 import { signOut } from "./supabase.js";
+import { hasPendingChallenge } from "./mfa.js";
 
 const PROVISION_FLAG = "bds.forge.provisioned";
 
@@ -23,7 +24,11 @@ const PROVISION_FLAG = "bds.forge.provisioned";
 export async function bootstrapSession({ requireAuth = true } = {}) {
   const session = await getSession();
 
-  if (!session) {
+  // A session that hasn't completed a required MFA step-up (AAL2) is treated
+  // the same as no session — this is what catches a magic-link redemption or
+  // a stale tab for an account that has 2FA enabled, since neither of those
+  // paths runs login.js's own post-password-signin challenge check.
+  if (!session || (requireAuth && (await hasPendingChallenge()))) {
     if (requireAuth) {
       const next = encodeURIComponent(window.location.pathname + window.location.search);
       window.location.replace(`${LOGIN_PAGE}?next=${next}`);
