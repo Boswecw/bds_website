@@ -7,6 +7,7 @@ import { forge } from "./api.js";
 import { signOut } from "./supabase.js";
 import { bootstrapSession, handleForgeError } from "./session.js";
 import { describeForgeError } from "./errors.js";
+import { listFactors, enroll, verifyCode, unenroll } from "./mfa.js";
 
 // --- small DOM/format helpers ---------------------------------------------
 
@@ -76,6 +77,118 @@ async function renderAccount() {
     const descriptor = await handleForgeError(error);
     if (!descriptor.redirect) setSectionError(node, error);
   }
+}
+
+// --- two-factor authentication ---------------------------------------------
+// Supabase owns the factor and its secret; this only enrolls, confirms, and
+// removes it. See docs/plans/two-factor-authentication-plan.md.
+
+async function renderMfa() {
+  const node = el("mfa");
+  if (!node) return;
+  try {
+    const factors = await listFactors();
+    if (factors.length === 0) {
+      renderMfaSetup(node);
+    } else {
+      renderMfaEnabled(node, factors);
+    }
+  } catch (error) {
+    setSectionError(node, error);
+  }
+}
+
+function renderMfaEnabled(node, factors) {
+  node.innerHTML = `
+    <div class="forge-row">
+      <div class="forge-row__main">
+        <strong>Enabled</strong>
+        <div class="forge-row__sub">${escapeHtml(factors[0].friendly_name || "Authenticator app")}</div>
+      </div>
+      <div class="forge-row__side">
+        <button type="button" class="btn btn-ghost btn-small" data-mfa-remove>Remove</button>
+      </div>
+    </div>
+    <p class="page-form__status" data-mfa-status role="status" aria-live="polite"></p>`;
+
+  const button = node.querySelector("[data-mfa-remove]");
+  const status = node.querySelector("[data-mfa-status]");
+  button.addEventListener("click", async () => {
+    button.disabled = true;
+    button.textContent = "Removing…";
+    try {
+      await unenroll(factors[0].id);
+      await renderMfa();
+    } catch {
+      status.dataset.state = "error";
+      status.textContent = "Couldn't remove this right now. Try again in a moment.";
+      button.disabled = false;
+      button.textContent = "Remove";
+    }
+  });
+}
+
+function renderMfaSetup(node) {
+  node.innerHTML = `
+    <p class="forge-empty">Not enabled.</p>
+    <button type="button" class="btn btn-ghost btn-small" data-mfa-enroll>Set up two-factor authentication</button>`;
+  node.querySelector("[data-mfa-enroll]").addEventListener("click", () => startMfaEnrollment(node));
+}
+
+async function startMfaEnrollment(node) {
+  node.innerHTML = `<p class="forge-empty">Preparing setup…</p>`;
+  let enrollment;
+  try {
+    enrollment = await enroll();
+  } catch (error) {
+    setSectionError(node, error);
+    return;
+  }
+
+  node.innerHTML = `
+    <p class="forge-section__intro">Scan this with your authenticator app, then enter the 6-digit code it shows.</p>
+    <img class="forge-mfa__qr" src="${enrollment.qrCode}" alt="QR code for two-factor authentication setup" width="180" height="180">
+    <p class="forge-mfa__secret">Can't scan it? Enter this key manually: <code>${escapeHtml(enrollment.secret)}</code></p>
+    <div class="page-field">
+      <label for="mfa-setup-code">6-digit code</label>
+      <input id="mfa-setup-code" type="text" inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]*" maxlength="6">
+    </div>
+    <p class="page-form__status" data-mfa-status role="status" aria-live="polite"></p>
+    <button type="button" class="btn btn-primary btn-small" data-mfa-confirm>Confirm</button>
+    <button type="button" class="btn btn-ghost btn-small" data-mfa-cancel>Cancel</button>`;
+
+  const status = node.querySelector("[data-mfa-status]");
+  const codeInput = node.querySelector("#mfa-setup-code");
+
+  node.querySelector("[data-mfa-cancel]").addEventListener("click", async () => {
+    try {
+      await unenroll(enrollment.factorId);
+    } catch {
+      // Best-effort cleanup of the unconfirmed factor; harmless if it lingers.
+    }
+    renderMfaSetup(node);
+  });
+
+  node.querySelector("[data-mfa-confirm]").addEventListener("click", async () => {
+    const code = String(codeInput.value || "").trim();
+    if (!code) {
+      status.dataset.state = "error";
+      status.textContent = "Enter the 6-digit code from your authenticator app.";
+      return;
+    }
+    status.dataset.state = "pending";
+    status.textContent = "Confirming…";
+    try {
+      await verifyCode(enrollment.factorId, code);
+    } catch {
+      status.dataset.state = "error";
+      status.textContent = "That code didn't work. Try again.";
+      codeInput.value = "";
+      codeInput.focus();
+      return;
+    }
+    await renderMfa();
+  });
 }
 
 async function renderSubscriptions() {
@@ -304,6 +417,7 @@ async function init() {
   // Reads run in parallel; each section handles its own errors.
   await Promise.all([
     renderAccount(),
+    renderMfa(),
     renderSubscriptions(),
     renderLicenses(),
     renderInstallations(),

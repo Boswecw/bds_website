@@ -5,6 +5,7 @@
 import { getSupabase, getSession } from "./supabase.js";
 import { forge } from "./api.js";
 import { describeForgeError, LOGIN_PAGE } from "./errors.js";
+import { hasPendingChallenge, listFactors, verifyCode } from "./mfa.js";
 
 const form = document.querySelector("[data-login-form]");
 
@@ -20,6 +21,10 @@ if (form instanceof HTMLFormElement) {
   const submitBtn = form.querySelector("[data-submit-button]");
   const magicBtn = form.querySelector("[data-magic-button]");
   const modeInputs = form.querySelectorAll("[name='auth-mode']");
+  const credentialFields = form.querySelectorAll("[data-credential-field]");
+  const credentialInputs = form.querySelectorAll("[data-credential-field] input");
+  const mfaStep = form.querySelector("[data-mfa-step]");
+  const mfaInput = form.querySelector("#login-mfa-code");
 
   const setStatus = (state, message) => {
     if (statusEl instanceof HTMLElement) {
@@ -33,13 +38,52 @@ if (form instanceof HTMLFormElement) {
     return checked instanceof HTMLInputElement ? checked.value : "signin";
   };
 
-  const redirectIfSignedIn = async () => {
-    const session = await getSession();
-    if (session) {
-      window.location.replace(safeNext());
+  // The sign-in form and the "enter your authenticator code" step share one
+  // <form> and toggle visibility rather than navigating to a second page.
+  // Disabling the credential inputs (not just hiding them) is what actually
+  // keeps them out of constraint validation and out of the FormData read.
+  const setMfaStepVisible = (visible) => {
+    credentialFields.forEach((field) => {
+      field.hidden = visible;
+    });
+    credentialInputs.forEach((input) => {
+      input.disabled = visible;
+    });
+    if (mfaStep instanceof HTMLElement) {
+      mfaStep.hidden = !visible;
     }
+    if (mfaInput instanceof HTMLInputElement) {
+      mfaInput.disabled = !visible;
+      if (visible) {
+        mfaInput.value = "";
+        mfaInput.focus();
+      }
+    }
+    if (submitBtn instanceof HTMLButtonElement) {
+      submitBtn.textContent = visible
+        ? "Verify"
+        : currentMode() === "signup"
+          ? "Create account"
+          : "Sign in";
+    }
+    form.dataset.step = visible ? "mfa" : "credentials";
   };
-  redirectIfSignedIn();
+
+  // Covers both a plain revisit with an existing session and landing back
+  // here (via session.js's redirect) after a magic-link or stale session
+  // turned out to need a step-up the caller couldn't complete itself.
+  const checkSignedIn = async () => {
+    const session = await getSession();
+    if (!session) {
+      return;
+    }
+    if (await hasPendingChallenge()) {
+      setMfaStepVisible(true);
+      return;
+    }
+    window.location.replace(safeNext());
+  };
+  checkSignedIn();
 
   const finishSignIn = async () => {
     try {
@@ -63,23 +107,57 @@ if (form instanceof HTMLFormElement) {
     window.location.replace(safeNext());
   };
 
+  // Same generic failure message whether the code was wrong, expired, or the
+  // lookup itself failed — don't give an attacker a way to distinguish them.
+  const submitMfaCode = async () => {
+    const code = String(mfaInput?.value || "").trim();
+    if (!code) {
+      setStatus("error", "Enter the 6-digit code from your authenticator app.");
+      return;
+    }
+    setStatus("pending", "Verifying…");
+    try {
+      const factors = await listFactors();
+      const factor = factors[0];
+      if (!factor) {
+        setStatus("error", "No authentication method found for this account.");
+        return;
+      }
+      await verifyCode(factor.id, code);
+    } catch {
+      setStatus("error", "That code didn't work. Try again.");
+      if (mfaInput instanceof HTMLInputElement) {
+        mfaInput.value = "";
+        mfaInput.focus();
+      }
+      return;
+    }
+    await finishSignIn();
+  };
+
   form.addEventListener("submit", async (event) => {
     event.preventDefault();
     if (!form.reportValidity()) {
       return;
     }
 
-    const data = new FormData(form);
-    const email = String(data.get("email") || "").trim();
-    const password = String(data.get("password") || "");
-    const mode = currentMode();
-
     if (submitBtn instanceof HTMLButtonElement) {
       submitBtn.disabled = true;
     }
-    setStatus("pending", mode === "signup" ? "Creating your account…" : "Signing you in…");
 
     try {
+      if (form.dataset.step === "mfa") {
+        await submitMfaCode();
+        return;
+      }
+
+      const data = new FormData(form);
+      const email = String(data.get("email") || "").trim();
+      const password = String(data.get("password") || "");
+      const mode = currentMode();
+
+      setStatus("pending", mode === "signup" ? "Creating your account…" : "Signing you in…");
+
       const supabase = await getSupabase();
       const { error } =
         mode === "signup"
@@ -98,6 +176,12 @@ if (form instanceof HTMLFormElement) {
           "success",
           "Check your email to confirm your account, then sign in."
         );
+        return;
+      }
+
+      if (await hasPendingChallenge()) {
+        setStatus("", "");
+        setMfaStepVisible(true);
         return;
       }
 
