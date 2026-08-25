@@ -8,6 +8,7 @@ export const LIMITS = {
   defaultJsonBodyBytes: 64 * 1024,
   checkoutBodyBytes: 8 * 1024,
   provisionBodyBytes: 4 * 1024,
+  mfaStatusBodyBytes: 1024,
   deletionBodyBytes: 8 * 1024,
   contactBodyBytes: 32 * 1024,
   bodyReadDeadlineMs: 5_000,

@@ -136,6 +136,18 @@ const ROUTES: RoutePolicy[] = [
     validateBody: validateBillingPortal,
   }),
 
+  policy("POST", "/v1/account/mfa-status", {
+    auth: "customer",
+    cssaAction: "account.mfa_status",
+    dataClass: "R2",
+    id: "forge.account.mfa_status",
+    idempotency: "optional",
+    maxBodyBytes: LIMITS.mfaStatusBodyBytes,
+    originRequired: true,
+    surface: "forgecustomer.account",
+    validateBody: validateMfaStatus,
+  }),
+
   policy("GET", "/v1/account", readPolicy("account.read", "forge.account.read", "forgecustomer.account")),
   policy(
     "GET",
@@ -440,6 +452,14 @@ function validateBillingPortal(input: Record<string, unknown>): Record<string, u
   rejectUnknown(input, new Set(["return_url"]));
   const returnUrl = validateSameOriginRedirect(input.return_url, "return_url", "/account.html");
   return { return_url: returnUrl };
+}
+
+function validateMfaStatus(input: Record<string, unknown>): Record<string, unknown> {
+  rejectUnknown(input, new Set(["enabled"]));
+  if (typeof input.enabled !== "boolean") {
+    throw new HttpError(422, "VALIDATION_FAILED", "\"enabled\" must be a boolean.");
+  }
+  return { enabled: input.enabled };
 }
 
 function validateDeletionRequest(input: Record<string, unknown>): Record<string, unknown> {

@@ -86,6 +86,14 @@ export const forge = {
   provision: (profile) =>
     forgeFetch("/v1/account/provision", { method: "POST", body: profile ?? {} }),
 
+  // MFA status (requires the caller's own token already be at aal2 — see mfa.js)
+  setMfaStatus: (enabled) =>
+    forgeFetch("/v1/account/mfa-status", {
+      method: "POST",
+      body: { enabled },
+      idempotencyKey: idempotencyKey("mfa-status"),
+    }),
+
   // Public catalog (no auth)
   products: () => forgeFetch("/v1/products", { requireAuth: false }),
   plans: () => forgeFetch("/v1/plans", { requireAuth: false }),
