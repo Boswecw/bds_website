@@ -1,6 +1,6 @@
 # Account Security — Two-Factor Authentication Plan
 
-**Status:** Proposed — no code merged yet
+**Status:** Phases 1–2 implemented (enrollment, sign-in challenge, session gating, backup-authenticator recovery). Phases 3–4 not started.
 **Depends on:** Supabase project Auth settings only for phase 1; no server-managed session rewrite required to ship enrollment + sign-in challenge
 **Primary surface:** `login.html`, `account.html`, `src/js/forge/*` (this repo). Phase 3 enforcement touches ForgeCustomer (Rust/Axum) and is **not built here**.
 
@@ -80,16 +80,15 @@ Rate-limit and generically-error the code-verification step the same way `07_AUT
 
 ## 7. Recovery & lost-device handling
 
-Supabase's TOTP MFA does not ship built-in one-time recovery codes as of the pinned client version — verify current behavior against the Supabase dashboard for this project before committing to a design, but plan on one of:
+**Decided and implemented:** the backup-authenticator path, the zero-new-infra option. Supabase's TOTP MFA does not ship built-in one-time recovery codes as of the pinned client version, so this repo doesn't wait on that — `account.js`'s MFA section lists every verified factor (not just one) and offers "Add backup authenticator" whenever at least one factor already exists, using the same enrollment flow as the first factor. At sign-in, `mfa.js`'s `verifyAnyFactor()` tries the submitted code against each enrolled factor in turn, so the challenger doesn't need to know or pick which authenticator produced it.
 
-- **(Recommended for v1, zero new infra)** Let a user enroll a second TOTP factor as an explicit "backup authenticator" during enrollment, and support-assisted removal (a human, via existing account-support channels, calls `unenroll` after verifying identity out-of-band) as the lost-all-devices path. Log every enroll/unenroll to whatever audit trail `07_AUTH_SESSION_CSRF_AND_ACCOUNT_SECURITY.md §7` already calls for on sensitive account changes.
-- **(Phase 2, more infra)** Generate a set of single-use recovery codes ourselves at enrollment time (hashed at rest, shown once), which requires a small table somewhere — either a new Supabase table in the same project (guarded by RLS to the owning user) or a ForgeCustomer-owned one. Don't build this for v1 unless support-assisted reset proves too slow in practice.
+What's still a manual process, not code in this repo: a user who loses access to *every* enrolled authenticator has no self-service path. That's support-assisted removal — a human, via existing account-support channels, calls `unenroll` after verifying identity out-of-band. There's no admin surface in this repo to build that against; it's an operational process today, and the "generate real recovery codes" option from the original draft of this section remains available later if support-assisted reset proves too slow in practice (would need a small table somewhere — a new Supabase table guarded by RLS, or a ForgeCustomer-owned one — so treat it as its own follow-on, not a quick add).
 
-Either way, "reset a customer's MFA" should be logged and auditable — this is the same capability `10_FORGE_COMMAND_INCIDENT_EXPERIENCE.md` and `13_OPERATIONS_RUNBOOKS_AND_RECOVERY.md` already assume exists for incident response ("require MFA" / "reset 2FA enrollment"), so building it once as a real, audited support action rather than an ad hoc database edit pays for both use cases.
+"Reset a customer's MFA" should still be logged and auditable once there's a support surface to do it from — this is the same capability `10_FORGE_COMMAND_INCIDENT_EXPERIENCE.md` and `13_OPERATIONS_RUNBOOKS_AND_RECOVERY.md` already assume exists for incident response ("require MFA" / "reset 2FA enrollment").
 
 ## 8. What the user sees, once
 
-On successful enrollment, show (once, not stored client-side): "Keep a backup authenticator enrolled, or contact support if you lose access to your device." Don't invent a recovery-codes UI ahead of the §7 decision.
+On successful enrollment, show (once, not stored client-side): "Add a second authenticator as a backup in case you lose access to this one." (Implemented as the enabled-state copy in `account.js`'s `renderMfaEnabled`, shown whenever exactly one factor exists.) Contacting support remains the only path once *all* factors are lost.
 
 ## 9. Enforcement boundary — what this repo can and can't guarantee
 
@@ -111,22 +110,22 @@ Phase 1–2 here should ship regardless — the UX gate is still real defense-in
 
 ## 11. Phasing
 
-1. **Enrollment + challenge (this repo only).** `mfa.js`, `account.html` section, `login.js` inline challenge step, `bootstrapSession()` AAL check. Ships independently of everything below.
-2. **Recovery path.** Land whichever option §7 settles on before phase 1 is promoted from "available" to anything resembling "expected" — don't ship enrollment without a documented, working lost-device story.
-3. **Cross-repo enforcement.** Coordinate with ForgeCustomer on AAL-aware request rejection (§9). Track as a ForgeCustomer-side issue linked back here.
-4. **Operations hookup.** Sentinel "MFA result" event, Forge_Command "require MFA" / "reset 2FA" operator action — once phases 1–3 exist to act on.
+1. **Enrollment + challenge (this repo only). ✅ Implemented.** `mfa.js`, `account.html` section, `login.js` inline challenge step, `bootstrapSession()` AAL check.
+2. **Recovery path. ✅ Implemented** (the backup-authenticator half — see §7). Support-assisted removal for a total lockout stays a manual process; generated recovery codes remain a possible future escalation, not scheduled.
+3. **Cross-repo enforcement.** Coordinate with ForgeCustomer on AAL-aware request rejection (§9). Track as a ForgeCustomer-side issue linked back here. Not started.
+4. **Operations hookup.** Sentinel "MFA result" event, Forge_Command "require MFA" / "reset 2FA" operator action — once phases 1–3 exist to act on. Not started.
 
 ## Open questions
 
 - Is project-level MFA already enabled in the Supabase Auth dashboard for this project, or does that need to be turned on first?
-- Recovery path: backup-factor + support reset (v1, §7) or build recovery codes now? Needs a decision before phase 2, not during it.
-- Should MFA ever be mandatory (all accounts, or just accounts with an active subscription / stored payment method / Forge_Command operator role)? Product decision, not engineering default — v1 assumes opt-in only.
+- Should MFA ever be mandatory (all accounts, or just accounts with an active subscription / stored payment method / Forge_Command operator role)? Product decision, not engineering default — shipped as opt-in only.
 - Does ForgeCustomer already parse the Supabase JWT's `aal` claim for anything today, or is §9 starting from zero on that side?
 - Confirm the exact `auth.mfa` method shapes against the pinned `@supabase/supabase-js@2.45.0` release before implementation — this plan describes the well-established API surface but wasn't checked against that exact version's changelog.
 
 ### First steps for implementation
 
-1. Confirm the Supabase project's MFA (TOTP) feature is enabled in its Auth settings.
-2. Build `src/js/forge/mfa.js` and the `account.html` enrollment section (§5) behind no feature flag — it's additive and opt-in by construction.
-3. Add the inline challenge step to `login.js` and the AAL check to `bootstrapSession()` (§6).
-4. Decide and document the §7 recovery path before announcing the feature to customers.
+1. ~~Confirm the Supabase project's MFA (TOTP) feature is enabled in its Auth settings.~~ Still worth a manual check against the real project before announcing the feature — this repo can't verify that itself.
+2. ~~Build `src/js/forge/mfa.js` and the `account.html` enrollment section (§5).~~ Done.
+3. ~~Add the inline challenge step to `login.js` and the AAL check to `bootstrapSession()` (§6).~~ Done.
+4. ~~Decide and document the §7 recovery path.~~ Done — backup authenticator, implemented.
+5. Next up: phase 3, coordinating with ForgeCustomer on AAL-aware enforcement (§9) — needed before 2FA is anything more than a client-side UX gate.
