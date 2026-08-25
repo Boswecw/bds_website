@@ -128,6 +128,18 @@ function renderMfaEnabled(node, factors) {
       button.textContent = "Removing…";
       try {
         await unenroll(factorId);
+        const remaining = await listFactors();
+        if (remaining.length === 0) {
+          // Best-effort: tell ForgeCustomer 2FA is off so it stops requiring aal2.
+          // Supabase (not ForgeCustomer) remains the source of truth for the factor
+          // itself, so a failed sync here doesn't block or need to roll back the
+          // removal — it just means enforcement lags until a retry succeeds.
+          try {
+            await forge.setMfaStatus(false);
+          } catch (syncError) {
+            console.warn("[account] mfa-status sync deferred:", syncError);
+          }
+        }
         await renderMfa();
       } catch {
         status.dataset.state = "error";
@@ -201,6 +213,13 @@ async function startMfaEnrollment(node) {
       codeInput.value = "";
       codeInput.focus();
       return;
+    }
+    // Best-effort: tell ForgeCustomer 2FA is on so it starts requiring aal2. Always
+    // safe to report true here even for a second/backup factor (already true).
+    try {
+      await forge.setMfaStatus(true);
+    } catch (syncError) {
+      console.warn("[account] mfa-status sync deferred:", syncError);
     }
     await renderMfa();
   });

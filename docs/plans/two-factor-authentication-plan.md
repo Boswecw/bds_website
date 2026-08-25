@@ -1,6 +1,6 @@
 # Account Security — Two-Factor Authentication Plan
 
-**Status:** Phases 1–2 implemented (enrollment, sign-in challenge, session gating, backup-authenticator recovery). Phases 3–4 not started.
+**Status:** Phases 1–3 implemented (enrollment, sign-in challenge, session gating, backup-authenticator recovery, ForgeCustomer-side AAL2 enforcement). Phase 4 not started.
 **Depends on:** Supabase project Auth settings only for phase 1; no server-managed session rewrite required to ship enrollment + sign-in challenge
 **Primary surface:** `login.html`, `account.html`, `src/js/forge/*` (this repo). Phase 3 enforcement touches ForgeCustomer (Rust/Axum) and is **not built here**.
 
@@ -92,12 +92,11 @@ On successful enrollment, show (once, not stored client-side): "Add a second aut
 
 ## 9. Enforcement boundary — what this repo can and can't guarantee
 
-Everything above is a **client-side UX gate**. A modified or bypassed client could skip the challenge step entirely and still hold a valid AAL1 Supabase session — the gate is not a security boundary by itself, the same way `bootstrapSession()`'s existing auth check isn't. Real enforcement requires one of, decided and built where the trust boundary actually is:
+Everything in §5–§7 is a **client-side UX gate** by itself. A modified or bypassed client could skip the challenge step entirely and still hold a valid AAL1 Supabase session — the gate is not a security boundary on its own, the same way `bootstrapSession()`'s existing auth check isn't.
 
-- ForgeCustomer rejecting requests carrying an AAL1 JWT for an account it knows has MFA enabled (ForgeCustomer already independently verifies the Supabase JWT per `doc/system/09-forgecustomer-integration.md`, so it already sees the `aal` claim) — this is a ForgeCustomer change, tracked in that repo, not here.
-- Supabase-project-level RLS policies keyed on `auth.jwt()->>'aal'` for any BDS-owned table an MFA-enabled user's data lives in (the same Supabase project also backs the HUD threads per `.env.example`).
+**Decided and implemented (`forgecustomer` PR #16):** ForgeCustomer now rejects an AAL1 (or missing-`aal`) token for any account it's been told has MFA enabled, via a new `customer_profiles.mfa_required` column checked in `CustomerContext::require_active()`. The remaining design question was never "can ForgeCustomer check the `aal` claim" (trivial) but "how does ForgeCustomer learn an account has MFA enabled at all" without either trusting a client-supplied flag naively (an attacker with just a stolen password could otherwise report "disabled" and defeat the protection) or standing up a whole new Supabase Admin API integration to independently poll `auth.mfa_factors`. The answer that shipped needs neither: `POST /v1/account/mfa-status` records the flag, but requires the caller's *own current* token already be at `aal2` to call it at all — since Supabase only issues `aal2` after a real TOTP challenge succeeds, a stolen-password-only attacker can never produce one. This repo's side of that: `mfa.js`'s `verifyCode`/`unenroll` paths in `account.js` now call `forge.setMfaStatus(true/false)` at the two factor-count transitions (0→1 enroll, 1→0 remove-last), best-effort (a failed sync doesn't block or roll back the local Supabase-side change — enforcement just lags until the next successful sync; there's no retry/reconciliation loop yet, see open questions).
 
-Phase 1–2 here should ship regardless — the UX gate is still real defense-in-depth and is what most users will ever hit — but this repo's PR should say explicitly that authoritative enforcement is a follow-on, cross-repo item, not silently imply it's covered.
+The RLS-policy alternative from the original draft of this section (`auth.jwt()->>'aal'` policies on BDS-owned tables) wasn't needed — the account/subscription/license data ForgeCustomer protects lives in its own Postgres, authorized in its Rust application layer, not through RLS-gated PostgREST access the way the HUD threads are.
 
 ## 10. Security checklist
 
@@ -112,15 +111,15 @@ Phase 1–2 here should ship regardless — the UX gate is still real defense-in
 
 1. **Enrollment + challenge (this repo only). ✅ Implemented.** `mfa.js`, `account.html` section, `login.js` inline challenge step, `bootstrapSession()` AAL check.
 2. **Recovery path. ✅ Implemented** (the backup-authenticator half — see §7). Support-assisted removal for a total lockout stays a manual process; generated recovery codes remain a possible future escalation, not scheduled.
-3. **Cross-repo enforcement.** Coordinate with ForgeCustomer on AAL-aware request rejection (§9). Track as a ForgeCustomer-side issue linked back here. Not started.
-4. **Operations hookup.** Sentinel "MFA result" event, Forge_Command "require MFA" / "reset 2FA" operator action — once phases 1–3 exist to act on. Not started.
+3. **Cross-repo enforcement. ✅ Implemented** (`forgecustomer` PR #16 — see §9). ForgeCustomer now fails closed on AAL1 for any account it's been told has MFA enabled.
+4. **Operations hookup.** Sentinel "MFA result" event, Forge_Command "require MFA" / "reset 2FA" operator action — once phase 3 has real accounts to observe. Not started.
 
 ## Open questions
 
-- Is project-level MFA already enabled in the Supabase Auth dashboard for this project, or does that need to be turned on first?
+- Is project-level MFA already enabled in the Supabase Auth dashboard for this project, or does that need to be turned on first? (Still unverified from either repo — needs a manual check against the real project.)
 - Should MFA ever be mandatory (all accounts, or just accounts with an active subscription / stored payment method / Forge_Command operator role)? Product decision, not engineering default — shipped as opt-in only.
-- Does ForgeCustomer already parse the Supabase JWT's `aal` claim for anything today, or is §9 starting from zero on that side?
-- Confirm the exact `auth.mfa` method shapes against the pinned `@supabase/supabase-js@2.45.0` release before implementation — this plan describes the well-established API surface but wasn't checked against that exact version's changelog.
+- Confirm the exact `auth.mfa` method shapes against the pinned `@supabase/supabase-js@2.45.0` release before relying on them further — this plan described the well-established API surface but wasn't checked against that exact version's changelog, and phase 1/2 shipped on that assumption.
+- The `POST /v1/account/mfa-status` sync (§9) is best-effort with no retry/reconciliation: if that one call fails right after a successful local enroll/unenroll, ForgeCustomer's `mfa_required` flag can drift from Supabase's real factor state until the next successful sync (which only happens on the *next* enroll/unenroll action, not proactively). Worth a periodic reconciliation job or a `GET /v1/account`-driven client-side re-check if this proves to matter in practice — not built.
 
 ### First steps for implementation
 
@@ -128,4 +127,5 @@ Phase 1–2 here should ship regardless — the UX gate is still real defense-in
 2. ~~Build `src/js/forge/mfa.js` and the `account.html` enrollment section (§5).~~ Done.
 3. ~~Add the inline challenge step to `login.js` and the AAL check to `bootstrapSession()` (§6).~~ Done.
 4. ~~Decide and document the §7 recovery path.~~ Done — backup authenticator, implemented.
-5. Next up: phase 3, coordinating with ForgeCustomer on AAL-aware enforcement (§9) — needed before 2FA is anything more than a client-side UX gate.
+5. ~~Coordinate with ForgeCustomer on AAL-aware enforcement (§9).~~ Done — `forgecustomer` PR #16 plus this repo's `forge.setMfaStatus` calls in `account.js`.
+6. Next up: phase 4 (Sentinel telemetry, Forge_Command operator actions) — lower priority until there's real usage to observe. The sync-reliability open question above is worth a look before that.
