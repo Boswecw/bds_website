@@ -5,7 +5,7 @@
 import { getSupabase, getSession } from "./supabase.js";
 import { forge } from "./api.js";
 import { describeForgeError, LOGIN_PAGE } from "./errors.js";
-import { hasPendingChallenge, listFactors, verifyCode } from "./mfa.js";
+import { hasPendingChallenge, verifyAnyFactor } from "./mfa.js";
 
 const form = document.querySelector("[data-login-form]");
 
@@ -117,13 +117,7 @@ if (form instanceof HTMLFormElement) {
     }
     setStatus("pending", "Verifying…");
     try {
-      const factors = await listFactors();
-      const factor = factors[0];
-      if (!factor) {
-        setStatus("error", "No authentication method found for this account.");
-        return;
-      }
-      await verifyCode(factor.id, code);
+      await verifyAnyFactor(code);
     } catch {
       setStatus("error", "That code didn't work. Try again.");
       if (mfaInput instanceof HTMLInputElement) {

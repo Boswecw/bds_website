@@ -63,6 +63,26 @@ export async function unenroll(factorId) {
   }
 }
 
+/** Verify a code against whichever enrolled factor accepts it. Used at
+ *  sign-in, where the challenger doesn't know which of possibly several
+ *  enrolled authenticators (a user may keep a backup) produced the code. */
+export async function verifyAnyFactor(code) {
+  const factors = await listFactors();
+  if (factors.length === 0) {
+    throw new Error("No authentication method found for this account.");
+  }
+  let lastError;
+  for (const factor of factors) {
+    try {
+      await verifyCode(factor.id, code);
+      return;
+    } catch (error) {
+      lastError = error;
+    }
+  }
+  throw lastError;
+}
+
 /** True when the session is authenticated but the account has a verified
  *  factor requiring step-up to AAL2 that hasn't happened yet this session. */
 export async function hasPendingChallenge() {

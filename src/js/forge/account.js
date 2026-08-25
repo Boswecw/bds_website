@@ -99,33 +99,46 @@ async function renderMfa() {
 }
 
 function renderMfaEnabled(node, factors) {
+  const rows = factors
+    .map(
+      (factor, index) => `
+      <div class="forge-row">
+        <div class="forge-row__main">
+          <strong>${escapeHtml(factor.friendly_name || `Authenticator ${index + 1}`)}</strong>
+        </div>
+        <div class="forge-row__side">
+          <button type="button" class="btn btn-ghost btn-small" data-mfa-remove="${escapeHtml(factor.id)}">Remove</button>
+        </div>
+      </div>`
+    )
+    .join("");
+
   node.innerHTML = `
-    <div class="forge-row">
-      <div class="forge-row__main">
-        <strong>Enabled</strong>
-        <div class="forge-row__sub">${escapeHtml(factors[0].friendly_name || "Authenticator app")}</div>
-      </div>
-      <div class="forge-row__side">
-        <button type="button" class="btn btn-ghost btn-small" data-mfa-remove>Remove</button>
-      </div>
-    </div>
+    ${rows}
+    <p class="forge-section__intro">Add a second authenticator as a backup in case you lose access to this one.</p>
+    <button type="button" class="btn btn-ghost btn-small" data-mfa-enroll>Add backup authenticator</button>
     <p class="page-form__status" data-mfa-status role="status" aria-live="polite"></p>`;
 
-  const button = node.querySelector("[data-mfa-remove]");
   const status = node.querySelector("[data-mfa-status]");
-  button.addEventListener("click", async () => {
-    button.disabled = true;
-    button.textContent = "Removing…";
-    try {
-      await unenroll(factors[0].id);
-      await renderMfa();
-    } catch {
-      status.dataset.state = "error";
-      status.textContent = "Couldn't remove this right now. Try again in a moment.";
-      button.disabled = false;
-      button.textContent = "Remove";
-    }
+
+  node.querySelectorAll("[data-mfa-remove]").forEach((button) => {
+    button.addEventListener("click", async () => {
+      const factorId = button.getAttribute("data-mfa-remove");
+      button.disabled = true;
+      button.textContent = "Removing…";
+      try {
+        await unenroll(factorId);
+        await renderMfa();
+      } catch {
+        status.dataset.state = "error";
+        status.textContent = "Couldn't remove this right now. Try again in a moment.";
+        button.disabled = false;
+        button.textContent = "Remove";
+      }
+    });
   });
+
+  node.querySelector("[data-mfa-enroll]").addEventListener("click", () => startMfaEnrollment(node));
 }
 
 function renderMfaSetup(node) {
@@ -166,7 +179,9 @@ async function startMfaEnrollment(node) {
     } catch {
       // Best-effort cleanup of the unconfirmed factor; harmless if it lingers.
     }
-    renderMfaSetup(node);
+    // Re-derive state rather than assuming "not enabled" — this may have been
+    // an attempt to add a backup factor with one already active.
+    renderMfa();
   });
 
   node.querySelector("[data-mfa-confirm]").addEventListener("click", async () => {
