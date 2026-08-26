@@ -1,6 +1,6 @@
 # Account Security — Two-Factor Authentication Plan
 
-**Status:** Phases 1–3 implemented (enrollment, sign-in challenge, session gating, backup-authenticator recovery, ForgeCustomer-side AAL2 enforcement). Phase 4 not started.
+**Status:** Phases 1–3 implemented (enrollment, sign-in challenge, session gating, backup-authenticator recovery, ForgeCustomer-side AAL2 enforcement). Phase 4 scoped, not started — split into 4a (Sentinel telemetry, blocked on Sentinel infrastructure that doesn't exist yet) and 4b (Forge_Command operator action, buildable but gated on a new ForgeCustomer endpoint). See §10.
 **Depends on:** Supabase project Auth settings only for phase 1; no server-managed session rewrite required to ship enrollment + sign-in challenge
 **Primary surface:** `login.html`, `account.html`, `src/js/forge/*` (this repo). Phase 3 enforcement touches ForgeCustomer (Rust/Axum) and is **not built here**.
 
@@ -98,7 +98,61 @@ Everything in §5–§7 is a **client-side UX gate** by itself. A modified or by
 
 The RLS-policy alternative from the original draft of this section (`auth.jwt()->>'aal'` policies on BDS-owned tables) wasn't needed — the account/subscription/license data ForgeCustomer protects lives in its own Postgres, authorized in its Rust application layer, not through RLS-gated PostgREST access the way the HUD threads are.
 
-## 10. Security checklist
+## 10. Phase 4 scoping: operations hookup
+
+Phase 4 was named in §12 as "Sentinel telemetry, Forge_Command operator actions," pointing at the aspirational plan's `09_SENTINEL_INTEGRATION_PLAN.md` and `10_FORGE_COMMAND_INCIDENT_EXPERIENCE.md`. Per the same rule the rest of this document follows, those describe *intended* architecture, not evidence of what `forgesentinel` or `forge_command` actually contain. This section is that verification, done directly against both repos' code (`boswell-digital-solutions/forgesentinel` @ `42f0e23`, `boswell-digital-solutions/forge_command` @ `c686cdb`), plus a scope for what's actually buildable now. This is a scoping exercise, not an implementation — nothing below is built yet.
+
+The two halves turn out to be almost entirely independent — different repos, different blockers, different payoff timelines — so this splits phase 4 into **4a** and **4b** rather than treating it as one unit.
+
+### 4a — Sentinel telemetry ingestion of MFA events
+
+**Current state.** `forgesentinel` is a real, tested TypeScript codebase (`package.json:1-28` — v0.1.0, zero runtime dependencies; the README claims 67 tests across 14 files) but it is **not a running or network-reachable service**. There is no HTTP server, no listener of any kind, and no Dockerfile or deployment artifact anywhere in the repo. Its own status doc says so directly: `docs/sentinel/implementation-status.md:16` marks "Forge_Command incident surface" **not started**, and line 23 marks "Production hardening" **not started**. Storage is a local append-only JSONL file (`src/spine/ledger.ts:44-61`) plus in-memory `Map`/`Set` state — there is no database.
+
+Event ingestion exists only as an in-process method, `EventGateway.ingest(rawEvent, credential)` (`src/spine/gateway.ts:43-118`), callable from code in the same Node process or via a CLI that replays a local `.jsonl` file. **There is no endpoint for ForgeCustomer or bds_website to call over the network** — building one means adding a transport (HTTP or queue) around `ingest()` from scratch; that's foundational Sentinel-side work, not a small addition on top of something that already exists.
+
+The event taxonomy is closer to ready than the transport is: `identity.mfa.challenged` and `identity.mfa.completed` already exist as canonical, allow-listed event types (`src/contracts/families.ts:14`), in the `identity` family, which doesn't require event-level signatures (only `billing/license/cssa/sentinel/operator/hermes/smith` do — `families.ts:28`). But **neither type is ever emitted, consumed, or given a payload schema anywhere in the repo** — they're unused placeholders. The MFA-related logic that *is* exercised end-to-end runs the other direction: Sentinel's policy engine recommending, and its mock `IdentityAuthority` executing, an **outbound** `identity.mfa.require` action against a compromised account (`src/intel/prime.ts:183,203`, `src/authority/policy.ts:33`, `src/authority/executor.ts:7-8,15,30-32,94-98,147-150`). That's a naming coincidence with 4b's operator action, not a shared implementation or an existing integration point — the executor is a mock entirely internal to this repo's own test suite; it never calls Forge_Command, ForgeCustomer, or anything outside itself. It's also not the inbound "MFA result" telemetry event this section is about — that direction has no working example anywhere in the repo.
+
+Producer authentication is explicitly interim: HMAC-SHA256 against an in-memory `ProducerRegistry` (`src/spine/producers.ts:11-55`), with an ADR stating plainly that Ed25519 must replace it "before any non-shadow deployment" (`docs/sentinel/adrs/ADR-026-hmac-signing-for-mvp.md:1-31`). There's no persisted credential store — the only populated registry entries are six synthetic test producers with hardcoded secrets (`src/runtime.ts:24-33`), and neither `forgecustomer` nor `bds_website` is registered anywhere. Sentinel's model is also coarser than ForgeCustomer's: no concept of AAL1 vs AAL2 or TOTP specifically anywhere in the repo — MFA is modeled only as a boolean-ish per-account set the mock authority tracks.
+
+**What this means for scope.** Shipping 4a isn't "add a `fetch()` call from bds_website or ForgeCustomer" — it's blocked on Sentinel first shipping a real network-reachable ingestion transport, a persisted producer credential store, a production signing scheme, and real payload schemas for the two placeholder event types. All four are Sentinel-side foundational work with no dependency on this repo or ForgeCustomer, and none of it exists yet. **4a is not schedulable as concrete work from this plan today.** Revisit once Sentinel's own roadmap reaches a real ingestion surface — at that point, ForgeCustomer emitting an event after each login/challenge outcome, and bds_website emitting one after each client-side enroll/verify, would be a small addition on both sides.
+
+### 4b — Forge_Command operator "require MFA" action
+
+**Current state.** Unlike Sentinel, `forge_command`'s relevant surface is real and running. It already proxies operator actions to ForgeCustomer's admin API end-to-end: a Tauri command mints a scoped EdDSA token and calls `ForgeCustomerAdminClient` (`src-tauri/src/clients/forgecustomer.rs:1-13,70-168`), and the frontend renders a reason-required confirmation dialog before calling it (`src/lib/components/commerce/CustomersPanel.svelte:176-194`, `AuthorityActionDialog.svelte`). Suspend and restore are the two live examples (`src-tauri/src/commands/forgecustomer_admin.rs:414-446,448-480`), mounted today at the `/commerce` route.
+
+The aspirational plan's assumed integration point — an "incident" card UI — exists (`src/routes/self-healing/`), but its own README says it "ships with mock data" (`src/routes/self-healing/README.md:3,45`), and the eight incidents in `incidents.ts:86-615` are all hardcoded infrastructure failures (ingestion stalls, cert rotation, Redis pressure) — no concept of a customer-security incident, no login/credential-stuffing/account-takeover event, and no real navigation (deep-dive links show a toast, not a page). **There is nothing to plug a customer-security action into there.** The real integration point is the existing Suspend/Restore button pair in `CustomersPanel.svelte` — a "Require MFA" button belongs next to them, not in the self-healing UI.
+
+Mechanically, the Forge_Command-side addition is a near-exact clone of the suspend/restore slice — new `OperationAction` variant, new Tauri command, new client wrapper, new store action, new button reusing the existing confirmation dialog — the same handful of files the suspend/restore pattern already touches. That part is cheap.
+
+**The blocking dependency: ForgeCustomer has no admin-triggered MFA endpoint today.** The only existing MFA-status write path is `POST /v1/account/mfa-status` (§9), deliberately self-service only — it trusts the caller's own report *because* the caller must already hold an aal2 token to call it. An operator forcing MFA onto *someone else's* account is a different, new capability requiring its own endpoint and its own security design — Forge_Command's half being a cheap clone doesn't skip that design work.
+
+The natural shape follows the pattern already proven for suspend/restore: an `admin::set_mfa_required()` function mirroring `admin::suspend_customer()`/`set_customer_status()` (`forgecustomer/api/src/repositories/admin.rs:154-199,244-263`) — row-locked idempotency check against `customer_profiles.mfa_required`, update, a `customer_status_history`-style audit insert with `actor_type = 'operator'`, an outbox event (e.g. `customer_mfa_required`), replaying as `changed: false` — exposed behind a new route (e.g. `POST /v1/admin/customers/{id}/mfa-required`) gated the same way suspend/restore already are: `operator.require_role("admin")` (`forgecustomer/api/src/routes/mod.rs:2374-2400`).
+
+That reuse also resolves the role-gating question the Forge_Command research raised: Forge_Command has **no operator-role concept at all** today — `TokenClaims` carries only a caller-supplied free-form `scope` string, not a roles list (`forge_command/src-tauri/src/models/token_authority.rs:46-64`), and every existing ForgeCustomer admin action mints the identical hardcoded `scope = "admin"` (`forge_command/src-tauri/src/commands/forgecustomer_admin.rs:39-41`). Forge_Command's own governance doc confirms this is a known gap, not an oversight: "there is no `OperatorContext`, `OperatorRole`, or `OperatorService` implementation... whoever launches the binary has access to the Tauri command surface" (`forge_command/doc/system/40_governance/20-multi-user-support.md:1-33`). A `support`-vs-`admin` split isn't available from Forge_Command's side today regardless of what ForgeCustomer would prefer, so the recommendation is to gate the new endpoint identically to suspend/restore (`admin` role required) rather than inventing a role distinction Forge_Command can't actually mint.
+
+**A gap this action would immediately expose, traced through the current code:** what happens to a customer whose `mfa_required` becomes `true` via this new admin path while they have **zero** enrolled TOTP factors — a state today's self-service flow can never produce (only an already-aal2 caller, meaning an already-verified factor, can set the flag on themselves), but an operator-driven flag flip could produce trivially. Tracing it through the code as it stands today:
+
+1. `bootstrapSession()`'s gate is `hasPendingChallenge()` (`src/js/forge/mfa.js:88-95`), which reads Supabase's own `nextLevel`. With zero enrolled factors, Supabase has nothing to challenge, so `nextLevel` stays `aal1` and `hasPendingChallenge()` returns `false` — **the client-side gate doesn't detect this case at all**, regardless of ForgeCustomer's flag.
+2. `bootstrapSession()`'s own `forge.provision(...)` call doesn't catch it either: `POST /v1/account/provision` is handled with `AuthUserContext`, not `CustomerContext` (`forgecustomer/api/src/routes/mod.rs:613-617`), so it carries no AAL gate — provisioning succeeds and `bootstrapSession()` returns normally.
+3. The user lands on the page. The first call that does use `CustomerContext` (`GET /v1/account`, or any other customer route) hits `require_active()` → `require_aal2()` and 403s with `MFA_REQUIRED`.
+4. `errors.js`'s `describeForgeError` has no case for `MFA_REQUIRED` (`src/js/forge/errors.js:91-115` only special-cases `CUSTOMER_SUSPENDED` and `REVOKED` under 403) — it falls through to the generic branch, which signs the user out and redirects to `/account/closed.html`, telling them their account is **closed**.
+
+That's a real bug this feature would ship with unless it's designed around: an operator using "Require MFA" on a never-enrolled account would lock that customer out with a message telling them their account was closed, not that they need to set up 2FA. Closing this has to be in 4b's scope, not deferred as an edge case — e.g. add an `MFA_REQUIRED` case to `describeForgeError` that redirects into account.html's MFA section instead of signing out, and/or have `bootstrapSession` treat "required but zero factors" as its own forced-enrollment redirect rather than relying on a downstream 403 to surface it.
+
+### Scope & non-goals for phase 4
+
+In scope, if/when this is picked up:
+
+- **4b**: a new ForgeCustomer admin endpoint to set `mfa_required` on another account (role-gated, audited, idempotent, mirroring suspend/restore); the corresponding Forge_Command command/UI; and closing the zero-factor gap in bds_website's error handling and session bootstrap described above — all landing together, since 4b is what makes the gap reachable.
+- **4a**: re-scope once Sentinel has a real ingestion transport — not before.
+
+Out of scope (explicitly, for now):
+
+- Any automated closed loop where Sentinel itself invokes "require MFA" without a human clicking a button in Forge_Command — that's Sentinel's own "unified operations" gate, marked not started in its own status doc, and a policy question (should software unilaterally change a customer's security posture?) bigger than this plan.
+- A `support`-vs-`admin` role split for this action — Forge_Command has no mechanism to mint it today; not worth designing on ForgeCustomer's side alone.
+- Generated TOTP recovery codes, SMS factors, WebAuthn — unchanged from §4, still out of scope.
+
+## 11. Security checklist
 
 - Never expose factor existence (enrolled vs. not) to an unauthenticated request — only to the account owner's own authenticated `listFactors()` call.
 - Unenrolling a factor and enrolling a *replacement* are sensitive actions — apply the same step-up/recent-auth window `07_AUTH_SESSION_CSRF_AND_ACCOUNT_SECURITY.md §6` defines for "MFA/passkey change."
@@ -107,12 +161,12 @@ The RLS-policy alternative from the original draft of this section (`auth.jwt()-
 - Audit-log enroll, verify, unenroll, and any support-assisted reset, with actor (self vs. support) recorded.
 - No secret, QR payload, or recovery material ever logged server-side or sent to Sentinel/telemetry.
 
-## 11. Phasing
+## 12. Phasing
 
 1. **Enrollment + challenge (this repo only). ✅ Implemented.** `mfa.js`, `account.html` section, `login.js` inline challenge step, `bootstrapSession()` AAL check.
 2. **Recovery path. ✅ Implemented** (the backup-authenticator half — see §7). Support-assisted removal for a total lockout stays a manual process; generated recovery codes remain a possible future escalation, not scheduled.
 3. **Cross-repo enforcement. ✅ Implemented** (`forgecustomer` PR #16 — see §9). ForgeCustomer now fails closed on AAL1 for any account it's been told has MFA enabled.
-4. **Operations hookup.** Sentinel "MFA result" event, Forge_Command "require MFA" / "reset 2FA" operator action — once phase 3 has real accounts to observe. Not started.
+4. **Operations hookup — scoped, not started** (§10). Split into two independent sub-phases: **4a** (Sentinel telemetry ingestion) is blocked on Sentinel infrastructure that doesn't exist yet — not schedulable now. **4b** (Forge_Command "require MFA" operator action) is scoped and buildable — gated on a new ForgeCustomer admin endpoint, not on 4a or on real usage volume.
 
 ## Open questions
 
@@ -120,6 +174,9 @@ The RLS-policy alternative from the original draft of this section (`auth.jwt()-
 - Should MFA ever be mandatory (all accounts, or just accounts with an active subscription / stored payment method / Forge_Command operator role)? Product decision, not engineering default — shipped as opt-in only.
 - Confirm the exact `auth.mfa` method shapes against the pinned `@supabase/supabase-js@2.45.0` release before relying on them further — this plan described the well-established API surface but wasn't checked against that exact version's changelog, and phase 1/2 shipped on that assumption.
 - ~~The `POST /v1/account/mfa-status` sync (§9) is best-effort with no retry/reconciliation...~~ **Resolved.** `GET /v1/account` now echoes `mfa_required` (`forgecustomer`, small follow-on to PR #16), and `account.js`'s `renderMfa()` compares it against the real Supabase factor count on every page visit, self-healing via a fire-and-forget `setMfaStatus` call on mismatch. This also let the explicit post-enroll/post-remove sync calls in `startMfaEnrollment`/`renderMfaEnabled` be deleted — reconciliation on the `renderMfa()` call already made right after both now covers the immediate case too, not just past drift. Still not instant (only checked when the account page is visited), but no longer permanently stuck if a single sync call fails.
+- Is 4a worth building at all, even once Sentinel has a real ingestion transport? ForgeCustomer already writes an audited outbox/history record for every MFA-status change and every admin action (§10). A bespoke Sentinel event is only additive once Sentinel has detection logic that would actually consume it — worth re-justifying the value, not just the mechanics, before investing in it.
+- Should Sentinel's event model ever gain AAL1/AAL2 or TOTP-specific granularity, or does its existing coarse per-account boolean stay sufficient? Sentinel's own detection logic doesn't reason about AAL today, so there's no evidence yet that a finer model is needed.
+- 4b's zero-enrolled-factor gap (§10): an operator setting `mfa_required` on an account with no factors currently 403s the user out to `/account/closed.html` with the wrong message. That state is unreachable today (only a self-service, already-aal2 caller can set the flag) but becomes reachable the moment 4b ships — the `errors.js`/`bootstrapSession` fix must land in the same change as the new admin endpoint, not after.
 
 ### First steps for implementation
 
@@ -128,4 +185,4 @@ The RLS-policy alternative from the original draft of this section (`auth.jwt()-
 3. ~~Add the inline challenge step to `login.js` and the AAL check to `bootstrapSession()` (§6).~~ Done.
 4. ~~Decide and document the §7 recovery path.~~ Done — backup authenticator, implemented.
 5. ~~Coordinate with ForgeCustomer on AAL-aware enforcement (§9).~~ Done — `forgecustomer` PR #16 plus this repo's `forge.setMfaStatus` calls in `account.js`.
-6. Next up: phase 4 (Sentinel telemetry, Forge_Command operator actions) — lower priority until there's real usage to observe. The sync-reliability open question above is worth a look before that.
+6. ~~Next up: phase 4 (Sentinel telemetry, Forge_Command operator actions) — lower priority until there's real usage to observe. The sync-reliability open question above is worth a look before that.~~ Done — sync-reliability resolved, phase 4 scoped (§10). If picked up next, start with 4b: ForgeCustomer's new admin endpoint first (mirrors `suspend_customer`/`set_customer_status`, `admin.rs:154-199,244-263`), then the Forge_Command command/UI clone, then the `errors.js`/`bootstrapSession` fix for the zero-factor gap — land all three together, not staggered. 4a stays blocked until Sentinel ships a real ingestion transport.
