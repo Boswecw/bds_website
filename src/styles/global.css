@@ -178,6 +178,31 @@ p {
   border-color: rgba(156,163,175,0.2);
 }
 
+/* ---- Mandatory-MFA grace period reminder ---- */
+[data-mfa-grace-banner] {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3);
+  padding: var(--space-1) var(--space-3);
+  background: var(--accent-subtle-bg);
+  border-bottom: 1px solid var(--accent-border);
+  color: var(--text-primary);
+  font-size: var(--fs-small);
+  text-align: center;
+}
+
+[data-mfa-grace-banner] p {
+  margin: 0;
+}
+
+[data-mfa-grace-banner] a {
+  color: var(--accent);
+  font-weight: var(--fw-medium);
+  white-space: nowrap;
+}
+
 /* ---- Divider ---- */
 .divider {
   height: 1px;

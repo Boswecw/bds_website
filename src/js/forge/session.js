@@ -10,9 +10,11 @@ import { getSession } from "./supabase.js";
 import { forge } from "./api.js";
 import { describeForgeError, LOGIN_PAGE } from "./errors.js";
 import { signOut } from "./supabase.js";
-import { hasPendingChallenge } from "./mfa.js";
+import { hasPendingChallenge, listFactors } from "./mfa.js";
 
 const PROVISION_FLAG = "bds.forge.provisioned";
+const MFA_GRACE_CACHE_KEY = "bds.forge.mfaGraceEndsAt";
+const MS_PER_DAY = 24 * 60 * 60 * 1000;
 
 /**
  * Ensure there is a signed-in session and the account is provisioned.
@@ -49,7 +51,64 @@ export async function bootstrapSession({ requireAuth = true } = {}) {
     }
   }
 
+  await showMfaGraceReminder();
+
   return { session };
+}
+
+/**
+ * Show a site-wide reminder banner while this account is inside its
+ * mandatory-MFA grace period (ForgeCustomer's `mfa_grace_period_ends_at`) and
+ * hasn't enrolled a factor yet. Best-effort throughout: any failure here just
+ * skips the reminder for this page load rather than affecting sign-in.
+ */
+async function showMfaGraceReminder() {
+  let endsAtRaw = sessionStorage.getItem(MFA_GRACE_CACHE_KEY);
+  if (endsAtRaw === null) {
+    try {
+      const account = await forge.account();
+      endsAtRaw = account?.mfa_grace_period_ends_at || "";
+    } catch {
+      endsAtRaw = "";
+    }
+    sessionStorage.setItem(MFA_GRACE_CACHE_KEY, endsAtRaw);
+  }
+  if (!endsAtRaw) {
+    return;
+  }
+
+  const msRemaining = new Date(endsAtRaw).getTime() - Date.now();
+  if (!Number.isFinite(msRemaining) || msRemaining <= 0) {
+    return;
+  }
+
+  // Always checked live (never cached): the whole point is that this
+  // disappears the moment the account actually enrolls a factor.
+  let factorCount;
+  try {
+    factorCount = (await listFactors()).length;
+  } catch {
+    return;
+  }
+  if (factorCount > 0) {
+    return;
+  }
+
+  renderMfaGraceBanner(Math.ceil(msRemaining / MS_PER_DAY));
+}
+
+function renderMfaGraceBanner(daysRemaining) {
+  if (document.querySelector("[data-mfa-grace-banner]")) {
+    return;
+  }
+  const banner = document.createElement("div");
+  banner.dataset.mfaGraceBanner = "";
+  banner.setAttribute("role", "status");
+  const days = daysRemaining === 1 ? "1 day" : `${daysRemaining} days`;
+  banner.innerHTML = `
+    <p>Two-factor authentication is now required on every account. You have ${days} left to set it up.</p>
+    <a href="/account.html">Set up two-factor authentication</a>`;
+  document.body.prepend(banner);
 }
 
 function defaultProvisionProfile() {
