@@ -106,6 +106,17 @@ export function describeForgeError(error) {
           action: { label: "Contact support", href: "/contact.html" },
         };
       }
+      if (code === "MFA_REQUIRED") {
+        // An operator can require this even on an account with no enrolled factor
+        // yet (incident response can't wait for one) — never sign out or redirect
+        // to CLOSED_PAGE here, since fixing it means staying signed in long enough
+        // to reach the enrollment flow, not being kicked out of the session.
+        return {
+          title: "Two-factor authentication required",
+          message:
+            "Two-factor authentication is now required on this account. Go to Account settings to set it up.",
+        };
+      }
       // FORBIDDEN — account closed (post-deletion) or unprovisioned.
       return {
         title: "Account unavailable",
