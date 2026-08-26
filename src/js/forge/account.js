@@ -88,6 +88,11 @@ async function renderMfa() {
   if (!node) return;
   try {
     const factors = await listFactors();
+    // Fire-and-forget: self-heals ForgeCustomer's enforcement flag against Supabase's
+    // real factor state (the source of truth) on every visit to this page, so a sync
+    // that failed after a past enroll/unenroll — or was never attempted at all — gets
+    // another chance here rather than drifting indefinitely. Never blocks rendering.
+    reconcileMfaStatus(factors.length > 0);
     if (factors.length === 0) {
       renderMfaSetup(node);
     } else {
@@ -95,6 +100,23 @@ async function renderMfa() {
     }
   } catch (error) {
     setSectionError(node, error);
+  }
+}
+
+async function reconcileMfaStatus(actuallyEnabled) {
+  let account;
+  try {
+    account = await forge.account();
+  } catch {
+    return; // Can't tell if it's out of sync; next render tries again.
+  }
+  if (account?.mfa_required === actuallyEnabled) {
+    return;
+  }
+  try {
+    await forge.setMfaStatus(actuallyEnabled);
+  } catch (error) {
+    console.warn("[account] mfa-status reconciliation deferred:", error);
   }
 }
 
@@ -128,18 +150,8 @@ function renderMfaEnabled(node, factors) {
       button.textContent = "Removing…";
       try {
         await unenroll(factorId);
-        const remaining = await listFactors();
-        if (remaining.length === 0) {
-          // Best-effort: tell ForgeCustomer 2FA is off so it stops requiring aal2.
-          // Supabase (not ForgeCustomer) remains the source of truth for the factor
-          // itself, so a failed sync here doesn't block or need to roll back the
-          // removal — it just means enforcement lags until a retry succeeds.
-          try {
-            await forge.setMfaStatus(false);
-          } catch (syncError) {
-            console.warn("[account] mfa-status sync deferred:", syncError);
-          }
-        }
+        // renderMfa()'s reconciliation reports the new (possibly now-zero) factor
+        // count to ForgeCustomer — no separate sync call needed here.
         await renderMfa();
       } catch {
         status.dataset.state = "error";
@@ -214,13 +226,8 @@ async function startMfaEnrollment(node) {
       codeInput.focus();
       return;
     }
-    // Best-effort: tell ForgeCustomer 2FA is on so it starts requiring aal2. Always
-    // safe to report true here even for a second/backup factor (already true).
-    try {
-      await forge.setMfaStatus(true);
-    } catch (syncError) {
-      console.warn("[account] mfa-status sync deferred:", syncError);
-    }
+    // renderMfa()'s reconciliation reports the new factor count to ForgeCustomer —
+    // no separate sync call needed here.
     await renderMfa();
   });
 }
