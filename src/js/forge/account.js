@@ -135,9 +135,14 @@ function renderMfaEnabled(node, factors) {
     )
     .join("");
 
+  const backupIntro =
+    factors.length === 1
+      ? `<p class="forge-section__intro">Add a second authenticator as a backup in case you lose access to this one.</p>`
+      : "";
+
   node.innerHTML = `
     ${rows}
-    <p class="forge-section__intro">Add a second authenticator as a backup in case you lose access to this one.</p>
+    ${backupIntro}
     <button type="button" class="btn btn-ghost btn-small" data-mfa-enroll>Add backup authenticator</button>
     <p class="page-form__status" data-mfa-status role="status" aria-live="polite"></p>`;
 
