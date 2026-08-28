@@ -1,9 +1,16 @@
-# Forge_Command — HUD Support Operator Inbox (handoff brief)
+# Forge_Command — HUD Support Operator Inbox (historical handoff brief)
 
-> **For:** a new Claude Code session working in the **Forge_Command** repository.
-> **Goal:** build the operator side of the BDS website support chat — read
-> visitor conversation threads and reply to them — so visitors get real answers.
-> This brief is self-contained; you do not need the originating conversation.
+**Current status (2026-08-28):** Implemented in
+[Forge_Command PR #66](https://github.com/Boswell-Digital-Solutions/Forge_Command/pull/66)
+and registered as `implemented_unverified` in
+[PR #199](https://github.com/Boswell-Digital-Solutions/Forge_Command/pull/199).
+The backend commands, `/support` operator route, status controls, unread
+awareness, and reply audit exist in source. The live visitor-to-operator
+acceptance test remains open.
+
+> **Historical purpose:** This brief defined how to build the operator side of
+> the BDS website support chat. It is retained as source context and acceptance
+> criteria.
 
 ---
 
@@ -14,9 +21,10 @@ A **signed-in visitor** can open it and send messages. Those messages persist in
 **Supabase** and are scoped per-user by row-level security. This is live and
 working today (call it "Tier 2 phase 2a").
 
-What's **missing** is the operator side: there is currently **no way for BDS to
-read a visitor's thread or reply**. Operator replies today only happen by hand in
-the Supabase SQL editor. **That is what you are building in Forge_Command.**
+When this brief was written, the operator side was missing and replies were
+possible only through the Supabase SQL editor. Forge_Command PR #66 closed that
+source implementation gap; only the live end-to-end acceptance gate remains
+unverified.
 
 Architecture (already decided, do not change):
 - The **visitor side** (bds_website) talks to Supabase with the **anon key + the
@@ -192,7 +200,11 @@ order by t.last_at desc;
 
 ---
 
-### First steps for the new session
+### Original implementation steps
+
+The source work corresponding to steps 1–4 and 6 is present. Step 5 remains the
+unverified live acceptance gate.
+
 1. Confirm Forge_Command's stack and where a new authenticated operator view/route belongs.
 2. Add `SUPABASE_URL` + `SUPABASE_SERVICE_ROLE_KEY` to its server-side env.
 3. Build the read path (thread list + thread view joining `auth.users` for email).
