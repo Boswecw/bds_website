@@ -1,6 +1,6 @@
 # HUD Tier 2 — Persistent Two-Way Conversation Threads
 
-**Status:** Phase 2a implemented (signed-in threads, polling). Phases 2b–2d pending.
+**Status:** Phases 2a and 2d implemented in source. Phases 2b–2c pending; live visitor-to-operator acceptance remains unverified.
 **Depends on:** Tier 1 support HUD (merged) — `src/js/hud.js`, `server/intake.ts`
 **Primary operator surface:** Forge_Command (operator replies live there, not on the marketing site)
 
@@ -23,7 +23,7 @@ project's JWT for RLS.
 Forge_Command (phase 2d) connects to this same project with the service role to
 write operator replies. All support-chat data stays in this one auth project.
 
-## Implemented so far (phase 2a)
+## Implemented so far (phases 2a and 2d)
 
 - **DB:** `db/migrations/0001_hud_threads.sql` — `hud_thread` / `hud_message`
   tables, RLS scoped to `auth.uid()`, and the SECURITY INVOKER RPCs
@@ -39,10 +39,15 @@ write operator replies. All support-chat data stays in this one auth project.
   Anonymous visitors keep the Tier 1 intake composer.
 - **Config:** reuses the existing `SUPABASE_URL` + `SUPABASE_ANON_KEY`. Optional
   `SUPABASE_ALLOWED_HOSTS` pins the upstream host.
+- **Operator:** Forge_Command PR
+  [#66](https://github.com/Boswell-Digital-Solutions/Forge_Command/pull/66)
+  implements the authenticated thread list/view, replies, status controls,
+  unread awareness, and reply audit. Forge_Command PR
+  [#199](https://github.com/Boswell-Digital-Solutions/Forge_Command/pull/199)
+  registers it as `implemented_unverified`.
 
-Still to do: **2b** anonymous threads, **2c** Supabase Realtime, **2d** the
-Forge_Command operator inbox (the reply side — operator messages won't appear
-until that exists).
+Still to do: **2b** anonymous threads, **2c** Supabase Realtime, and the live
+visitor-to-operator round-trip acceptance test for the implemented 2a/2d path.
 
 ---
 
@@ -129,10 +134,17 @@ already has the Supabase anon key via `/api/public-config`.
 
 ## 7. Operator reply path (Forge_Command)
 
-Out of scope for this repo. Forge_Command:
-- lists open `hud_thread`s, reads messages,
+Implemented in Forge_Command PR
+[#66](https://github.com/Boswell-Digital-Solutions/Forge_Command/pull/66);
+runtime ownership remains out of scope for this repo. The operator surface:
+- lists open `hud_thread`s and reads messages,
 - writes `author = 'operator'` rows with the service-role key,
-- flips `status` to `answered` / `closed`.
+- flips `status` to `answered` / `closed`,
+- records reply audit metadata without storing the message body locally.
+
+Current source: `src-tauri/src/commands/support_inbox.rs` and
+`src/routes/support/+page.svelte` in Forge_Command. Source-level verification
+is complete; the live end-to-end acceptance test is not yet evidenced.
 
 The marketing site never holds the service-role key and never renders the
 operator inbox — consistent with `docs/.../02_SECURITY_DOCTRINE_AND_AUTHORITY.md`.
@@ -157,11 +169,12 @@ operator inbox — consistent with `docs/.../02_SECURITY_DOCTRINE_AND_AUTHORITY.
 
 ## 10. Phasing
 
-1. **2a — storage + read/write, polling, logged-in only.** Tables, RLS,
-   `server/hud.ts`, thread rendering. Forge_Command reply path stubbed.
-2. **2b — anonymous threads** via signed cookie + claim-on-login.
-3. **2c — Supabase Realtime** replacing the poll.
-4. **2d — Forge_Command operator inbox** (separate repo) closes the loop.
+1. **2a — storage + read/write, polling, logged-in only.** Implemented in this
+   repo: tables, RLS, `server/hud.ts`, and thread rendering.
+2. **2b — anonymous threads** via signed cookie + claim-on-login. Pending.
+3. **2c — Supabase Realtime** replacing the poll. Pending.
+4. **2d — Forge_Command operator inbox.** Implemented in source in
+   Forge_Command PR #66; live 2a/2d acceptance remains unverified.
 
 ## 11. Open questions
 

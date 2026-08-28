@@ -57,10 +57,10 @@ per-page markup is required.
 - Never auto-expands · keyboard navigable with focus trapping · reads only,
   never mutates business state.
 
-> Signed-in polling threads are implemented in source (Tier 2 phase 2a).
-> Anonymous threads, realtime delivery, and the **Forge_Command** operator
-> inbox/reply path remain pending; see
-> `docs/plans/hud-tier-2-conversation-threads.md`.
+> Signed-in polling threads and the **Forge_Command** operator inbox are
+> implemented in source (Tier 2 phases 2a and 2d). Anonymous threads and
+> realtime delivery remain pending; a live visitor-to-operator round trip is
+> not yet evidenced. See `docs/plans/hud-tier-2-conversation-threads.md`.
 
 ## Pages (Build Sequence)
 
