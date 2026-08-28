@@ -1,0 +1,59 @@
+schema_version: "bds.acceptance_receipt.v1"
+plan_id: "BDS-WEB-HUD-E2E-v0.1"
+checkpoint: "CP0"
+generated_at_utc: "2026-08-28T23:05:00.000Z"
+canonicalization: "UTF-8; LF; final newline"
+source_pins:
+  bds_website: "7d64ed5c8cc3059cfc21880a347487d54f6884ab"
+  Forge_Command: "22982be159c6fecaad1fd5b6ba441373a61e54ee"
+live_target:
+  origin: "https://bds-website.onrender.com"
+  service: "bds-website"
+test_record:
+  nonce: "BDS-WEB-HUD-E2E-v0.1-CP0-20260828T230309157Z"
+  visitor_thread_created: true
+  operator_reply_created: false
+  cleanup_authorized: false
+gates:
+  source_pins_retrieved:
+    status: "pass"
+  live_health_check:
+    status: "pass"
+    observation: "HUD reported All systems operational."
+  account_confirmation:
+    status: "pass"
+  authenticated_thread_mode:
+    status: "pass"
+  visitor_message_send:
+    status: "pass"
+    observation: "HUD reported Sent."
+  visitor_message_readback:
+    status: "pass"
+    observation: "Rendered thread contained the exact test nonce."
+  operator_connection_presence:
+    status: "blocked"
+    observation: "The current execution environment had no configured SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY for the Forge_Command operator path; values were never read or exposed."
+  operator_inbox_receipt:
+    status: "not_run"
+  operator_reply:
+    status: "not_run"
+  operator_status_transition:
+    status: "not_run"
+  visitor_reply_readback:
+    status: "not_run"
+  reply_audit_verification:
+    status: "not_run"
+outcome:
+  status: "blocked_prerequisite"
+  verified_complete: false
+  promotion_allowed: false
+  blocker: "A configured and accessible Forge_Command operator runtime is required to execute the 2d reply, status, and audit gates."
+scope_guards:
+  source_changed: false
+  schema_changed: false
+  environment_changed: false
+  deployment_changed: false
+  credentials_exposed: false
+  phase_2b_or_2c_changed: false
+  contextual_intelligence_changed: false
+  authority_changed: false
