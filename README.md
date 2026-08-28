@@ -49,16 +49,18 @@ per-page markup is required.
 
 - **Home tab** — live system status (`/healthz`), quick links, and a
   "Send us a message" action.
-- **Messages tab** — a composer that posts to the governed intake lane
-  (`/api/intake/consultation`, `source_page: "hud"`) plus the receipts of
-  messages sent during the current browser session.
+- **Messages tab** — signed-in visitors can use a persistent, RLS-scoped thread
+  (`/api/hud/thread`, `/api/hud/messages`) when the Supabase schema and
+  configuration are present; otherwise the HUD falls back to the governed
+  intake lane (`/api/intake/consultation`, `source_page: "hud"`) and
+  session receipts.
 - Never auto-expands · keyboard navigable with focus trapping · reads only,
   never mutates business state.
 
-> Two-way conversation threads (persistent history + agent replies) are a
-> deliberate follow-on: they need a message store (Supabase/ForgeCustomer) and
-> an operator reply path, which belongs in **Forge_Command**, not the
-> marketing surface.
+> Signed-in polling threads are implemented in source (Tier 2 phase 2a).
+> Anonymous threads, realtime delivery, and the **Forge_Command** operator
+> inbox/reply path remain pending; see
+> `docs/plans/hud-tier-2-conversation-threads.md`.
 
 ## Pages (Build Sequence)
 
@@ -70,7 +72,7 @@ per-page markup is required.
 6. ✅ Security page
 7. ✅ About + Contact + Legal
 8. ✅ Account area (ForgeCustomer customer surface)
-9. ⬜ HUD contextual intelligence
+9. ⬜ Page-aware HUD contextual intelligence (the base support HUD is implemented)
 
 ## ForgeCustomer Integration
 
