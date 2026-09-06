@@ -13,6 +13,14 @@ Test whether preserving model-raised concerns and consulting their investigation
 
 The repo-level record is [KNOWN_ISSUES.md](KNOWN_ISSUES.md). Reuse existing issue IDs and component records; link them rather than copying their content. Findings are engineering notes, not an automatic promotion into DataForge or a canonical ecosystem classification.
 
+## Operating-context evidence
+
+Record the exact deployed configuration that shaped the review; do not infer behavior from a vendor, model family, or harness name alone. The BDS Evidence Library in Drive `/Forge` is a research and evidence surface. It is not the mutable repository execution workspace, and the two boundaries must not be described with one ambiguous `/forge` label.
+
+For governed work, Registry remains authoritative, the worker executes only the bounded approved flow, operator approval remains external, and Forge_Command presents state, evidence, and decisions. A diagnostic shell or scripting escape hatch, when admitted, remains inside the execution-workspace and proposal boundaries; it is not an approval bypass.
+
+Tool-count thresholds from external research are hypotheses for BDS evaluation, not policy. Record the active capability profile and observed failures so later analysis can compare exact configurations.
+
 ## Four-week operation
 
 The cohort clock is recorded in the [Forge_Command pilot log](https://github.com/Boswell-Digital-Solutions/Forge_Command/blob/main/docs/model-findings/sessions.yaml); dates are recorded when work actually begins, not inferred from this file's creation or merge. Charles Boswell coordinates the phase transition already described by the pilot.
@@ -64,7 +72,9 @@ fix_and_verification: []
 
 Record actual sessions in [model-findings/sessions.yaml](model-findings/sessions.yaml). Minimal baseline notes capture task type, active work minutes, waiting time, outcome, and issue references. Structured-phase notes additionally distinguish capture effort, false-alarm effort, and evidence reuse. Missing timing is `null`, never zero or a number inferred from PR age.
 
-For a session, capture `session_id`, `started_at`, `phase`, `reviewed_commit`, `task_type`, `source_model`, `issue_ids`, `active_minutes`, `recordkeeping_minutes`, `false_alarm_minutes`, `inconclusive_minutes`, `waiting_minutes`, `outcome`, `verification_ref`, and `prior_evidence_reused`. Recordkeeping and investigation categories are subsets of active time, not extra time to add again. Separate setup cost from ordinary task cost.
+For a session, capture `session_id`, `started_at`, `phase`, `reviewed_commit`, `task_type`, `source_model`, `issue_ids`, `active_minutes`, `recordkeeping_minutes`, `false_alarm_minutes`, `inconclusive_minutes`, `waiting_minutes`, `outcome`, `verification_ref`, and `prior_evidence_reused`. Also capture an `execution_context` with the exact harness and version when known, active capability profile and exposed-capability count, workspace boundary, invalid invocation count, retry-loop count, output-truncation count, escape-hatch use, and human-correction count. Unknown values remain `null` or `unknown`; they are never inferred from product or model names. Recordkeeping and investigation categories are subsets of active time, not extra time to add again. Separate setup cost from ordinary task cost.
+
+Use zero or more `failure_modes` values when observed: `registry-misroute`, `schema-rejection-loop`, `semantic-tool-overlap`, `observation-truncation`, `workspace-boundary-violation`, `environment-state-drift`, `escape-hatch-dependency`, `verification-gap`, or `plausible-but-unproven-fix`. These classify evidence; they do not by themselves establish an application defect.
 
 At four weeks, compare comparable tasks: total active time to a verified disposition, verified fixes per active hour, recording overhead, false-alarm effort, repeat investigations, and reopened fixes. Report unresolved cases and per-repo samples. For unique adjudicated defect claims, precision is confirmed / (confirmed + disproven); show duplicates, enhancements, and inconclusive cases separately. Cross-repo copies of one root cause count once at ecosystem level.
 
