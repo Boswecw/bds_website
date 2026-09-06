@@ -1,8 +1,14 @@
 # Manual pilot observations; empty means no sessions recorded, not no defects.
 pilot_id: BDS-MODEL-FINDINGS-TOP10-v0.1
+session_schema_version: 0.2
 repository: Boswell-Digital-Solutions/bds_website
 baseline_commit: 842b63aee2f7b3f31cf88d88e98052f4b334e239
 initial_phase: baseline_after_merge
 structured_intake_started_at: null
 cohort_clock_reference: https://github.com/Boswell-Digital-Solutions/Forge_Command/blob/main/docs/model-findings/sessions.yaml
+# Each sessions[] record retains the documented timing and outcome fields.
+# execution_context records: harness_id, harness_version, capability_profile,
+# capabilities_exposed_count, workspace_boundary, invalid_invocations,
+# retry_loops, output_truncations, escape_hatch_used, and human_corrections.
+# failure_modes uses only the evidence classifications defined in the pilot.
 sessions: []
