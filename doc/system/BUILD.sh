@@ -24,8 +24,11 @@ for part in "$PARTS_DIR"/[0-9][0-9]-*.md; do
 done
 shopt -u nullglob
 
-if [ -x "$VALIDATOR" ]; then
+if [ -f "$VALIDATOR" ]; then
   bash "$VALIDATOR" "$TMP_OUTPUT"
+else
+  echo "BUILD_FAILED: missing validator $VALIDATOR" >&2
+  exit 1
 fi
 
 cp "$TMP_OUTPUT" "$ROOT_DIR/$OUTPUT"

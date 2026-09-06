@@ -4,11 +4,28 @@
 
 ```bash
 bun run dev
+bun test tests
+bun run tools/qc/no-side-door.ts
 bun run qc:stateforge
+bun run verify:hud
 bash doc/system/BUILD.sh
 ```
 
 ## Current Quality Posture
+
+`.github/workflows/ci.yml` runs on every pull request and push to `main`,
+including documentation changes, with read-only repository permission. One
+Ubuntu job runs the app-route/security tests, governed egress guard, and the
+StateForge verifier (which runs its unit suite from its own directory plus
+positive and negative fixtures). It rebuilds `doc/BDSSYSTEM.md` and fails on
+generated drift. The builder always runs its snapshot validator through Bash
+and rejects a missing validator, regardless of its executable permission.
+
+A separate Ubuntu job starts the local website and exercises the desktop and
+mobile HUD with Chromium. Playwright 1.58.2 is installed for CI only; screenshots
+are retained for seven days. Bun 1.3.11 matches the deployment configuration.
+All commands are blocking. The jobs use no live integration credentials, make
+no live commerce claims, and do not publish or deploy the website.
 
 What exists now:
 
@@ -26,7 +43,7 @@ What exists now:
 
 What does not exist yet:
 
-- automated frontend tests
+- broader frontend coverage beyond the existing desktop/mobile HUD harness
 - broken-link enforcement
 - templating to remove duplicated layout markup
 - production commerce integration tests
