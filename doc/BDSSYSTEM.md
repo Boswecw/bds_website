@@ -29,6 +29,18 @@ Assembly contract:
 bash doc/system/BUILD.sh
 ```
 
+## Model findings debugging pilot
+
+The manual `BDS-MODEL-FINDINGS-TOP10-v0.1` review procedure is in repository-root
+`docs/MODEL_FINDINGS_PILOT.md`; issue intake and retained dispositions are in
+`docs/KNOWN_ISSUES.md`, with actual session measurements in
+`docs/model-findings/sessions.yaml`. Consult the pilot's cohort phase before
+applying structured intake. This repo starts in `baseline_after_merge` after merge.
+During the active structured phase, reconcile model-raised concerns with known
+issues before closing a documentation review. Unverified claims remain distinct
+from confirmed defects; documentation validation and product readiness remain
+separate outcomes. This pilot has no automatic CI or runtime enforcement.
+
 ---
 
 # Overview
