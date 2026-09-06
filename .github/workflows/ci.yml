@@ -1,0 +1,67 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verification:
+    name: Security, app routes, StateForge, and documentation
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          persist-credentials: false
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.3.11
+      - name: App routes and security contract tests
+        run: bun test tests
+      - name: Governed egress boundary
+        run: bun run tools/qc/no-side-door.ts
+      - name: StateForge tests and positive/negative fixture verification
+        run: bun run qc:stateforge
+      - name: Generated documentation parity
+        run: |
+          bash doc/system/BUILD.sh
+          git diff --exit-code -- doc/BDSSYSTEM.md
+
+  hud-browser:
+    name: Desktop and mobile HUD browser verification
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v5
+        with:
+          node-version: '24'
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.3.11
+      - name: Install CI-only browser tooling
+        run: npm install --no-save --package-lock=false --ignore-scripts playwright@1.58.2
+      - name: Install Chromium and system dependencies
+        run: npx playwright install --with-deps chromium
+      - name: Exercise the running website HUD
+        run: |
+          export HUD_VERIFY_CHROMIUM="$(node -p "require('playwright').chromium.executablePath()")"
+          bun run verify:hud
+      - name: Preserve browser evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: hud-browser-evidence
+          path: out/hud/
+          if-no-files-found: warn
+          retention-days: 7

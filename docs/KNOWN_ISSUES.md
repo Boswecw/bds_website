@@ -21,4 +21,5 @@ New observations go below this heading or into existing linked entries. Setup ob
 - Verification: **confirmed conditional validation gap**. An explicit `bash doc/system/validate_snapshots.sh doc/BDSSYSTEM.md` passed for the pilot candidate; this does not repair the build condition.
 - Severity: provisional medium; build success alone can omit the snapshot check.
 - Disposition: **open**. Owner: Charles Boswell.
-- Next action: make validator invocation reliable for the tracked file mode, then verify a clean-checkout build executes it and rejects an invalid snapshot. Review trigger: before relying on the native build alone as the documentation validation gate.
+- Candidate correction in PR #29: invoke the validator through Bash when the file exists and fail if it is missing. CI also rebuilds the generated reference and rejects drift. Closure requires the corrected commit's verification and merge receipt.
+- Next action: confirm the merged commit after CI. Local checks passed for the normal build, invalid-source rejection, and missing-validator rejection. Review trigger: PR #29 CI completion.
